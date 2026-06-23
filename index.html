@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="logo">Journal</h1>
+        <button id="new-btn" class="new-btn" title="New entry">+</button>
+      </div>
+      <div class="search-wrap">
+        <input id="search" type="text" placeholder="Search entries…" autocomplete="off" />
+      </div>
+      <ul id="entry-list" class="entry-list"></ul>
+    </aside>
+
+    <main class="editor-pane" id="editor-pane">
+      <div class="empty-state" id="empty-state">
+        <p>Select an entry or create a new one.</p>
+      </div>
+      <div class="editor-wrap hidden" id="editor-wrap">
+        <div class="editor-toolbar">
+          <input id="entry-title" class="entry-title" type="text" placeholder="Title" maxlength="120" />
+          <div class="toolbar-actions">
+            <span id="entry-date" class="entry-date"></span>
+            <button id="delete-btn" class="delete-btn" title="Delete entry">Delete</button>
+          </div>
+        </div>
+        <textarea id="entry-body" class="entry-body" placeholder="Write something…"></textarea>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
