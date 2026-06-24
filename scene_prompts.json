@@ -1,0 +1,106 @@
+[
+  {
+    "scene": 1,
+    "title": "Hallway - Allison Walks In",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Cinematic tracking shot moving backward through a bright high school hallway. Teal-colored lockers line both sides. Morning golden sunlight streams through tall windows on the right, casting long shadows on polished wooden floors. Students move in both directions. In the center, a confident 17-year-old Asian-American girl in a beige wide-brimmed hat, light blue oxford shirt tucked into a charcoal gray pleated skirt, powder blue cable-knit sweater vest, and black leather loafers walks toward camera with measured, purposeful strides. She holds a white envelope at her side. A gold medal on a red, white, and blue ribbon hangs from her neck. She pauses briefly to glance at a bulletin board, then continues walking. Nostalgic indie-pop plays softly in background. Film-quality cinematography, warm color grading.",
+    "negative": "blurry, low quality, shaky cam, dark, ugly, deformed, text overlay"
+  },
+  {
+    "scene": 2,
+    "title": "George Catches Up",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "High school hallway with gray metal lockers. A 17-year-old boy with dark curly hair bouncing, wearing a navy blue zip-up hoodie and white sneakers, sprints down the hallway and SKIDS to a halt beside the girl, one hand slamming against a locker. He's breathless, eyes wide, gesturing animatedly. She turns to him with mild amusement and slight exasperation. They walk together as he talks rapidly. Fluorescent lights overhead. Cinematic medium shot, slightly urgent camera movement, warm school hallway lighting.",
+    "negative": "blurry, low quality, text, watermark, dark"
+  },
+  {
+    "scene": 3,
+    "title": "Maddie's Invitation Ceremony",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Spacious school courtyard with red brick buildings and large oak trees. Morning golden sunlight filters through leaves. On a raised stone platform stands a strikingly beautiful 18-year-old Asian-American girl in a bright pink cropped denim jacket, white fitted tank top, high-waisted dark blue jeans, and white platform sneakers. She holds a large decorative pink fan and a stack of cream-colored envelopes with gold embossing. Students are gathered around in clusters—some excited, some anxious. She calls names with theatrical flair; recipients cheer while others deflate. A girl with a sparkly lavender sequined top stands beside her holding a clipboard. Camera pans slowly across the scene. Dramatic lighting, cinematic wide shot.",
+    "negative": "blurry, low quality, text overlay, watermark"
+  },
+  {
+    "scene": 4,
+    "title": "Allison and Zack Eye Contact",
+    "duration": 5,
+    "ratio": "1280:720",
+    "prompt": "School courtyard bathed in morning golden light. Across the space, a 18-year-old athletic boy with wavy dark hair in a light blue button-down shirt (sleeves rolled up) leans casually against a brick wall. He spots the girl across the crowd. Their eyes meet across the distance. The camera cuts between close-ups of their faces—he looks intrigued, she looks away with a slight blush. Soft romantic synth music swells. The background crowd softens into blur. Cinematic slow-motion eye contact moment, golden bokeh lighting.",
+    "negative": "blurry, low quality, artificial, CGI-looking"
+  },
+  {
+    "scene": 5,
+    "title": "Allison Walks Away with Dignity",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "School courtyard, late morning. A confident 17-year-old Asian-American girl in a beige wide-brimmed hat, blue oxford shirt, gray pleated skirt, and gold medal necklace, turns away from a laughing group and walks away with measured, dignified steps. Her jaw is tight but her posture is perfect. Her curly-haired male friend walks beside her, looking frustrated on her behalf. Close-up on her face reveals composed expression but eyes showing quiet hurt. She clutches a white envelope tighter. Cinematic shot, emotional close-up, warm but slightly melancholic lighting.",
+    "negative": "blurry, low quality, text, watermark"
+  },
+  {
+    "scene": 6,
+    "title": "Parking Lot - The Idea",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Sunny high school parking lot, mid-morning. Students leaving, cars packed. A girl in a beige hat and blue shirt and her curly-haired male friend walk toward a beat-up Honda Civic. He talks animatedly with his hands gesturing. She stops walking suddenly, eyes lighting up with excitement. She turns to him, a full genuine smile spreading across her face. They're both now excited, talking rapidly. The mood shifts from melancholy to determined triumph. Bright sunlight, energetic camera movement, hopeful color grading.",
+    "negative": "blurry, low quality, dark"
+  },
+  {
+    "scene": 7,
+    "title": "Basement Transformation Montage",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Fast-cut montage inside a basement being transformed into a party venue. String lights being hung from wooden beams. Colorful geometric projections pulsing on concrete walls. Pizza boxes and snacks arranged on folding tables. A teenage boy testing a DJ controller, nodding to the beat. A girl with glasses running a laptop projector. Friends assembling a foam dance floor. A hand writing a checklist on a clipboard. Someone hanging a handmade banner. Final shot: four teenagers stepping back, looking proudly at their warm, glowing, decorated basement. Upbeat pop-punk music feel. Quick cuts, warm golden-hour tones.",
+    "negative": "blurry, low quality, boring, empty room"
+  },
+  {
+    "scene": 8,
+    "title": "Maddie's Mansion Party - Surface Glamour",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Establishing shot of a sprawling modern mansion at night. White marble exterior, floor-to-ceiling windows, infinity pool overlooking city lights. Expensive cars in the driveway. Inside: a glamorous 18-year-old girl in a tight sparkly silver mini-dress with high ponytail holds a champagne flute and poses for photos. About 60 well-dressed teenagers mill around. The atmosphere is tense beneath the surface—people checking phones, posing artificially, whispering. A bouncer at the door turns someone away. Thumping curated pop music. Cinematic wide shot, cool blue and silver lighting, slight sense of hollowness.",
+    "negative": "blurry, low quality, warm colors"
+  },
+  {
+    "scene": 9,
+    "title": "The Real Soirée in Full Swing",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Vibrant basement party at night. String lights cast warm golden glow. Colorful geometric projections dance across concrete walls showing words 'YOU BELONG HERE'. A packed dance floor of 80+ diverse high school students from all cliques dance together freely and joyfully. A conga line forms spontaneously. Someone starts a dance battle, everyone laughing. A DJ in a basketball jersey hypes the crowd. Genuine unfiltered laughter. People singing along. A girl with glasses projects light art. Two teenagers on a couch talking and smiling warmly. The energy is electric and authentic. Handheld camera feel, warm orange and purple lighting.",
+    "negative": "blurry, forced smiles, artificial, low quality, dark"
+  },
+  {
+    "scene": 10,
+    "title": "Zack and Allison Dance",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Romantic slow-motion scene on a basement dance floor. A boy in a simple black t-shirt and dark jeans awkwardly but sweetly dances with a girl in high-waisted black jeans, emerald green silky camisole, and denim jacket. They step on each other's feet and laugh. Close-up on their faces shows genuine smiles and connection. Warm string lights create golden bokeh in background. Other happy couples and friends visible around them. Romantic mid-tempo music. Soft shallow depth of field, warm glowing lighting, intimate cinematography.",
+    "negative": "blurry, low quality, stiff, staged"
+  },
+  {
+    "scene": 11,
+    "title": "Maddie Arrives at The Real Soirée",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Basement party. The music fades slightly. A door opens. A beautiful 18-year-old girl in a wrinkled silver mini-dress with slightly messy hair stands in the doorway looking smaller and more vulnerable than we've seen her. The crowd notices her. Faces are a mix of hostile, curious, and sympathetic. She steps in tentatively. The confident girl in the emerald green top stands and approaches her calmly. They talk quietly. Then the crowd begins returning to dancing. The formerly cold girl slowly, hesitantly begins to smile—small, real, unfamiliar to her face. Cinematic emotional scene, warm lighting.",
+    "negative": "blurry, low quality, over-dramatic"
+  },
+  {
+    "scene": 12,
+    "title": "Graduation Day - Caps in the Air",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Outdoor high school courtyard decorated with balloons and 'Congratulations Class of 2024!' banners. Golden afternoon sunlight. A group of seven teenagers in black graduation caps and gowns stand together laughing and hugging. The central girl wears honor cords and multiple stoles. They all look at each other, then on a count, throw their graduation caps high into the air in slow motion. The caps reach their peak suspended against a bright blue sky. Everyone cheers and embraces. Tears, joy, bittersweet emotion. Epic wide shot pulling back. Triumphant orchestral music swells. Cinematic slow motion, bright hopeful color grading.",
+    "negative": "blurry, low quality, dark, empty background"
+  },
+  {
+    "scene": 13,
+    "title": "Yale Campus - One Year Later",
+    "duration": 10,
+    "ratio": "1280:720",
+    "prompt": "Beautiful Ivy League university campus in autumn. Gothic stone architecture, red and orange fall foliage, students crossing a quad. A confident 18-year-old Asian-American woman in casual but stylish clothes walks across campus carrying textbooks, looking happy and at ease. She checks her phone and smiles at messages. She looks up at the sky with contentment. Camera slowly pulls back to reveal the grand campus. Warm autumn colors, hopeful morning light. Final shot feels like a beginning, not an ending. Cinematic wide aerial-style shot, warm golden tones.",
+    "negative": "blurry, low quality, winter, dark, sad"
+  }
+]
