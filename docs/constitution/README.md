@@ -40,8 +40,11 @@ features, so no developer discipline is required to avoid them.*
 - Features locked behind earned progress
 - Anything that renders one partner's behaviour as a deficit to the other
 - Analytics, telemetry, tracking, third-party scripts
-- Backend/API server, cloud database, user accounts (Phase 1)
 - "Relationship health" scores / metrics / activity dashboards
+
+*(Amended 2026-07-20: a backend is now permitted **solely** as an end-to-end-encrypted
+sync relay that stores only ciphertext; accounts are minimal pairing identity only.
+See the [two-device amendment](amendment-2026-07-20-two-device.md).)*
 
 ---
 
@@ -55,13 +58,15 @@ them here.
 
 | # | Decision | Status |
 |---|----------|--------|
-| 1 | **Begin Milestone 1 now**; do not wait for Volumes 2–4 to start the (product-agnostic) foundation. | Approved |
-| 2 | **Approval cadence A**: Claude presents the Phase 1 plan for approval, then builds milestone-by-milestone, pausing at each testing gate. | Approved |
+| 1 | **Begin Milestone 1 now**; do not wait for Volumes 2–4 to start the foundation. | Approved |
+| 2 | **Approval cadence A**: Claude presents the plan for approval, then builds milestone-by-milestone, pausing at each testing gate. | Approved |
 | 3 | **Persist the Constitution to the repo** under `docs/constitution/`. | Done |
-| 4 | **Meta-framework**: author delegated to Claude ("do what is best and doesn't cause errors"). **Recommendation awaiting approval:** build on **Vite + React 19 + TypeScript + vite-plugin-pwa** instead of Next.js 15, because the product is a purely static, offline-only, installable PWA with no server/SSR — Vite + Workbox is the simpler, lower-friction, fewer-footguns path and better honours "simplicity over complexity." *Deviation from Part 1 fixed stack (Next.js 15), author-delegated.* | Proposed |
-| 5 | **Components: fully bespoke** — no shadcn/ui, no Radix. Hand-built, token-driven, accessible base components. *Deviation from Part 1 fixed stack (shadcn/ui), author-selected.* Claude owns WCAG 2.2 AA correctness of all hand-built components (focus trapping, live regions, semantics). | Approved |
-| 6 | **Hosting: static host.** Proposed target: **GitHub Pages** (sets Vite `base` path + service-worker scope). | Proposed |
-| 7 | **Product name:** 3 candidates researched; awaiting the author's selection before scaffolding (name goes in `package.json`, manifest, copy). | Open |
+| 4 | **Meta-framework: Next.js 15 static export** (`output: 'export'`, no server runtime/API routes for the frontend). Author's explicit choice (M1 §3); Claude's earlier Vite recommendation withdrawn. | Approved |
+| 5 | **Components: fully bespoke** — no shadcn/ui, no Radix. Hand-built, token-driven, accessible base components. *Deviation from Part 1 fixed stack (shadcn/ui), author-selected.* Claude owns WCAG 2.2 AA correctness. | Approved |
+| 6 | **Hosting: static host** for the frontend (target **GitHub Pages** → sets `basePath` + service-worker scope). Backend (E2EE relay) hosting decided at M2. | Approved |
+| 7 | **Product name: Aveyra.** | Approved |
+| 8 | **Two-Device Amendment approved** — see [amendment-2026-07-20-two-device.md](amendment-2026-07-20-two-device.md). Aveyra is two-device, local-first, with an E2EE sync relay. All Part 2 §1.2 emotional-safety prohibitions retained. | Approved |
+| 9 | **Milestone 1 = two-device-ready, local-first, backend-agnostic foundation.** Sync/identity/encryption/invitation *foundations* built now (client-side, abstract `SyncTransport` + local stub); concrete backend + live cross-device sync + network invitation redemption = **Milestone 2**. | Approved |
 
 ### Retained from Part 1 fixed stack (unchanged)
 
