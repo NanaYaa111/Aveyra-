@@ -7,6 +7,21 @@ the relevant sections here **must be read before writing any code**.
 > Working sessions are ephemeral; this repo is the only permanent memory.
 > If it isn't written here, it isn't binding.
 
+## Product Identity
+
+**Aveyra** — a private, offline-first relationship platform for two people to
+connect, preserve memories, and grow together.
+
+The name merges two concepts:
+- **Avela** — discovery, revelation, opening up
+- **Veya** — a journey, a path, growth
+
+Together: *"the journey of discovering, remembering, and growing together."*
+
+> Earlier documents (the Constitution volumes and research dossiers) were written
+> under the working title **"Weave"**. Wherever they say "Weave"/"WEAVE", read
+> **Aveyra**. The codebase, manifest, and all UI use Aveyra.
+
 ## Volumes
 
 | Doc | Covers |
@@ -64,7 +79,7 @@ them here.
 | 4 | **Meta-framework: Next.js 15 static export** (`output: 'export'`, no server runtime/API routes for the frontend). Author's explicit choice (M1 §3); Claude's earlier Vite recommendation withdrawn. | Approved |
 | 5 | **Components: fully bespoke** — no shadcn/ui, no Radix. Hand-built, token-driven, accessible base components. *Deviation from Part 1 fixed stack (shadcn/ui), author-selected.* Claude owns WCAG 2.2 AA correctness. | Approved |
 | 6 | **Hosting: static host** for the frontend (target **GitHub Pages** → sets `basePath` + service-worker scope). Backend (E2EE relay) hosting decided at M2. | Approved |
-| 7 | **Product name: Aveyra.** | Approved |
+| 7 | **Product name: Aveyra** (Avela = discovery/revelation + Veya = journey/growth → "the journey of discovering, remembering, and growing together"). Supersedes the working title "Weave" used in all Constitution volumes and research. | Approved |
 | 8 | **Two-Device Amendment approved** — see [amendment-2026-07-20-two-device.md](amendment-2026-07-20-two-device.md). Aveyra is two-device, local-first, with an E2EE sync relay. All Part 2 §1.2 emotional-safety prohibitions retained. | Approved |
 | 9 | **Milestone 1 = two-device-ready, local-first, backend-agnostic foundation.** Sync/identity/encryption/invitation *foundations* built now (client-side, abstract `SyncTransport` + local stub); concrete backend + live cross-device sync + network invitation redemption = **Milestone 2**. | Approved |
 
