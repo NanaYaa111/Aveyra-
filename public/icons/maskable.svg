@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Aveyra">
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b0635b"/>
+      <stop offset="1" stop-color="#3a3f57"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#a)"/>
+  <!-- Rings kept within the maskable safe zone. -->
+  <g fill="none" stroke="#fbf8f5" stroke-width="22" opacity="0.96">
+    <circle cx="222" cy="256" r="80"/>
+    <circle cx="290" cy="256" r="80"/>
+  </g>
+</svg>

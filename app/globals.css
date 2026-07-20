@@ -58,7 +58,7 @@
 
   --color-text: #241f20;
   --color-text-soft: #5f5658;
-  --color-text-mute: #90858a;
+  --color-text-mute: #6e6367; /* meets 4.5:1 on --color-bg (WCAG 1.4.3) */
   --color-text-on-accent: #ffffff;
 
   --color-accent: #b0635b; /* muted terracotta-rose */
@@ -85,7 +85,7 @@
 
   --color-text: #f0ece8;
   --color-text-soft: #bcb6b8;
-  --color-text-mute: #8b8592;
+  --color-text-mute: #9b96a3;
   --color-text-on-accent: #1b1114;
 
   --color-accent: #dd8b81; /* warmer rose/coral for dark bg contrast */
@@ -112,7 +112,7 @@
     --color-border: #333748;
     --color-text: #f0ece8;
     --color-text-soft: #bcb6b8;
-    --color-text-mute: #8b8592;
+    --color-text-mute: #9b96a3;
     --color-text-on-accent: #1b1114;
     --color-accent: #dd8b81;
     --color-accent-strong: #e7a29a;

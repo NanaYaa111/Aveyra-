@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ThemeScript } from '@/components/app/ThemeScript';
 import { AppShell } from '@/components/app/AppShell';
+import { PwaInit } from '@/components/app/PwaInit';
 import { ToastProvider } from '@/components/ui';
 
 export const metadata: Metadata = {
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeScript />
+        <PwaInit />
         <ToastProvider>
           <AppShell>{children}</AppShell>
         </ToastProvider>
