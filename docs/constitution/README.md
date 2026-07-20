@@ -1,0 +1,76 @@
+# Project Constitution — Index & Governing Record
+
+This directory is the **permanent, durable record** of the project's governing
+specification. Per the Claude Code Execution Protocol (Volume 1, Part 5, §7.1),
+the relevant sections here **must be read before writing any code**.
+
+> Working sessions are ephemeral; this repo is the only permanent memory.
+> If it isn't written here, it isn't binding.
+
+## Volumes
+
+| Doc | Covers |
+|-----|--------|
+| [volume-1-part-1-foundation.md](volume-1-part-1-foundation.md) | Product vision, core principles, AI operating rules, fixed tech stack, Phase 1 scope |
+| [volume-1-part-2-ux-design.md](volume-1-part-2-ux-design.md) | UX philosophy, relationship psychology, design language, interaction, accessibility, offline experience |
+| [volume-1-part-3-architecture-security.md](volume-1-part-3-architecture-security.md) | Offline-first architecture, storage, encryption, backup, export/import, data management |
+| [volume-1-part-4-schema-implementation.md](volume-1-part-4-schema-implementation.md) | Database schema, data models, application architecture, technology rules |
+| [volume-1-part-5-roadmap-protocol.md](volume-1-part-5-roadmap-protocol.md) | Phase 1 roadmap, workflow, testing gates, code review, Claude Code execution protocol |
+| [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
+
+**Status:** Volume 1 complete (Parts 1–5). Volumes 2–4 pending.
+Next per the source: *Volume 2 — Product Requirements, Feature Specifications,
+User Flows & Detailed Experience Design.*
+
+## The one rule above all rules
+
+> Every screen, interaction, and feature must answer:
+> **"Does this make the couple's experience better?"** If no, it does not belong.
+
+And its structural corollary (Part 5 Final Rule): *the codebase makes the right
+behaviour the easiest behaviour — the architecture itself prevents harmful
+features, so no developer discipline is required to avoid them.*
+
+## Permanent prohibitions (Part 2 §1.2 — never build, any phase)
+
+- Experience points, levels, or ranks
+- Consecutive-day streaks and loss framing
+- Scores, grades, or ratings applied to the relationship
+- Leaderboards or comparison of any kind
+- Features locked behind earned progress
+- Anything that renders one partner's behaviour as a deficit to the other
+- Analytics, telemetry, tracking, third-party scripts
+- Backend/API server, cloud database, user accounts (Phase 1)
+- "Relationship health" scores / metrics / activity dashboards
+
+---
+
+## Decisions Log
+
+Records decisions, and any **author-sanctioned deviations** from the Part 1
+fixed stack. Deviations are only valid when the Constitution's author approves
+them here.
+
+### 2026-07-20 — Pre–Milestone-1 decisions
+
+| # | Decision | Status |
+|---|----------|--------|
+| 1 | **Begin Milestone 1 now**; do not wait for Volumes 2–4 to start the (product-agnostic) foundation. | Approved |
+| 2 | **Approval cadence A**: Claude presents the Phase 1 plan for approval, then builds milestone-by-milestone, pausing at each testing gate. | Approved |
+| 3 | **Persist the Constitution to the repo** under `docs/constitution/`. | Done |
+| 4 | **Meta-framework**: author delegated to Claude ("do what is best and doesn't cause errors"). **Recommendation awaiting approval:** build on **Vite + React 19 + TypeScript + vite-plugin-pwa** instead of Next.js 15, because the product is a purely static, offline-only, installable PWA with no server/SSR — Vite + Workbox is the simpler, lower-friction, fewer-footguns path and better honours "simplicity over complexity." *Deviation from Part 1 fixed stack (Next.js 15), author-delegated.* | Proposed |
+| 5 | **Components: fully bespoke** — no shadcn/ui, no Radix. Hand-built, token-driven, accessible base components. *Deviation from Part 1 fixed stack (shadcn/ui), author-selected.* Claude owns WCAG 2.2 AA correctness of all hand-built components (focus trapping, live regions, semantics). | Approved |
+| 6 | **Hosting: static host.** Proposed target: **GitHub Pages** (sets Vite `base` path + service-worker scope). | Proposed |
+| 7 | **Product name:** 3 candidates researched; awaiting the author's selection before scaffolding (name goes in `package.json`, manifest, copy). | Open |
+
+### Retained from Part 1 fixed stack (unchanged)
+
+React 19 · TypeScript · Tailwind CSS · Framer Motion · Dexie.js · Zustand ·
+React Hook Form · Zod · PWA · Vitest · ESLint · Prettier · pnpm.
+
+### Open questions deferred to Volume 2
+
+Product-flow specifics (daily-question bank & selection, pass-the-phone exact
+UX, the "moment after" reveal, memory creation entry points, journal fields,
+two-name identity model) are expected to be specified by **Volume 2** and will
+be resolved there before the corresponding flows are built.
