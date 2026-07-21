@@ -45,6 +45,82 @@ support.
 E2EE — Phase 1 itself remains local-only, consistent with this document.)*
 
 ---
-**Consistency check:** nothing here conflicts with Volume 1 or the two-device
-amendment. It restates the same IA, principles, and Phase 1 boundary at a
-product-overview altitude.
+
+## 7. Product Principles (non-negotiable, take precedence over convenience/trends)
+- **7.1 Every feature must strengthen human connection** — it must help two
+  people understand each other, encourage meaningful communication, preserve
+  memories, support healthy growth, or reduce relationship-maintenance friction.
+  If it does none of these, it is not implemented.
+- **7.2 Privacy is a product feature** — not just technical. Users share honest
+  thoughts because they trust the space. Every interaction reinforces that trust.
+- **7.3 Quality over quantity** — meaningful engagement, not frequent engagement.
+  Encourage intentional participation, never continuous usage.
+- **7.4 Calm technology** — quiet, focused, respectful of attention. **Never**
+  endless scrolling, artificial urgency, manipulative notifications,
+  attention-grabbing mechanics, or pressure to return. Users control when/how
+  they engage.
+- **7.5 Shared growth** — help users move forward *together*; celebrate progress,
+  reflection, understanding — never competition or comparison.
+
+## 8. Product Boundaries — what Aveyra is *not*
+Not: a social-media platform · a public-sharing platform · a messaging app · a
+dating app · a therapy/counseling service · a mental-health diagnostic tool · a
+productivity app · a habit tracker · a cloud-storage platform · a replacement for
+genuine human interaction. *Technology supports relationships; it does not
+replace them.*
+
+## 9. Relationship-Science Foundation
+Aveyra creates opportunities for intentional communication and reflection rather
+than trying to "fix" relationships. Guiding principles: curiosity strengthens
+understanding · shared experiences strengthen bonds · reflection improves
+communication · **consistency > intensity** · small moments accumulate into
+lasting relationships · psychological safety encourages honesty · positive
+interactions deserve preservation.
+
+## 10. User Personas
+- **Primary — Intentional Partners:** two people actively strengthening their
+  relationship through better communication and shared experiences. Value
+  meaningful conversation and privacy; want stronger trust, to learn more about
+  each other, to preserve milestones. Challenges: busy schedules, repetitive
+  conversations, forgetting moments, difficulty expressing deeper thoughts.
+- **Secondary — Long-Distance Partners:** shared experiences despite distance,
+  regular meaningful connection, memory preservation across time.
+- **Future personas** — best friends, parent & child, mentor & mentee, siblings;
+  tailored experiences that preserve the core philosophy. *(This directly
+  supports the open `participants` vs `partner` schema decision — the product
+  roadmap explicitly anticipates non-romantic one-to-one relationships.)*
+
+## 11. Emotional Experience Framework (target feeling per surface)
+- **Onboarding:** welcome · safe · curious · hopeful
+- **Daily questions:** curious · comfortable · thoughtful
+- **Shared answer reveal:** anticipation · discovery · understanding · appreciation
+- **Creating memories:** gratitude · reflection · joy
+- **Timeline:** nostalgia · pride · growth · perspective
+- **Private journal:** safe · honest · calm · unjudged
+
+*(This is the design brief for Milestone 2 — each flow is built to evoke its
+row.)*
+
+## 12. Success Metrics
+- **North Star — Meaningful Shared Moments:** a completed interaction that
+  contributes to understanding, reflection, or memory creation between two users.
+- **Supporting:** daily-question completion, shared-memory creation, conversation
+  completion, milestone participation, weekly active relationship spaces,
+  retention over meaningful periods, satisfaction & trust.
+- **Never** vanity metrics (screen time, notification engagement). These never
+  drive product decisions. *(Consistent with the constitution's ban on scores and
+  engagement mechanics — measured internally, never shown as relationship scores.)*
+
+## 13. Feature Evaluation Framework (a proposal must pass ALL)
+1. Strengthens meaningful human connection? 2. Respects privacy? 3. Aligns with
+Aveyra's philosophy? 4. Avoids unnecessary complexity? 5. Long-term value over
+short-term engagement? 6. Implementable offline-first? 7. Understandable for new
+users? 8. Contributes positively to the emotional experience? 9. Sustainably
+maintainable? 10. Would removing it noticeably reduce Aveyra's value?
+
+---
+**Consistency check:** nothing here conflicts with Volume 1, the two-device
+amendment, or the research. It sharpens governance (§7, §13), draws hard product
+boundaries (§8), and gives per-surface emotional targets (§11) that become the
+Milestone 2 design brief. §10's future personas reinforce the open `participants`
+question.
