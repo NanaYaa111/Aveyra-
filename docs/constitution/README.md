@@ -42,6 +42,7 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [design-research-policy.md](design-research-policy.md) | Binding: research proven UX patterns + get design approval before building any major screen |
 | [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
 | [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |
+| [volume-2-product-strategy.md](volume-2-product-strategy.md) | Positioning (communication-first), product principles, metrics, brand voice, feature-entry criteria, AI boundaries, North Star |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
 > two-device, and connected** — **offline-first has been dropped** as a product
@@ -53,6 +54,16 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 **Status:** Volume 1 complete (Parts 1–5). Volumes 2–4 pending.
 Next per the source: *Volume 2 — Product Requirements, Feature Specifications,
 User Flows & Detailed Experience Design.*
+
+## North Star (Volume 2)
+
+> **Every interaction in Aveyra should help two people know each other a little
+> better than they did yesterday.**
+
+**Positioning:** Aveyra is a private space for two people to intentionally
+understand each other better through meaningful conversations, shared
+experiences, and a relationship story they build together. **Daily Questions is
+the hero; Memories are the outcome.**
 
 ## The one rule above all rules
 
