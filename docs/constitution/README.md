@@ -35,7 +35,9 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [volume-1-part-3-architecture-security.md](volume-1-part-3-architecture-security.md) | Offline-first architecture, storage, encryption, backup, export/import, data management |
 | [volume-1-part-4-schema-implementation.md](volume-1-part-4-schema-implementation.md) | Database schema, data models, application architecture, technology rules |
 | [volume-1-part-5-roadmap-protocol.md](volume-1-part-5-roadmap-protocol.md) | Phase 1 roadmap, workflow, testing gates, code review, Claude Code execution protocol |
+| [volume-2-part-1-product-ux.md](volume-2-part-1-product-ux.md) | Product overview, vision/mission, IA, target users, Phase 1 scope |
 | [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
+| [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |
 
 **Status:** Volume 1 complete (Parts 1–5). Volumes 2–4 pending.
 Next per the source: *Volume 2 — Product Requirements, Feature Specifications,
@@ -91,6 +93,14 @@ them here.
 
 React 19 · TypeScript · Tailwind CSS · Framer Motion · Dexie.js · Zustand ·
 React Hook Form · Zod · PWA · Vitest · ESLint · Prettier · pnpm.
+
+### Open decision — `participants` vs `partner` (raised by Positive Love research §6)
+
+The wellbeing evidence is **not romance-specific** (it holds for close-friendship
+and familial love too), which argues for modelling **`participants`** rather than a
+romantic **`partner`**. This is a genuine fork from the two-romantic-partners
+framing, not a silent change. **To be decided at Milestone 2 planning** before the
+onboarding/relationship data model is finalized.
 
 ### Open questions deferred to Volume 2
 
