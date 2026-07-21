@@ -43,6 +43,7 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
 | [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |
 | [volume-2-product-strategy.md](volume-2-product-strategy.md) | Positioning (communication-first), product principles, metrics, brand voice, feature-entry criteria, AI boundaries, North Star |
+| [user-research-report.md](user-research-report.md) | Validation survey (n=13) — the empirical basis for communication-first; feature-priority signal |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
 > two-device, and connected** — **offline-first has been dropped** as a product
