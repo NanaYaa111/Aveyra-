@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { AveyraDB, __setDB } from '@/lib/database/db';
 import { KeyManager, WrongPassphraseError } from '@/lib/encryption/keyManager';
 import { Cipher } from '@/lib/encryption/cipher';
@@ -11,6 +11,12 @@ function freshManager() {
   __setDB(new AveyraDB('aveyra-keys-' + crypto.randomUUID()));
   return new KeyManager();
 }
+
+// Reset the module singleton after each test so a dangling test DB can never
+// leak into another test or file (the singleton is otherwise never reset).
+afterEach(() => {
+  __setDB(new AveyraDB('aveyra-keys-reset-' + crypto.randomUUID()));
+});
 
 describe('KeyManager — no-passphrase mode', () => {
   let km: KeyManager;

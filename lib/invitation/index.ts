@@ -1,9 +1,13 @@
 /**
  * Invitation foundation (backend-agnostic). Milestone 1 can GENERATE and PARSE
- * a secure, single-use, expiring invitation that carries the inviter's device
- * public key — everything that can be done without a server. The network
- * handshake that actually links two devices (and enforces single-use across
- * them) is Milestone 2, when a backend exists.
+ * an expiring invitation that carries the inviter's device public key and a
+ * single-use code — everything that can be done without a server.
+ *
+ * HONESTY: the encoded token is a plaintext base64url JSON envelope with NO
+ * signature or MAC. It is NOT tamper-proof or authenticated, and single-use is
+ * NOT enforced here — `decodeInvitation` / `validateInvitation` only check
+ * structure and expiry. Authenticity (signing), single-use enforcement, and the
+ * device-linking handshake are the server's responsibility in Milestone 2.
  */
 
 const DEFAULT_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 days

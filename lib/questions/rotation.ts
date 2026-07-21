@@ -151,6 +151,14 @@ function beginNextCycle(state: RotationState): void {
 
 /** Pop the next non-repeating question id, wrapping cycles as needed. */
 function advance(state: RotationState): string {
+  // Degenerate pool with nothing to rotate (an empty pool): keep serving
+  // whatever was last served rather than indexing past the end. `advance` must
+  // always return a real id, never `undefined`.
+  if (state.pool.length === 0) {
+    const id = state.lastServedId ?? state.firstQuestionId;
+    state.lastServedId = id;
+    return id;
+  }
   if (state.cursor >= state.order.length) beginNextCycle(state);
   let id = state.order[state.cursor]!;
   // Extremely small pools could still line up a repeat; nudge forward once.
@@ -169,14 +177,23 @@ function advance(state: RotationState): string {
  * with the same `dateKey` returns the same question and the same state. A new
  * `dateKey` advances the rotation by exactly one.
  *
+ * Callers must pass NON-DECREASING day keys. Any `dateKey` that differs from
+ * the assigned one — including an earlier day — advances the rotation, so a
+ * backward clock/timezone jump hands out a new question rather than
+ * reproducing that day's prompt. (`dateKeyInTimeZone` returns a calendar date,
+ * so DST alone never triggers this — only a genuine backward day jump does.)
+ *
  * Returns a NEW state (never mutates the input) plus the chosen question id.
  */
 export function questionForDate(
   state: RotationState,
   dateKey: string,
 ): { state: RotationState; questionId: string } {
-  // Same day → return what was already assigned (stable within the day).
-  if (state.assignedDateKey === dateKey && state.currentQuestionId) {
+  // Same day → return what was already assigned (stable within the day). Gated
+  // on the date alone (a `dateKey` is a non-empty string and `assignedDateKey`
+  // starts null); `!= null` (not truthiness) so a legitimately-assigned
+  // empty-string id would still count as assigned rather than reassigned.
+  if (state.assignedDateKey === dateKey && state.currentQuestionId != null) {
     return { state, questionId: state.currentQuestionId };
   }
 

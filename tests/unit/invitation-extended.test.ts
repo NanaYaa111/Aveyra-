@@ -55,13 +55,15 @@ describe('invitation — validation', () => {
     expect(() => validateInvitation(encoded)).toThrow(/expired/i);
   });
 
-  it('rejects a tampered token', () => {
+  it('rejects a token that no longer decodes to a valid payload', () => {
+    // HONESTY: the token is plaintext base64url JSON with NO signature/MAC, so
+    // it is NOT tamper-proof — an arbitrary bit-flip is not guaranteed to be
+    // caught (authenticity is enforced server-side in Milestone 2). What IS
+    // guaranteed is structural validation: a token that no longer decodes to a
+    // well-formed, versioned payload is rejected. Truncation reliably breaks it.
     const { encoded } = createInvitation('rel-1', 'pub');
-    // Corrupt the middle of the payload.
-    const mid = Math.floor(encoded.length / 2);
-    const swap = encoded[mid] === 'A' ? 'B' : 'A';
-    const tampered = encoded.slice(0, mid) + swap + encoded.slice(mid + 1);
-    expect(() => decodeInvitation(tampered)).toThrow();
+    const truncated = encoded.slice(0, Math.floor(encoded.length / 3));
+    expect(() => decodeInvitation(truncated)).toThrow();
   });
 
   it('rejects an unsupported version', () => {

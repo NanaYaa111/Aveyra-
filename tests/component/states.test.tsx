@@ -24,8 +24,8 @@ describe('EmptyState', () => {
 
   it('hides the decorative symbol from assistive tech', () => {
     render(<EmptyState symbol="📖" title="T" description="D" />);
-    // The emoji is aria-hidden, so it is not part of the accessible tree name.
-    expect(screen.getByText('📖')).toHaveAttribute('aria-hidden');
+    // The emoji is aria-hidden="true", so it is not part of the accessible name.
+    expect(screen.getByText('📖')).toHaveAttribute('aria-hidden', 'true');
   });
 });
 

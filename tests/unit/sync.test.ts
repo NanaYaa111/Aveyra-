@@ -51,4 +51,31 @@ describe('SyncEngine', () => {
     const sameVersionNewer = { ...base, version: 1, timestamp: 200 };
     expect(SyncEngine.resolveConflict(older, sameVersionNewer)).toBe(sameVersionNewer);
   });
+
+  it('resolveConflict is argument-order-agnostic and resolves ties deterministically', () => {
+    const base: Omit<Mutation, 'version' | 'timestamp'> = {
+      id: 'x',
+      table: 'answers',
+      op: 'put',
+      record_id: 'a1',
+      synced: 0,
+    };
+    const lowV = { ...base, version: 1, timestamp: 100 };
+    const highV = { ...base, version: 2, timestamp: 100 };
+    // Higher version wins regardless of which argument it is.
+    expect(SyncEngine.resolveConflict(highV, lowV)).toBe(highV);
+    expect(SyncEngine.resolveConflict(lowV, highV)).toBe(highV);
+
+    // Same version → higher timestamp wins regardless of order.
+    const t1 = { ...base, version: 1, timestamp: 100 };
+    const t2 = { ...base, version: 1, timestamp: 200 };
+    expect(SyncEngine.resolveConflict(t2, t1)).toBe(t2);
+    expect(SyncEngine.resolveConflict(t1, t2)).toBe(t2);
+
+    // Full tie (equal version AND timestamp) resolves to the remote (the `>=`
+    // branch) so replaying the same pair is stable.
+    const tieL = { ...base, version: 1, timestamp: 100 };
+    const tieR = { ...base, version: 1, timestamp: 100 };
+    expect(SyncEngine.resolveConflict(tieL, tieR)).toBe(tieR);
+  });
 });

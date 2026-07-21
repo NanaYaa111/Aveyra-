@@ -51,7 +51,9 @@ export function Modal({ open, onClose, title, children, footer, alert }: ModalPr
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="absolute inset-0 bg-scrim backdrop-blur-sm" aria-hidden />
+      {/* pointer-events-none so a click on the visible backdrop falls through to
+          the overlay container above, which handles dismiss (target === self). */}
+      <div className="absolute inset-0 bg-scrim backdrop-blur-sm pointer-events-none" aria-hidden />
       <div
         ref={trapRef}
         role={alert ? 'alertdialog' : 'dialog'}

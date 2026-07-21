@@ -61,19 +61,47 @@ describe('Modal', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('closes when the backdrop is clicked but not when the panel is', async () => {
+  it('does not close when the panel is clicked', async () => {
     const onClose = vi.fn();
     render(
       <Modal open onClose={onClose} title="Backdrop">
         <p>panel content</p>
       </Modal>,
     );
-    // Clicking inside the panel must NOT close.
     await userEvent.click(screen.getByText('panel content'));
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('locks body scroll while open and restores it on close', () => {
+  it('closes when the overlay (backdrop) itself is the click target', async () => {
+    const onClose = vi.fn();
+    render(
+      <Modal open onClose={onClose} title="Backdrop">
+        <p>panel content</p>
+      </Modal>,
+    );
+    // The dismiss handler lives on the overlay container that wraps the dialog.
+    const overlay = screen.getByRole('dialog').parentElement!;
+    await userEvent.click(overlay);
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it('keeps the visible scrim click-transparent so backdrop clicks reach the overlay', () => {
+    // Regression guard for the real bug: the scrim must not intercept clicks,
+    // otherwise clicking the *visible* backdrop never reaches the dismiss
+    // handler. jsdom cannot model pointer-events geometry, so we assert the
+    // structural contract directly.
+    render(
+      <Modal open onClose={() => {}} title="Scrim">
+        body
+      </Modal>,
+    );
+    const overlay = screen.getByRole('dialog').parentElement!;
+    const scrim = overlay.querySelector('[aria-hidden]')!;
+    expect(scrim.className).toContain('pointer-events-none');
+  });
+
+  it('locks body scroll while open and restores the exact prior value on close', () => {
+    const prior = document.body.style.overflow; // capture the real starting value
     const { rerender } = render(
       <Modal open onClose={() => {}} title="Lock">
         body
@@ -85,7 +113,7 @@ describe('Modal', () => {
         body
       </Modal>,
     );
-    expect(document.body.style.overflow).not.toBe('hidden');
+    expect(document.body.style.overflow).toBe(prior);
   });
 
   it('has an accessible close control', () => {

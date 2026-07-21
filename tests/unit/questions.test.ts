@@ -294,3 +294,26 @@ describe('rotation — small pools', () => {
     expect(ids.every((id) => id === 'only')).toBe(true);
   });
 });
+
+describe('rotation — degenerate empty pool (public-API robustness)', () => {
+  it('never returns an undefined question id', () => {
+    let s = createRotation('rel-empty', [], 'opener');
+    for (let d = 0; d < 5; d++) {
+      const r = questionForDate(s, dayKey(d));
+      s = r.state;
+      expect(typeof r.questionId).toBe('string');
+      expect(r.questionId.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('stays idempotent within a day and does not drift', () => {
+    const s0 = createRotation('rel-empty', [], 'opener');
+    // Assign day 1 (past the opener), then re-ask the same day repeatedly.
+    const d0 = questionForDate(s0, dayKey(0));
+    const d1 = questionForDate(d0.state, dayKey(1));
+    const again = questionForDate(d1.state, dayKey(1));
+    expect(again.questionId).toBe(d1.questionId);
+    expect(again.state).toBe(d1.state); // same object → no cycle drift
+    expect(again.state.cycle).toBe(d1.state.cycle);
+  });
+});

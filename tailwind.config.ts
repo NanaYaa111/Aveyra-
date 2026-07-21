@@ -29,7 +29,6 @@ const config: Config = {
         DEFAULT: 'var(--color-text)',
         soft: 'var(--color-text-soft)',
         mute: 'var(--color-text-mute)',
-        onAccent: 'var(--color-text-on-accent)',
       },
       accent: {
         DEFAULT: 'var(--color-accent)',

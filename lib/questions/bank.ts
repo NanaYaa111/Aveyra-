@@ -59,7 +59,7 @@ const EVERYDAY = seed('everyday', [
   [`What's a little thing that always lifts your mood?`, 1],
   [`What's a food that tastes like home to you?`, 2],
   [`What's something you saw today that felt beautiful?`, 2],
-  [`What's a small win from today worth remembering?`, 1],
+  [`What's a small good thing from today worth remembering?`, 1],
   [`What's the coziest part of your evenings?`, 1],
   [`What's a sound or smell that instantly comforts you?`, 2],
 ]);
@@ -187,7 +187,7 @@ const PLAY = seed('play', [
   [`If our life were a movie, what genre would it be?`, 1],
   [`What imaginary superpower would suit you best?`, 1],
   [`If we had a free weekend and no budget, what would we do?`, 1],
-  [`What's a silly tradition you'd love to invent for us?`, 2],
+  [`If we invented a holiday just for the two of us, what would we celebrate?`, 2],
   [`If you could relive one day just for fun, which one?`, 2],
   [`What would you name a boat, a band, and a pet?`, 1],
   [`If you could share a meal with anyone, living or not, who?`, 2],
