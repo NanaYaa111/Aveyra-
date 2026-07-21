@@ -36,6 +36,8 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [volume-1-part-4-schema-implementation.md](volume-1-part-4-schema-implementation.md) | Database schema, data models, application architecture, technology rules |
 | [volume-1-part-5-roadmap-protocol.md](volume-1-part-5-roadmap-protocol.md) | Phase 1 roadmap, workflow, testing gates, code review, Claude Code execution protocol |
 | [volume-2-part-1-product-ux.md](volume-2-part-1-product-ux.md) | Product overview, vision/mission, IA, target users, Phase 1 scope |
+| [volume-2-part-2-ia-journey.md](volume-2-part-2-ia-journey.md) | Information architecture, user journey, relationship lifecycle — ⚠️ contains an unresolved nav conflict |
+| [design-research-policy.md](design-research-policy.md) | Binding: research proven UX patterns + get design approval before building any major screen |
 | [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
 | [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |
 
@@ -93,6 +95,33 @@ them here.
 
 React 19 · TypeScript · Tailwind CSS · Framer Motion · Dexie.js · Zustand ·
 React Hook Form · Zod · PWA · Vitest · ESLint · Prettier · pnpm.
+
+### ⚠️ Open decision — navigation: four vs five destinations (Volume 1 §4.2 vs Volume 2 Part 2 §4)
+
+**Conflict.** Volume 1 Part 2 §4.2 fixes **four** destinations (Today · Story ·
+Write · Settings) and forbids a fifth "ever." Volume 2 Part 2 §4 specifies
+**five** (Home · Questions · Memories · Journal · Profile), splitting Today into
+Home + Questions and renaming the rest. **The shipped app implements the four.**
+Until the author decides, **the four-destination model remains in force.** Code
+impact of switching: routes, `Navigation`, and `AppShell` (moderate).
+
+### Open decision — Phase-1 onboarding model (Volume 1 §13 vs Volume 2 Part 2 §5)
+
+Volume 1 defines Phase-1 onboarding as **≤3 local screens** (partner name, start
+date, optional passphrase, **no account**). Volume 2 Part 2's journey uses
+**account creation + partner invitation + activation** — the two-device flow,
+which needs the deferred backend. Approved sequencing is *local-first first*, so
+the account/invite journey belongs to the later two-device milestone. **To
+confirm at Milestone 2 planning.**
+
+### Binding process — Design Research Policy (Volume 2 §2.X)
+
+Before any major screen is built, Claude must research proven UX patterns (Apple
+HIG, Material 3, NN/g, Laws of UX — all reachable; **Mobbin/Page Flows are
+login-gated and generally not reachable from here**, so those are substituted +
+flagged), then present a design proposal with **pattern justifications + an
+accessibility checkpoint** for approval before implementing. See
+[design-research-policy.md](design-research-policy.md).
 
 ### Open decision — `participants` vs `partner` (raised by Positive Love research §6)
 
