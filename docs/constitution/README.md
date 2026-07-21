@@ -38,6 +38,7 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [volume-2-part-1-product-ux.md](volume-2-part-1-product-ux.md) | Product overview, vision/mission, IA, target users, Phase 1 scope |
 | [volume-2-part-2-ia-journey.md](volume-2-part-2-ia-journey.md) | Information architecture, user journey, relationship lifecycle — ⚠️ contains an unresolved nav conflict |
 | [volume-2-part-2-sections-b-c-d.md](volume-2-part-2-sections-b-c-d.md) | Onboarding, Home Dashboard, Daily Questions — ⚠️ assume two-device/accounts/sync/async-reveal; open decisions |
+| [volume-2-part-2-sections-e-to-p.md](volume-2-part-2-sections-e-to-p.md) | Memories, Journal, Notifications, Account, Search, Settings, Backup, Accessibility, Errors, Research framework, Journey map — resolves Supabase/staged-privacy/four-nav/participants |
 | [design-research-policy.md](design-research-policy.md) | Binding: research proven UX patterns + get design approval before building any major screen |
 | [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
 | [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |

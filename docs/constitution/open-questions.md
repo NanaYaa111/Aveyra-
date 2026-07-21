@@ -16,13 +16,24 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
 - **Q7 → Accounts + invitations central.** 🟢
 - **NEW: offline-first dropped**, web-first primary, APK later. 🟢
 
-## 🔴 Still open (blocking Milestone-2 planning)
-- **Q12 — Privacy model: E2EE vs server-side encryption?** E2EE (relay stores
-  only ciphertext; max privacy, more complex) **vs** server-side encryption at
-  rest (server can read; simpler — matches the stated "reduce complexity" goal).
-- **Q8 — Backend choice:** managed BaaS (e.g. Supabase) vs custom service.
-- **Q2 — Navigation 4 vs 5** (this direction *leans four* — "small, ritual-centered").
-- **Q4 — `partner` vs `participants`** (this direction *leans `partner`* — couples).
+## ✅ Resolved 2026-07-21 (batch 2) — see [Sections E–P](volume-2-part-2-sections-e-to-p.md)
+- **Q12 → Staged privacy.** 🟢 Launch with **server-side encryption at rest +
+  strict row-level access controls**; design the schema in 3 content classes
+  (shared / private-device-owned / future-encryptable) so **E2EE can be added
+  later**. **Honesty rule: do NOT claim E2EE / "no one can read your data."**
+- **Q8 → Supabase.** 🟢
+- **Q2 → Four destinations** (Today/Story/Write/Settings). 🟢
+- **Q4 → Neutral `participants` schema (Participant A/B), partner-forward copy.** 🟢
+
+## 🔴 Remaining (mostly infra / content, not architecture)
+- **Q7b — Terms of Service & Privacy Policy.** With real accounts + a backend,
+  these legal texts are genuinely needed (Settings → About). Author is the user's
+  to provide; I can draft honest placeholders reflecting the real privacy model.
+- **Q8b — Supabase project provisioning.** I can't create it under your account.
+  Need project URL + anon key (env) to build networked features; local mock
+  usable until then.
+- **Privacy copy stance** — I'll write honest copy (encrypted at rest, strict
+  access, never sold; *not* E2EE) unless you object.
 
 ---
 

@@ -3,19 +3,22 @@
 Implements the [web-first amendment](constitution/amendment-2026-07-21-web-first-two-device.md).
 Presented for approval (cadence A). **Nothing is torn out until this is approved.**
 
-## Locked decisions (defaults — veto any)
-- **Backend: Supabase** — Auth + Postgres + Realtime + Row-Level Security. The
-  fastest, lowest-ops path for a web-first two-person coordinated product.
-- **Privacy: client-side E2EE** — Supabase stores **ciphertext only**; the
-  relationship key is derived from the invitation ECDH exchange (crypto
-  primitives already built in M1). The server coordinates and relays but cannot
-  read answers, journals, or memories. *This preserves Aveyra's privacy
-  identity.* **Fallback if you want it even simpler:** server-side encryption at
-  rest (server can read) — say the word and I'll drop E2EE.
+## Locked decisions (confirmed by Volume 2 Sections E–P, 2026-07-21)
+- **Backend: Supabase** — Auth + Postgres + Realtime + Row-Level Security.
+- **Privacy: STAGED (server-side first).** Launch with **server-side encryption
+  at rest + strict RLS access controls**. Design the schema in **3 content
+  classes** — shared relational · private device-owned · future-encryptable — so
+  **client-side E2EE can be added later without a rewrite**. **Honesty:** the
+  product must NOT claim E2EE; copy says "encrypted at rest, strict access, never
+  sold." (Supersedes the earlier E2EE-first default.)
 - **Navigation: four** — Today / Story / Write / Settings. Today hosts the daily
   question + a light home summary; Story = memories timeline; Settings = profile,
-  account, privacy, invitation. (Matches your "keep navigation small" research.)
-- **Model: `partner`** (romantic couples), schema kept widenable to `participants`.
+  account, privacy, invitation.
+- **Model: neutral `participants`** (Participant A / Participant B) schema, with
+  partner-forward UI copy.
+- **Per-tab emotional targets:** Today = anticipation + gentle continuity ·
+  Story = shared identity + continuity · Write = private safety + self-clarity ·
+  Settings = control + trust.
 
 ## Good news — the rework is smaller than it sounds
 The frontend can **stay a static Next.js export** and talk to **Supabase directly
