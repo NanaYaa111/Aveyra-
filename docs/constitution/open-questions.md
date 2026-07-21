@@ -25,15 +25,32 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
 - **Q2 → Four destinations** (Today/Story/Write/Settings). 🟢
 - **Q4 → Neutral `participants` schema (Participant A/B), partner-forward copy.** 🟢
 
-## 🔴 Remaining (mostly infra / content, not architecture)
-- **Q7b — Terms of Service & Privacy Policy.** With real accounts + a backend,
-  these legal texts are genuinely needed (Settings → About). Author is the user's
-  to provide; I can draft honest placeholders reflecting the real privacy model.
-- **Q8b — Supabase project provisioning.** I can't create it under your account.
-  Need project URL + anon key (env) to build networked features; local mock
-  usable until then.
-- **Privacy copy stance** — I'll write honest copy (encrypted at rest, strict
-  access, never sold; *not* E2EE) unless you object.
+## ✅ Resolved 2026-07-21 (batch 3) — see [Parts 3–4 decisions](volume-2-parts-3-4-decisions.md)
+- **Q7b → Draft honest ToS/Privacy placeholders now**, clearly marked draft;
+  legal review before public launch. 🟢
+- **Q8b → Option B** — build against a local mock; provision Supabase **when
+  Part 4 begins** (not now). 🟢
+- **Auth → Email OTP / magic link**, email as primary identifier. 🟢
+- **Hosting/domain → Vercel + Supabase; aveyra.app** (fallbacks .co/.io/.com). 🟢
+- **Question bank → ~200 questions, 10 categories**; first question fixed
+  ("What's one small thing about yourself that you hope I always remember?"). 🟢
+- **Question timing → relationship's primary timezone**; exhaustion → shuffle →
+  new cycle, no consecutive repeats. 🟢
+- **Skip → silent, no partner notification, returns later.** 🟢
+- **Milestones (minimal) → Relationship Created, Partner Joined, First Question
+  Answered, First Shared Memory, First Month Together, Anniversary.** 🟢
+- **Notifications v1 → none** (in-app only). 🟢
+- **Beta → 5–10 couples**, private, with feedback/interview/bug/feature templates. 🟢
+- **Account info → email + display name only.** Profile photos deferred.
+  Relationship category omitted from MVP. English only, localization-ready. 🟢
+- **Offline-era work → repurposed** as draft cache/graceful reconnection/
+  resilience; all "offline-first" messaging to be corrected. 🟢
+
+## 🔴 Still open
+- **What Volume 2 Parts 3–4 will cover in full** (per-feature specs, screen
+  states, schema DDL, RLS policies) — scope previewed, detailed content pending.
+- Nothing else is currently blocking — Milestone 2 code build resumes once the
+  full Parts 3–4 arrive.
 
 ---
 
@@ -125,7 +142,8 @@ fallbacks now (zero network/bytes). Bundle real fonts now or later?
 
 ---
 
-*Q1 was decided 2026-07-21 (two-device, web-first). Milestone 2 is planned
-([docs/milestone-2-plan.md](../milestone-2-plan.md)) and **on hold until Volume 2
-Parts 3–4 arrive**. Remaining open: Terms/Privacy texts (Q7b), Supabase project
-provisioning (Q8b), self-hosted fonts (Q11).*
+*All pivotal and secondary questions are resolved as of 2026-07-21 (see the
+[Parts 3–4 decisions batch](volume-2-parts-3-4-decisions.md)). Milestone 2 is
+planned in detail ([docs/milestone-2-plan.md](../milestone-2-plan.md)); code build
+resumes once the full Volume 2 Parts 3–4 documents arrive. Only Q11
+(self-hosted fonts) remains a deliberately deferred, non-blocking item.*

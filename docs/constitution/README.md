@@ -45,6 +45,7 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |
 | [volume-2-product-strategy.md](volume-2-product-strategy.md) | Positioning (communication-first), product principles, metrics, brand voice, feature-entry criteria, AI boundaries, North Star |
 | [user-research-report.md](user-research-report.md) | Validation survey (n=13) — the empirical basis for communication-first; feature-priority signal |
+| [volume-2-parts-3-4-decisions.md](volume-2-parts-3-4-decisions.md) | Preview of Parts 3–4 scope + a full decisions batch (Supabase sequencing, auth, question bank, domain/hosting, notifications, beta, milestones) |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
 > two-device, and connected** — **offline-first has been dropped** as a product
@@ -54,10 +55,12 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 > remain fully in force.
 
 **Status:** Volume 1 complete (Parts 1–5, as amended). Volume 2: Parts 1–2
-(Sections A–P), the product-strategy directives, and the user-research report
-received; **Parts 3–4 still to come**. Volumes 3–4 pending. Milestone 1 (built
-foundation) shipped and approved; Milestone 2 planned but **on hold until Volume
-2 Parts 3–4 arrive**.
+(Sections A–P), the product-strategy directives, the user-research report, and a
+**Parts 3–4 scope-preview + decisions batch** received; **the full Parts 3–4
+documents (per-feature specs, schema/RLS/deploy blueprint) still to come**.
+Volumes 3–4 pending. Milestone 1 (built foundation) shipped and approved;
+Milestone 2 planned in detail but **code build on hold until the full Parts 3–4
+arrive**.
 
 ## North Star (Volume 2)
 
@@ -114,7 +117,7 @@ them here.
 | 3 | **Persist the Constitution to the repo** under `docs/constitution/`. | Done |
 | 4 | **Meta-framework: Next.js 15 static export** (`output: 'export'`, no server runtime/API routes for the frontend). Author's explicit choice (M1 §3); Claude's earlier Vite recommendation withdrawn. | Approved |
 | 5 | **Components: fully bespoke** — no shadcn/ui, no Radix. Hand-built, token-driven, accessible base components. *Deviation from Part 1 fixed stack (shadcn/ui), author-selected.* Claude owns WCAG 2.2 AA correctness. | Approved |
-| 6 | **Hosting: static host** for the frontend (target **GitHub Pages** → sets `basePath` + service-worker scope). Backend hosting: **Supabase** (decided 2026-07-21). | Approved |
+| 6 | **Hosting: Vercel** (frontend) + **Supabase** (backend). *(Supersedes the earlier GitHub Pages default, decided 2026-07-21.)* Domain: **aveyra.app** (fallbacks `.co`/`.io`/`.com`). | Approved |
 | 7 | **Product name: Aveyra** (Avela = discovery/revelation + Veya = journey/growth → "the journey of discovering, remembering, and growing together"). Supersedes the working title "Weave" used in all Constitution volumes and research. | Approved |
 | 8 | **Two-Device Amendment approved** — see [amendment-2026-07-20-two-device.md](amendment-2026-07-20-two-device.md). *(Its "local-first + E2EE-relay" framing was superseded on 2026-07-21 by the web-first amendment + staged privacy.)* All Part 2 §1.2 emotional-safety prohibitions retained. | Approved · partly superseded |
 | 9 | **Milestone 1 = two-device-ready, local-first, backend-agnostic foundation.** Sync/identity/encryption/invitation *foundations* built now (client-side, abstract `SyncTransport` + local stub); concrete backend + live cross-device sync + network invitation redemption = **Milestone 2**. | Approved |
@@ -138,6 +141,14 @@ React Hook Form · Zod · PWA · Vitest · ESLint · Prettier · pnpm.
 | Privacy | **Staged:** server-side encryption at rest + strict RLS now; 3-class content taxonomy (shared / private-device-owned / future-encryptable) so client-side E2EE lands later without a rewrite. **No E2EE claims until real.** |
 | Onboarding model | Volume 2 Section B governs: welcome flow → account → create/join space → invitation → first shared experience. |
 | Lifecycle | Adopt `Pending / Active / Paused / Archived / Closed` when relationships ship. |
+| Supabase sequencing | **Option B** — build against a local mock first; provision the production project when Part 4 begins. |
+| Auth | **Email OTP / magic link**; email is the primary identifier. |
+| Hosting / domain | **Vercel** + Supabase; domain **aveyra.app**. |
+| Question bank | **~200 questions, 10 categories** (see decisions batch); first question fixed. |
+| Notifications v1 | **None** — in-app only; push/email later. |
+| Beta | Private beta, **5–10 couples**, before public release. |
+
+*(Full detail: [volume-2-parts-3-4-decisions.md](volume-2-parts-3-4-decisions.md).)*
 
 ### Binding process — Design Research Policy (Volume 2 §2.X + Section O)
 

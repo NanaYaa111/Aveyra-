@@ -6,6 +6,8 @@ purpose is **not to copy** interfaces, but to adapt proven interaction models to
 Aveyra's privacy-first, calm, relationship-centered philosophy (connected, with graceful disconnect).
 
 ## Required research sources
+- **User research** — surveys, interviews, usability testing (the Aveyra survey
+  is a living document; cite it directly where relevant).
 - **Mobbin** — user flows, onboarding, empty states, forms, settings,
   navigation, authentication, profile, notifications.
 - **Page Flows** — complete journeys, multi-screen flows, transitions.
@@ -14,6 +16,10 @@ Aveyra's privacy-first, calm, relationship-centered philosophy (connected, with 
 - **Material Design 3** — Android components, layout, motion, responsive.
 - **Nielsen Norman Group** — usability, IA, cognitive load, form design.
 - **Laws of UX** — hierarchy, decision-making, interaction principles.
+
+**Research rule:** every major product decision must cite at least one of the
+above (or another reputable UX source). Never add a feature because it is
+trendy or popular.
 
 ## Required workflow (every new feature/screen)
 1. Identify the **user goal**.
