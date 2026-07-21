@@ -4,11 +4,14 @@ The permanent technical blueprint. The architecture exists to serve the
 couple's experience; the codebase must never become more complicated than the
 product requires.
 
-> **Superseded in part by the Two-Device Amendment** — see
-> [`amendment-2026-07-20-two-device.md`](amendment-2026-07-20-two-device.md).
-> The single-device data model below is extended (not discarded) with a minimal
-> two-device identity model and E2EE-ready fields. All emotional-safety and
-> simplicity rules stand unchanged.
+> **Superseded in part by the amendments** — see
+> [`amendment-2026-07-20-two-device.md`](amendment-2026-07-20-two-device.md) and
+> the governing [`amendment-2026-07-21-web-first-two-device.md`](amendment-2026-07-21-web-first-two-device.md).
+> The single-device data model below is extended (not discarded) with the
+> two-device identity model; the backend is Supabase with staged privacy; the
+> schema follows the neutral `participants` model and three content classes
+> (Volume 2 Sections E–P). All emotional-safety and simplicity rules stand
+> unchanged.
 
 ## 1. Application Architecture Principles
 - **1.1 Architecture follows UX.** It mirrors the four permanent destinations

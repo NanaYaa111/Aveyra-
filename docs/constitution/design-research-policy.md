@@ -3,7 +3,7 @@
 **Binding on the implementation AI.** Before any major screen or interaction is
 designed, targeted research into established UX patterns must be conducted. The
 purpose is **not to copy** interfaces, but to adapt proven interaction models to
-Aveyra's privacy-first, offline-first, relationship-centered philosophy.
+Aveyra's privacy-first, calm, relationship-centered philosophy (connected, with graceful disconnect).
 
 ## Required research sources
 - **Mobbin** — user flows, onboarding, empty states, forms, settings,
@@ -19,7 +19,7 @@ Aveyra's privacy-first, offline-first, relationship-centered philosophy.
 1. Identify the **user goal**.
 2. Review comparable flows + platform guidance.
 3. Note the patterns that fit Aveyra.
-4. **Reject** patterns that conflict with privacy, calmness, or offline-first use.
+4. **Reject** patterns that conflict with privacy, calmness, or graceful-disconnect resilience.
 5. **Present the proposed direction for approval before implementation.**
 
 ## Mandatory additions to every screen proposal

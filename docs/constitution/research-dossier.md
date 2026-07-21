@@ -105,6 +105,10 @@ journal? Minimum useful archive size? Cultural specificity (cited research is
 largely Western/US — state this limitation openly).
 
 ---
-*This dossier informs but does not override the Constitution. Where the
-two-device amendment re-introduces sync, §5's honesty rules apply: E2EE must make
-"the server can't read it" literally true.*
+*This dossier informs but does not override the Constitution. Under the 2026-07-21
+web-first pivot and staged privacy, §5's honesty rules apply as follows: the
+product states the real protection (server-side encryption at rest, strict access
+controls, never sold) and claims nothing more; "the server can't read it" may
+only be said if/when client-side E2EE for sensitive content actually ships.
+The single-device positioning advantage noted in §5.4 was knowingly traded away
+for the long-distance two-device fit (see the web-first amendment).*

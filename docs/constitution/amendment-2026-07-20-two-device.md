@@ -1,5 +1,14 @@
 # Amendment — Two-Device Architecture (2026-07-20)
 
+> ⚠️ **Partly superseded (2026-07-21).** The
+> [web-first amendment](amendment-2026-07-21-web-first-two-device.md) dropped
+> offline-first entirely (this amendment had preserved it), and Volume 2
+> Sections E–P replaced the "E2EE-only relay / stores only ciphertext" invariant
+> with **staged privacy** (server-side encryption at rest + strict RLS first,
+> client-side E2EE for sensitive content later — and no E2EE claims until real).
+> The two-device direction itself, the minimal-identity principle, and every
+> emotional-safety rule here remain in force.
+
 **Status:** Approved by the Constitution's author on 2026-07-20.
 **Scope:** Amends Volume 1 (Parts 1–5). Supersedes the specific single-device
 clauses listed below. **All Part 2 §1.2 emotional-safety prohibitions and all

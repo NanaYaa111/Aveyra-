@@ -41,8 +41,9 @@ four-destination navigation from Volume 1 Part 2 §4.2.)
 ## Phase 1 Scope
 Core offline features only. Excludes cloud sync, accounts, AI, and multi-device
 support.
-*(Note: the two-device amendment reframes sync/accounts as later milestones with
-E2EE — Phase 1 itself remains local-only, consistent with this document.)*
+*(⚠️ Superseded 2026-07-21: the [web-first amendment](amendment-2026-07-21-web-first-two-device.md)
+makes accounts, invitation, and cross-device sync **core**. AI remains excluded
+— roadmap only, per the product strategy.)*
 
 ---
 

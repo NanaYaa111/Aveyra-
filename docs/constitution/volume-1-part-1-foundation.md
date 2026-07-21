@@ -2,6 +2,10 @@
 
 *Product vision, core principles, AI operating rules, fixed tech stack, Phase 1 scope.*
 
+> ⚠️ **Amended:** "offline-first" and "single-device only" (§2, §6) are
+> superseded by the [web-first amendment](amendment-2026-07-21-web-first-two-device.md)
+> — Aveyra is now web-first, two-device, and connected. All other principles stand.
+
 ## Purpose
 Establishes the permanent engineering constitution for building an
 **offline-first couples platform**. Defines product vision, architecture

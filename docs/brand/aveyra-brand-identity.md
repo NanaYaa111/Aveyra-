@@ -211,7 +211,7 @@ memories."** Every physical property below serves that feeling.
 
 - **Today (Discovery)** — one question, set in the display serif, alone on
   paper. Answering feels like writing in a book, not filling a form. The
-  pass-the-phone reveal is the product's one ceremonial moment: deliberate
+  two-device reveal is the product's one ceremonial moment: deliberate
   pace, gold light, announced to screen readers.
 - **Story (Remembering)** — a vertical path of kept moments, oldest anchored
   at the relationship's start date. Reading, not scrolling-feed, energy.

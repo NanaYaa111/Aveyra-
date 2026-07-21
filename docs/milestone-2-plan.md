@@ -3,6 +3,9 @@
 Implements the [web-first amendment](constitution/amendment-2026-07-21-web-first-two-device.md).
 Presented for approval (cadence A). **Nothing is torn out until this is approved.**
 
+> ⏸️ **On hold (author's instruction):** the build does not start until **Volume 2
+> Parts 3–4** arrive — later parts may adjust this plan.
+
 ## Locked decisions (confirmed by Volume 2 Sections E–P, 2026-07-21)
 - **Backend: Supabase** — Auth + Postgres + Realtime + Row-Level Security.
 - **Privacy: STAGED (server-side first).** Launch with **server-side encryption
@@ -42,8 +45,10 @@ infra.
 
 ## Build stages (each gated: research note → design proposal → approval → build → 4 gates)
 1. **Backend model** — Supabase schema (profiles, relationships, invitations,
-   questions, answers, memories, journal) with RLS; auth (email OTP); client
-   integration behind the existing service interfaces; E2EE key exchange on link.
+   questions, answers, memories, journal) with RLS across the three content
+   classes; auth (email OTP); client integration behind the existing service
+   interfaces. (Device keypairs from M1 are retained for the future E2EE stage,
+   not exercised at launch.)
 2. **Onboarding** — 4-screen welcome → account → create/join relationship space →
    invitation (QR + code) → link. (Per Design Research Policy.)
 3. **Today** — daily question → private draft → submit → "waiting for partner" →

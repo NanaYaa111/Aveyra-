@@ -2,12 +2,14 @@
 
 *(Written under "Weave" — read as **Aveyra**.)*
 
-> ⚠️ **These sections assume the two-device, account-based, sync-enabled,
-> five-destination model.** That diverges from Volume 1's Phase-1 scope
-> (single-device, local, no accounts, no sync, pass-the-phone reveal, four
-> destinations). All such divergences are recorded here as **open decisions**
-> (README decisions section) — nothing below overrides Volume 1 until the author
-> resolves the scope question. Specific conflicts are flagged inline as ⚠️.
+> ✅ **Status update (2026-07-21):** the two-device/account/async-reveal model
+> these sections assume was **adopted** via the
+> [web-first amendment](amendment-2026-07-21-web-first-two-device.md). The inline
+> ⚠️ flags below are retained as history; their outcomes: scope → two-device
+> **adopted** · async reveal → **adopted** · sync copy → **valid** · accounts →
+> **core** · navigation → **four** (not five; Home + Questions fold into Today) ·
+> §21 streak → **rejected** (Part 2 §1.2 ban stands; accumulation-only) ·
+> "difficulty" → internal only, never surfaced.
 
 ---
 
@@ -154,12 +156,11 @@ text, reduced-motion reveal, large tap targets). (NN/g, Material 3, Apple HIG.)
 
 ---
 
-## Consolidated open decisions this batch forces
-1. **Phase-1 scope / sequencing** — full two-device product now vs keep
-   local-first-first (Volume 2's two-device flows become the *next* milestone).
-2. **Navigation** — four (Volume 1) vs five (Home/Questions/Memories/Journal/Profile).
-3. **Streak** — §21 "ethical streak" vs Part 2 §1.2's permanent ban.
-4. **Reveal** — async two-device (§37) vs pass-the-phone (Volume 1 §13). *(Follows #1.)*
-5. **`participants` vs `partner`** — still open (account/space model is two-person).
-6. **Secondary (resolve from #1):** sync copy validity (§28/29), account data +
-   Terms/Privacy source (§12), "difficulty" wording.
+## Consolidated decisions this batch forced — ✅ ALL RESOLVED 2026-07-21
+1. **Scope → full two-device now** (web-first amendment).
+2. **Navigation → four** (Home + Questions fold into Today).
+3. **Streak → ban stands** (accumulation-only progress).
+4. **Reveal → async two-device.**
+5. **Model → neutral `participants` schema, partner-forward copy.**
+6. **Secondary:** sync copy **valid**; account data minimal per §12 with
+   Terms/Privacy texts still to be authored; "difficulty" internal-only.

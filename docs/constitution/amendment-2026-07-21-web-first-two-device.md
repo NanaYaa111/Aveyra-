@@ -53,13 +53,13 @@ never claim offline operation we don't provide.
   draft/cache**; **accounts/auth + network invitation redemption + real sync**
   get built. The backend-agnostic sync stub becomes a real transport.
 
-## Open within this pivot (need answers before building)
-1. **Privacy model — E2EE vs server-side.** Keep **end-to-end encryption** (the
-   relay stores only ciphertext; the differentiator) — *more complex* — **or**
-   accept standard **server-side encryption at rest** (the server *can* read) —
-   *simpler, the stated goal*. Trade-off: privacy guarantee vs simplicity.
-2. **Backend choice** — managed BaaS (e.g. Supabase) vs custom service.
-3. **Navigation 4 vs 5** — the navigation research here says keep it *small* and
-   ritual-centered, which *leans four*; confirm.
-4. **`partner` vs `participants`** — this direction emphasizes *couples*, which
-   *leans `partner`*; confirm.
+## Open within this pivot — ✅ all resolved (Volume 2 Sections E–P, 2026-07-21)
+1. **Privacy model → STAGED.** Launch with server-side encryption at rest +
+   strict row-level access controls; schema split into three content classes
+   (shared / private-device-owned / future-encryptable) so client-side E2EE for
+   sensitive content can be added later without a rewrite. **No E2EE claims until
+   it is actually implemented.**
+2. **Backend → Supabase** (auth + Postgres + realtime + RLS).
+3. **Navigation → four** (Today · Story · Write · Settings).
+4. **Model → neutral `participants` schema** (Participant A/B) with
+   partner-forward UI copy.

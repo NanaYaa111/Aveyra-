@@ -3,6 +3,14 @@
 The platform must feel: Safe · Personal · Warm · Trustworthy · Beautiful · Effortless.
 Every interface decision must strengthen the user's connection with their partner.
 
+> ⚠️ **Amended (2026-07-21):** §5 (offline-first experience, no-sync-language) and
+> §13's pass-the-phone reveal are superseded by the
+> [web-first amendment](amendment-2026-07-21-web-first-two-device.md) — the product
+> is connected, sync language is valid, and the reveal is async across two devices.
+> §2.4's "not E2EE" honesty stance continues under staged privacy (state the real
+> protection; claim nothing more). **Everything else in this document — §1.2's
+> permanent prohibitions above all — remains fully binding.**
+
 ## 1. UX Philosophy
 - **1.1 Human-centered.** Designed around connection, communication,
   appreciation, reflection, shared memories, growth. Technology stays invisible:

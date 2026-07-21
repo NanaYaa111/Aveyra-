@@ -2,14 +2,13 @@
 
 *(Written under the "Weave" working title — read as **Aveyra**.)*
 
-> ⚠️ **UNRESOLVED CONFLICT — navigation destinations (see §4).**
-> This document specifies a **five-destination** navigation
-> (Home · Questions · Memories · Journal · Profile). **Volume 1 Part 2 §4.2**
-> specifies a **four-destination** model (Today · Story · Write · Settings) and
-> states there is *"no fifth destination, ever."* The shipped app implements the
-> four-destination model. **Pending the author's decision (logged in the README
-> decisions section), Volume 1's four-destination model remains in force.** The
-> five-destination content below is recorded but NOT yet adopted.
+> ✅ **Nav conflict RESOLVED (2026-07-21): four destinations govern**
+> (Today · Story · Write · Settings). §4's five-destination model was not
+> adopted — Home + Questions fold into **Today**; Memories = **Story**;
+> Journal = **Write**; Profile = **Settings**. The mapping table in §4 remains
+> the authoritative translation for everything else in this document.
+> Separately, the account/invitation journey in §5 is now **core** (web-first
+> amendment), no longer deferred.
 
 ## 1. Purpose
 Defines how information is organized, how users navigate, the relationship-space

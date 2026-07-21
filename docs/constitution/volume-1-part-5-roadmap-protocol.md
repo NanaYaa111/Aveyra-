@@ -1,5 +1,10 @@
 # Volume 1 — Part 5: Phase 1 Roadmap, Workflow, Testing Gates, Code Review & Claude Code Execution Protocol
 
+> ⚠️ **Amended (2026-07-21):** references to offline-first below read as
+> "connected with graceful disconnect" per the
+> [web-first amendment](amendment-2026-07-21-web-first-two-device.md). The
+> workflow, gates, review rules, and Execution Protocol are unchanged and binding.
+
 Defines how principles become implementation, and prevents the project from
 becoming a collection of features. Every implementation decision must preserve
 the foundation: emotional safety, privacy honesty, offline ownership,

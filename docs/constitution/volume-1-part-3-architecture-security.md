@@ -1,9 +1,15 @@
 # Volume 1 — Part 3: Offline-First Architecture, Database, Security, Encryption, Backup, Export/Import & Data Management
 
-The correct architecture is the **simplest** system that works reliably without
-connectivity, protects relationship data honestly, preserves user control, and
-allows future evolution without rebuilding Phase 1. Technical sophistication is
-not a goal.
+> ⚠️ **Amended (2026-07-21):** the offline-first/no-server mandates here are
+> superseded by the [web-first amendment](amendment-2026-07-21-web-first-two-device.md)
+> (Supabase backend; graceful disconnect instead of an offline guarantee; staged
+> privacy instead of a local-only encryption model). Still binding: the honesty
+> rules about privacy claims, reversibility/export-import/soft-delete guarantees,
+> the Web-Crypto practices, and all WCAG requirements.
+
+The correct architecture is the **simplest** system that works reliably,
+protects relationship data honestly, preserves user control, and allows future
+evolution without rebuilding. Technical sophistication is not a goal.
 
 ## Four questions Part 3 answers
 1. Offline-first architecture that never assumes connectivity but still allows
