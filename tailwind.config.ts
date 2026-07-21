@@ -36,7 +36,11 @@ const config: Config = {
         strong: 'var(--color-accent-strong)',
         soft: 'var(--color-accent-soft)',
       },
+      /* Top-level so `text-onAccent` resolves (used on primary buttons). */
+      onAccent: 'var(--color-text-on-accent)',
       gold: 'var(--color-gold)',
+      /* Modal/dialog backdrop — a token, never a literal in components. */
+      scrim: 'var(--color-scrim)',
       success: 'var(--color-success)',
       warning: 'var(--color-warning)',
       error: 'var(--color-error)',

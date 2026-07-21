@@ -51,7 +51,7 @@ export function Modal({ open, onClose, title, children, footer, alert }: ModalPr
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="absolute inset-0 bg-[rgba(20,12,14,0.5)] backdrop-blur-sm" aria-hidden />
+      <div className="absolute inset-0 bg-scrim backdrop-blur-sm" aria-hidden />
       <div
         ref={trapRef}
         role={alert ? 'alertdialog' : 'dialog'}

@@ -72,6 +72,7 @@
   --color-warning: #a8712c;
   --color-error: #a84f3f;
   --color-focus: #2e6b5e;
+  --color-scrim: rgba(18, 26, 22, 0.5); /* modal backdrop */
 
   --shadow-sm: 0 1px 2px rgba(31, 42, 36, 0.06), 0 2px 8px rgba(31, 42, 36, 0.05);
   --shadow-md: 0 4px 14px rgba(31, 42, 36, 0.1), 0 2px 6px rgba(31, 42, 36, 0.06);
@@ -100,6 +101,7 @@
   --color-warning: #d2a35f;
   --color-error: #d98a76;
   --color-focus: #86c2ac;
+  --color-scrim: rgba(4, 8, 6, 0.6);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
@@ -126,6 +128,7 @@
     --color-warning: #d2a35f;
     --color-error: #d98a76;
     --color-focus: #86c2ac;
+    --color-scrim: rgba(4, 8, 6, 0.6);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.6);

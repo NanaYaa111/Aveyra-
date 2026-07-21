@@ -44,14 +44,18 @@ export function createInvitation(
 
 /** Base64url of the JSON payload — shareable as a link or QR code. */
 export function encodeInvitation(payload: InvitationPayload): string {
-  const json = JSON.stringify(payload);
-  const b64 = btoa(unescape(encodeURIComponent(json)));
+  const bytes = new TextEncoder().encode(JSON.stringify(payload));
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  const b64 = btoa(binary);
   return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 export function decodeInvitation(encoded: string): InvitationPayload {
   const b64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
-  const json = decodeURIComponent(escape(atob(b64)));
+  const binary = atob(b64);
+  const bytes = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
+  const json = new TextDecoder().decode(bytes);
   const parsed = JSON.parse(json) as InvitationPayload;
   if (parsed.v !== 1 || !parsed.rel_id || !parsed.inviter_public_key || !parsed.code) {
     throw new Error('This invitation is not valid.');

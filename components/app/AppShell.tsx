@@ -24,7 +24,7 @@ const NAV_ITEMS: NavItem[] = [
 export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="sm:flex sm:items-stretch min-h-dvh">
-      <a href="#main" className="skip-link btn bg-surface border border-border rounded-md px-3 py-2">
+      <a href="#main" className="skip-link bg-surface border border-border rounded-md px-3 py-2">
         Skip to content
       </a>
 
