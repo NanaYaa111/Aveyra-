@@ -37,6 +37,7 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [volume-1-part-5-roadmap-protocol.md](volume-1-part-5-roadmap-protocol.md) | Phase 1 roadmap, workflow, testing gates, code review, Claude Code execution protocol |
 | [volume-2-part-1-product-ux.md](volume-2-part-1-product-ux.md) | Product overview, vision/mission, IA, target users, Phase 1 scope |
 | [volume-2-part-2-ia-journey.md](volume-2-part-2-ia-journey.md) | Information architecture, user journey, relationship lifecycle — ⚠️ contains an unresolved nav conflict |
+| [volume-2-part-2-sections-b-c-d.md](volume-2-part-2-sections-b-c-d.md) | Onboarding, Home Dashboard, Daily Questions — ⚠️ assume two-device/accounts/sync/async-reveal; open decisions |
 | [design-research-policy.md](design-research-policy.md) | Binding: research proven UX patterns + get design approval before building any major screen |
 | [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
 | [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |
@@ -95,6 +96,25 @@ them here.
 
 React 19 · TypeScript · Tailwind CSS · Framer Motion · Dexie.js · Zustand ·
 React Hook Form · Zod · PWA · Vitest · ESLint · Prettier · pnpm.
+
+### ⚠️ Open decision — Phase-1 scope: two-device now vs local-first-first (Volume 2 Sections B/C/D)
+
+Volume 2's onboarding, dashboard, and daily-question sections specify a **full
+two-device, account-based, sync-enabled product with an async reveal** as Phase 1.
+This reverses Volume 1's deliberately local single-device Phase-1 scope and the
+approved "build local-first before sync" sequencing. **Either** build the full
+two-device product now (requires the backend + accounts + E2EE key exchange + sync
+— a large milestone needing the deferred backend decision) **or** keep the
+sequencing (build the local core now; treat Volume 2's two-device flows as the
+spec for the next milestone). Almost everything else (reveal type, sync copy,
+account fields) resolves from this. **Blocking Milestone 2.**
+
+### ⚠️ Open decision — streak (Volume 2 §21 vs Constitution Part 2 §1.2)
+
+Home Dashboard §21 lists a "current relationship **streak** (if implemented
+ethically)." Part 2 §1.2 **permanently prohibits** consecutive-day streaks and
+loss framing, and the streak research strongly supports that ban. **Keep the ban
+(accumulation-only progress)** or reconsider it? Recommend keeping the ban.
 
 ### ⚠️ Open decision — navigation: four vs five destinations (Volume 1 §4.2 vs Volume 2 Part 2 §4)
 
