@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     'A private, offline-first home for your relationship. Your memories stay on your device.',
   applicationName: 'Aveyra',
   manifest: '/manifest.webmanifest',
+  icons: { icon: '/favicon.svg' },
   appleWebApp: {
     capable: true,
     title: 'Aveyra',
@@ -26,8 +27,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fbf8f5' },
-    { media: '(prefers-color-scheme: dark)', color: '#141620' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f5ef' },
+    { media: '(prefers-color-scheme: dark)', color: '#101815' },
   ],
 };
 

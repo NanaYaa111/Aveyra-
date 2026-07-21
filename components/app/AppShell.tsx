@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import {
   Navigation,
+  Logo,
   TodayIcon,
   StoryIcon,
   WriteIcon,
@@ -27,7 +28,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         Skip to content
       </a>
 
-      <Navigation items={NAV_ITEMS} />
+      <Navigation items={NAV_ITEMS} brand={<Logo />} />
 
       {/* Bottom padding on mobile clears the fixed bottom nav. */}
       <main

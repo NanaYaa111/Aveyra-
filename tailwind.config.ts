@@ -36,6 +36,7 @@ const config: Config = {
         strong: 'var(--color-accent-strong)',
         soft: 'var(--color-accent-soft)',
       },
+      gold: 'var(--color-gold)',
       success: 'var(--color-success)',
       warning: 'var(--color-warning)',
       error: 'var(--color-error)',

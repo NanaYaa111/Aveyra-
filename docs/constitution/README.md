@@ -18,6 +18,10 @@ The name merges two concepts:
 
 Together: *"the journey of discovering, remembering, and growing together."*
 
+Full brand identity (logo, palette, typography, taglines, design tokens):
+[`../brand/aveyra-brand-identity.md`](../brand/aveyra-brand-identity.md) —
+visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
+
 > Earlier documents (the Constitution volumes and research dossiers) were written
 > under the working title **"Weave"**. Wherever they say "Weave"/"WEAVE", read
 > **Aveyra**. The codebase, manifest, and all UI use Aveyra.

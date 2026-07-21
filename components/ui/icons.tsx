@@ -21,9 +21,12 @@ function Base(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+// Sunrise — first light; discovery. (No hearts anywhere in Aveyra.)
 export const TodayIcon = (p: SVGProps<SVGSVGElement>) => (
   <Base {...p}>
-    <path d="M12 21s-7.5-4.6-10-9.3C.6 8.3 2.3 4.8 5.7 4.8c2 0 3.4 1.2 4.3 2.6.9-1.4 2.3-2.6 4.3-2.6 3.4 0 5.1 3.5 3.7 6.9C19.5 16.4 12 21 12 21Z" />
+    <path d="M3 18h18" />
+    <path d="M7 18a5 5 0 0 1 10 0" />
+    <path d="M12 4v2M5.2 8.2l1.4 1.4M18.8 8.2l-1.4 1.4M2 13h2M20 13h2" />
   </Base>
 );
 

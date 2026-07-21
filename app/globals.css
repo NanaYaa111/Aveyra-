@@ -3,13 +3,15 @@
 @tailwind utilities;
 
 /* ============================================================================
-   Aveyra — Design Tokens
-   Warm, private, trustworthy, modern. A deep warm-neutral base with a single
-   muted rose/coral accent, used sparingly. Every value here is a token; no
-   component ever hardcodes a colour or size (Constitution Part 4 §2.3).
+   Aveyra — Design Tokens · "First Light on the Path"
+   (docs/brand/aveyra-brand-identity.md is the authority for these values.)
+
+   Journey → Evergreen (actions, trust) · Discovery → Dawn Gold (highlight
+   moments only) · Remembering → Paper (warm ivory surfaces). Every value here
+   is a token; no component ever hardcodes a colour or size (Part 4 §2.3).
 
    Fonts are system stacks so the app has zero external asset fetches and works
-   fully offline. (Self-hosted brand fonts are a documented later enhancement.)
+   fully offline. (Self-hosted Fraunces/Inter are the sanctioned enhancement.)
    ========================================================================== */
 :root {
   /* Type families */
@@ -49,53 +51,55 @@
   /* Layout */
   --app-max-width: 40rem;
 
-  /* ---- Light theme (default) ---- */
-  --color-bg: #fbf8f5;
-  --color-bg-soft: #f3ece6;
-  --color-surface: #ffffff;
-  --color-surface-raised: #fffdfb;
-  --color-border: #e9ded6;
+  /* ---- Light theme (default): first light on paper ---- */
+  --color-bg: #f7f5ef;
+  --color-bg-soft: #eeeae0;
+  --color-surface: #fffef9;
+  --color-surface-raised: #fbf9f3;
+  --color-border: #ded9cb;
 
-  --color-text: #241f20;
-  --color-text-soft: #5f5658;
-  --color-text-mute: #6e6367; /* meets 4.5:1 on --color-bg (WCAG 1.4.3) */
+  --color-text: #1f2521;
+  --color-text-soft: #555c55;
+  --color-text-mute: #646b63; /* meets 4.5:1 on --color-bg (WCAG 1.4.3) */
   --color-text-on-accent: #ffffff;
 
-  --color-accent: #b0635b; /* muted terracotta-rose */
-  --color-accent-strong: #934e48;
-  --color-accent-soft: #f4e5e1;
+  --color-accent: #2e6b5e; /* Evergreen — the journey */
+  --color-accent-strong: #245548;
+  --color-accent-soft: #e3ede8;
+  --color-gold: #b9822f; /* Dawn Gold — discovery; decorative/large only */
 
-  --color-success: #4f8a6b;
-  --color-warning: #b07d34;
-  --color-error: #b1544a;
-  --color-focus: #b0635b;
+  --color-success: #3f7d54;
+  --color-warning: #a8712c;
+  --color-error: #a84f3f;
+  --color-focus: #2e6b5e;
 
-  --shadow-sm: 0 1px 2px rgba(60, 35, 30, 0.06), 0 2px 8px rgba(60, 35, 30, 0.05);
-  --shadow-md: 0 4px 14px rgba(60, 35, 30, 0.1), 0 2px 6px rgba(60, 35, 30, 0.06);
-  --shadow-lg: 0 14px 40px rgba(60, 35, 30, 0.16);
+  --shadow-sm: 0 1px 2px rgba(31, 42, 36, 0.06), 0 2px 8px rgba(31, 42, 36, 0.05);
+  --shadow-md: 0 4px 14px rgba(31, 42, 36, 0.1), 0 2px 6px rgba(31, 42, 36, 0.06);
+  --shadow-lg: 0 14px 40px rgba(31, 42, 36, 0.16);
 }
 
-/* ---- Dark theme: deep warm navy base, rose/coral accent ---- */
+/* ---- Dark theme: the path at night (evergreen-black, warmed ivory) ---- */
 :root[data-theme='dark'] {
-  --color-bg: #141620;
-  --color-bg-soft: #1a1d29;
-  --color-surface: #1c1f2b;
-  --color-surface-raised: #232636;
-  --color-border: #333748;
+  --color-bg: #101815;
+  --color-bg-soft: #16201c;
+  --color-surface: #1a2420;
+  --color-surface-raised: #223028;
+  --color-border: #31413a;
 
-  --color-text: #f0ece8;
-  --color-text-soft: #bcb6b8;
-  --color-text-mute: #9b96a3;
-  --color-text-on-accent: #1b1114;
+  --color-text: #edf0ea;
+  --color-text-soft: #b9c2b8;
+  --color-text-mute: #94a096;
+  --color-text-on-accent: #0f1d18;
 
-  --color-accent: #dd8b81; /* warmer rose/coral for dark bg contrast */
-  --color-accent-strong: #e7a29a;
-  --color-accent-soft: rgba(221, 139, 129, 0.14);
+  --color-accent: #86c2ac; /* Evergreen, lifted for dark-bg contrast */
+  --color-accent-strong: #9ed3bf;
+  --color-accent-soft: rgba(134, 194, 172, 0.14);
+  --color-gold: #d9a45f;
 
-  --color-success: #6fb28e;
-  --color-warning: #d29a4e;
-  --color-error: #d97b6f;
-  --color-focus: #dd8b81;
+  --color-success: #7cbb92;
+  --color-warning: #d2a35f;
+  --color-error: #d98a76;
+  --color-focus: #86c2ac;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
@@ -105,22 +109,23 @@
 /* Respect OS preference when the user has not chosen a theme explicitly. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']):not([data-theme='dark']) {
-    --color-bg: #141620;
-    --color-bg-soft: #1a1d29;
-    --color-surface: #1c1f2b;
-    --color-surface-raised: #232636;
-    --color-border: #333748;
-    --color-text: #f0ece8;
-    --color-text-soft: #bcb6b8;
-    --color-text-mute: #9b96a3;
-    --color-text-on-accent: #1b1114;
-    --color-accent: #dd8b81;
-    --color-accent-strong: #e7a29a;
-    --color-accent-soft: rgba(221, 139, 129, 0.14);
-    --color-success: #6fb28e;
-    --color-warning: #d29a4e;
-    --color-error: #d97b6f;
-    --color-focus: #dd8b81;
+    --color-bg: #101815;
+    --color-bg-soft: #16201c;
+    --color-surface: #1a2420;
+    --color-surface-raised: #223028;
+    --color-border: #31413a;
+    --color-text: #edf0ea;
+    --color-text-soft: #b9c2b8;
+    --color-text-mute: #94a096;
+    --color-text-on-accent: #0f1d18;
+    --color-accent: #86c2ac;
+    --color-accent-strong: #9ed3bf;
+    --color-accent-soft: rgba(134, 194, 172, 0.14);
+    --color-gold: #d9a45f;
+    --color-success: #7cbb92;
+    --color-warning: #d2a35f;
+    --color-error: #d98a76;
+    --color-focus: #86c2ac;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.6);

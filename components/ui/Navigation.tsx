@@ -11,12 +11,18 @@ export interface NavItem {
   icon: ReactNode;
 }
 
+/** Optional brand lockup, shown at the top of the desktop rail only. */
+export interface NavigationProps {
+  items: NavItem[];
+  brand?: ReactNode;
+}
+
 /**
  * The fixed four-destination navigation (Constitution Part 2 §4.2). Order and
  * position never change. Renders as a bottom tab bar on mobile and a side rail
  * on larger screens. Active destination is marked with aria-current="page".
  */
-export function Navigation({ items }: { items: NavItem[] }) {
+export function Navigation({ items, brand }: NavigationProps) {
   const pathname = usePathname();
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
@@ -32,6 +38,7 @@ export function Navigation({ items }: { items: NavItem[] }) {
         'sm:static sm:h-dvh sm:w-60 sm:border-t-0 sm:border-r sm:pb-0',
       )}
     >
+      {brand && <div className="hidden sm:block px-5 pt-6 pb-2">{brand}</div>}
       <ul
         className={cn(
           'flex items-stretch',
