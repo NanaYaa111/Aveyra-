@@ -66,7 +66,7 @@ streak/score/rank/leaderboard/"difficulty"/quiz framing, and no deficit framing
 
 ## 2. Deep test hardening — existing M1 code
 
-Unit tests grew **17 → 90** (all passing). New coverage:
+Tests grew **17 → 128** (all passing): 90 unit + 38 component. New unit coverage:
 
 - **`questions.test.ts` (31)** — bank integrity + full rotation behaviour,
   including small-pool and single-question edge cases (no infinite loops).
@@ -86,6 +86,28 @@ Unit tests grew **17 → 90** (all passing). New coverage:
 No bugs were surfaced by the new tests — the M1 code held up. (The four QA
 fixes from the earlier pass remain the only code defects found to date.)
 
+### Component-test lane — NEW infrastructure
+
+The project's `devDependencies` already staged a full component-testing stack
+(`@testing-library/react`, `jsdom`, `@vitejs/plugin-react`, `jest-dom`,
+`user-event`) that had never been wired up. I completed that setup — a second
+Vitest lane routes `tests/component/**` to jsdom while `tests/unit/**` stays in
+Node — and used it to harden the already-approved bespoke UI:
+
+- **Button** — native semantics, default `type="button"`, click/disabled, ref.
+- **Input / Textarea** — label association, `aria-describedby` hint+error wiring,
+  `aria-invalid`, sr-only label.
+- **Modal / Dialog** — dialog vs alertdialog roles, accessible name from title,
+  Escape-to-close, backdrop-vs-panel click, body scroll lock/restore, confirm/
+  cancel flow. (Focus-trap movement needs real layout → stays in the e2e lane.)
+- **Toast** — provider guard, polite live region, Undo action + dismiss,
+  auto-dismiss timing.
+- **ThemeToggle** — radiogroup semantics, applies/clears `data-theme`, persists,
+  restores a saved choice.
+- **Navigation** — labelled primary nav, exactly-one `aria-current="page"`.
+- **EmptyState / ErrorMessage / LoadingState / Card** — roles, live-region
+  politeness, decorative-symbol hiding.
+
 ---
 
 ## 3. Verification (all green)
@@ -94,7 +116,7 @@ fixes from the earlier pass remain the only code defects found to date.)
 | --- | --- |
 | `pnpm typecheck` | ✓ |
 | `pnpm lint` | ✓ (0 warnings) |
-| `pnpm test` | ✓ 90/90 unit |
+| `pnpm test` | ✓ 128/128 (90 unit + 38 component) |
 | `pnpm build` | ✓ static export |
 | `pnpm test:e2e` | ✓ 9/9 Playwright + axe (WCAG 2.2 AA) |
 
