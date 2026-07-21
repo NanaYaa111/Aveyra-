@@ -42,6 +42,13 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [research-dossier.md](research-dossier.md) | Evidence base (competitive analysis + relationship psychology + behavioural/technical research) |
 | [positive-love-research.md](positive-love-research.md) | Positive-love evidence extract — what healthy love is, graded; drives Milestone 2 decisions |
 
+> 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
+> two-device, and connected** — **offline-first has been dropped** as a product
+> promise. See the [web-first amendment](amendment-2026-07-21-web-first-two-device.md).
+> Where Volume 1 says "offline-first / no server / local is source of truth / no
+> accounts," that pillar is **superseded**. Emotional-safety and trust rules
+> remain fully in force.
+
 **Status:** Volume 1 complete (Parts 1–5). Volumes 2–4 pending.
 Next per the source: *Volume 2 — Product Requirements, Feature Specifications,
 User Flows & Detailed Experience Design.*

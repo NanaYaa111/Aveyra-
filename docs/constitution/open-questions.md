@@ -8,6 +8,24 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
 
 ---
 
+## ✅ Resolved 2026-07-21 — see [web-first amendment](amendment-2026-07-21-web-first-two-device.md)
+- **Q1 → Full two-device now.** 🟢
+- **Q3 → Keep the streak ban** (no streaks / loss framing). 🟢
+- **Q5 → Async reveal.** 🟢
+- **Q6 → Sync language valid.** 🟢
+- **Q7 → Accounts + invitations central.** 🟢
+- **NEW: offline-first dropped**, web-first primary, APK later. 🟢
+
+## 🔴 Still open (blocking Milestone-2 planning)
+- **Q12 — Privacy model: E2EE vs server-side encryption?** E2EE (relay stores
+  only ciphertext; max privacy, more complex) **vs** server-side encryption at
+  rest (server can read; simpler — matches the stated "reduce complexity" goal).
+- **Q8 — Backend choice:** managed BaaS (e.g. Supabase) vs custom service.
+- **Q2 — Navigation 4 vs 5** (this direction *leans four* — "small, ritual-centered").
+- **Q4 — `partner` vs `participants`** (this direction *leans `partner`* — couples).
+
+---
+
 ## A. Pivotal
 
 ### Q1 — Phase-1 scope / sequencing 🔴 *(blocking Milestone 2)*
