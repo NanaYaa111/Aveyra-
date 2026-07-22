@@ -28,9 +28,10 @@ export default function SettingsPage() {
         <Card>
           <h2 className="text-heading mb-1">Your data stays yours</h2>
           <p className="text-text-soft mb-4">
-            Export a copy of everything you&apos;ve saved as a file you own, or restore from one.
-            Because a browser can clear its storage, keeping an occasional backup is the surest way
-            to protect your memories. (Profile, lock, and Recently Deleted arrive as the app grows.)
+            Export a copy of your questions, memories, and journal entries as a file you own, or
+            restore from one. Because a browser can clear its storage, keeping an occasional backup
+            is the surest way to protect what you&apos;ve written. (Photos aren&apos;t included in
+            backups yet; profile, lock, and Recently Deleted arrive as the app grows.)
           </p>
           <DataControls />
         </Card>

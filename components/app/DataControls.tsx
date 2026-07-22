@@ -13,7 +13,7 @@ import { serializeBackup, parseBackup, downloadBackup, suggestedFilename } from 
  */
 export function DataControls() {
   const fileRef = useRef<HTMLInputElement>(null);
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<{ text: string; error: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function handleExport() {
@@ -21,9 +21,9 @@ export function DataControls() {
     try {
       const snapshot = await getService().exportSnapshot();
       downloadBackup(serializeBackup(snapshot), suggestedFilename());
-      setStatus('Your backup has been downloaded.');
+      setStatus({ text: 'Your backup has been downloaded.', error: false });
     } catch {
-      setStatus('Something went wrong preparing your backup. Please try again.');
+      setStatus({ text: 'Something went wrong preparing your backup. Please try again.', error: true });
     } finally {
       setBusy(false);
     }
@@ -36,9 +36,15 @@ export function DataControls() {
     try {
       const data = parseBackup(await file.text());
       const { imported } = await getService().importSnapshot(data);
-      setStatus(`Restored ${imported} item${imported === 1 ? '' : 's'} from your backup.`);
+      setStatus({
+        text: `Restored ${imported} item${imported === 1 ? '' : 's'} from your backup.`,
+        error: false,
+      });
     } catch (err) {
-      setStatus(err instanceof Error ? err.message : 'That backup could not be read.');
+      setStatus({
+        text: err instanceof Error ? err.message : 'That backup could not be read.',
+        error: true,
+      });
     } finally {
       setBusy(false);
       if (fileRef.current) fileRef.current.value = '';
@@ -65,8 +71,12 @@ export function DataControls() {
         />
       </div>
       {status && (
-        <p role="status" aria-live="polite" className="text-label text-text-soft">
-          {status}
+        <p
+          role={status.error ? 'alert' : 'status'}
+          aria-live={status.error ? 'assertive' : 'polite'}
+          className="text-label text-text-soft"
+        >
+          {status.text}
         </p>
       )}
     </div>

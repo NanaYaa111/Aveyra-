@@ -62,6 +62,43 @@ Test count: **152** (was 133). Verification after remediation: typecheck ✓, li
 
 ---
 
+## Remediation Update — Round 2 (independent re-review of the fixes)
+
+Three independent reviewers (encryption, data-integrity, integration) audited
+the remediation itself. Export and encryption read/write coverage verified
+clean, but they surfaced **3 real defects in the new code**, now fixed:
+
+- **CONFIRMED data-loss race — no-passphrase vault auto-init TOCTOU (crypto).**
+  Concurrent first-writes could each generate and persist a *different* content
+  key, making data written under the superseded key permanently undecryptable
+  (reproduced ~6% over 200 trials). Fixed by serialising init with a cached
+  in-flight promise in `KeyManager.initialise` (reset on failure); added a
+  concurrent-first-writes regression test.
+- **Import hardening — 6 gaps (data-integrity).** `importSnapshot` was
+  non-atomic, crashed on non-array fields, silently clobbered newer local data,
+  bypassed the sync outbox, and persisted unvalidated garbage/settings rows;
+  the UI over-claimed "everything." Now: **atomic** (crypto pre-computed, DB
+  writes in one Dexie transaction), array + per-row validation, **version-merge**
+  (never overwrites a newer local record), **outbox-journalled**, settings
+  sanitised to the singleton, the erroneous `recordExport`-on-import removed,
+  and Settings copy discloses that photos aren't in backups yet. 6 new tests.
+- **Service worker — staleness/blank-page risks (integration).** The
+  network-first change could serve new HTML without its hashed chunk on an
+  interrupted deploy, and could resolve a navigation to `undefined`. Switched to
+  **stale-while-revalidate** (serves the offline-safe cached page instantly,
+  refreshes in the background — self-heals deploys with no manual cache bump)
+  and added a hard-coded final offline `Response`.
+
+Everything else in the new code (encrypt-on-write / decrypt-on-read coverage,
+field list, empty-string round-trip, locked-vault safety, db binding,
+ErrorBoundary, PwaInit having no vault side-effect, rotation hash, dependency
+removal) was independently verified clean.
+
+Test count: **159**. Verification: typecheck ✓, lint ✓ (0 warnings), 159/159
+tests ✓, static build ✓, 9/9 Playwright + axe ✓.
+
+---
+
 ## Strengths
 
 - **Architecture & boundaries.** Backend-agnostic modules (invitation, sync, identity, questions) sit behind clean interfaces; the DatabaseService is the single storage path; the SyncTransport boundary lets a real backend drop in without touching callers.

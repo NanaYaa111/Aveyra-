@@ -78,6 +78,35 @@ describe('DatabaseService — encryption at rest', () => {
     expect(live[0]!.content).toBe('a longer, revised entry');
   });
 
+  it('serialises vault init under concurrent first-writes (no key corruption)', async () => {
+    // Regression guard for the auto-init race: four concurrent first-writes
+    // must all end up under ONE content key, so every value still decrypts.
+    await Promise.all([
+      service.createAnswer({ question_id: 'q', author: 'partner_one', content: 'one' }),
+      service.createJournalEntry({ owner_id: 'u1', title: 't', content: 'two' }),
+      service.createMemory({
+        relationship_id: 'r',
+        title: 'three',
+        description: 'd',
+        memory_date: Date.now(),
+        image_ref: null,
+      }),
+      service.createRelationship({
+        creator_id: 'u',
+        partner_id: null,
+        status: 'solo',
+        partner_name: 'Nana',
+        relationship_start_date: null,
+      }),
+    ]);
+    const answers = (await service.listLive('answers')) as unknown as { content: string }[];
+    const journals = (await service.listLive('journalEntries')) as unknown as { content: string }[];
+    expect(answers[0]!.content).toBe('one');
+    expect(journals[0]!.content).toBe('two');
+    expect((await service.getRelationship())!.partner_name).toBe('Nana');
+    expect(await db.keyvault.count()).toBe(1);
+  });
+
   it('decrypts labels in Recently Deleted', async () => {
     const mem = await service.createMemory({
       relationship_id: 'r1',

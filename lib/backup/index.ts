@@ -42,6 +42,14 @@ export function parseBackup(text: string): BackupData {
   if (!f || f.format !== BACKUP_FORMAT || f.version !== BACKUP_VERSION || !f.data) {
     throw new Error("This file isn't a recognised Aveyra backup.");
   }
+  // The content tables, when present, must be arrays — reject a clearly
+  // malformed file up front rather than failing partway through an import.
+  const d = f.data as unknown as Record<string, unknown>;
+  for (const key of ['relationships', 'answers', 'memories', 'journalEntries']) {
+    if (d[key] !== undefined && !Array.isArray(d[key])) {
+      throw new Error('This backup file is malformed.');
+    }
+  }
   return f.data;
 }
 

@@ -14,6 +14,7 @@ import {
   type Memory,
   type JournalEntry,
   type BackupData,
+  type ThemeChoice,
 } from './types';
 
 /**
@@ -79,7 +80,10 @@ export class DatabaseService {
    */
   private async ready(): Promise<void> {
     if (this.vaultReady) return;
-    if (!(await this.keys.isInitialised())) await this.keys.initialise();
+    await this.keys.initialise(); // idempotent + concurrency-safe (serialised)
+    // Warm the in-memory content key so later encrypt/decrypt need no DB read
+    // (important inside a Dexie transaction, whose scope excludes the keyvault).
+    await this.keys.getDataKey();
     this.vaultReady = true;
   }
 
@@ -293,28 +297,95 @@ export class DatabaseService {
   }
 
   /**
-   * Restore a snapshot, re-encrypting content with THIS device's key. Records
-   * are upserted by id (idempotent re-import). Returns how many were written.
+   * Restore a snapshot, re-encrypting content with THIS device's key.
+   *
+   * Hardened against malformed/hostile files and data loss:
+   *  - ATOMIC: the whole restore runs in one transaction, so a bad row rolls
+   *    the entire import back (no half-restored state).
+   *  - NON-DESTRUCTIVE MERGE: a record is written only if the backup's version
+   *    is >= the local version, so importing a stale backup never silently
+   *    discards newer local edits.
+   *  - VALIDATED: non-array tables and structurally-invalid rows are skipped;
+   *    settings are sanitised to the singleton.
+   *  - JOURNALLED: each write is recorded to the outbox so restored data syncs.
+   *
+   * Records are upserted by id, so re-import is idempotent. Returns how many
+   * rows were written. (Image blobs are not yet part of a backup — a v1 limit.)
    */
   async importSnapshot(data: BackupData): Promise<{ imported: number }> {
-    let imported = 0;
-    const put = async (name: SoftDeletableTable, rows: BaseRecord[] = []): Promise<void> => {
-      // `table(name)` is a union of EntityTables, so its `.put` is over-typed;
-      // narrow to a put-shaped view (records are already the right shape).
-      const table = this.table(name) as unknown as { put: (v: BaseRecord) => Promise<unknown> };
+    await this.ready();
+    const tables: SoftDeletableTable[] = ['relationships', 'answers', 'memories', 'journalEntries'];
+
+    // Phase 1 (outside the transaction): validate + encrypt. Web Crypto awaits
+    // are not Dexie operations and would prematurely commit a Dexie transaction,
+    // so all crypto happens here; Phase 2 does only DB work.
+    const prepared: { name: SoftDeletableTable; row: BaseRecord; version: number }[] = [];
+    for (const name of tables) {
+      const rows = (data as unknown as Record<string, unknown>)[name];
+      if (!Array.isArray(rows)) continue; // tolerate a malformed/absent field
       for (const r of rows) {
-        await table.put(await this.encryptFields(name, r));
-        imported++;
+        if (!isImportableRecord(r)) continue; // skip structurally-invalid rows
+        prepared.push({ name, row: await this.encryptFields(name, r), version: r.version });
       }
-    };
-    await put('relationships', data.relationships);
-    await put('answers', data.answers);
-    await put('memories', data.memories);
-    await put('journalEntries', data.journalEntries);
-    if (data.settings) await this.db.settings.put(data.settings);
-    await this.recordExport(imported);
+    }
+    const settings =
+      data.settings && typeof data.settings === 'object' ? sanitiseSettings(data.settings) : null;
+
+    // Phase 2: atomic write — only Dexie ops inside, so the transaction holds.
+    let imported = 0;
+    await this.db.transaction(
+      'rw',
+      [
+        this.db.relationships,
+        this.db.answers,
+        this.db.memories,
+        this.db.journalEntries,
+        this.db.outbox,
+        this.db.settings,
+      ],
+      async () => {
+        for (const p of prepared) {
+          const table = this.table(p.name) as unknown as {
+            get: (id: string) => Promise<BaseRecord | undefined>;
+            put: (v: BaseRecord) => Promise<unknown>;
+          };
+          const existing = await table.get(p.row.id);
+          if (existing && existing.version > p.version) continue; // keep newer local
+          await table.put(p.row);
+          await this.journal(p.name, 'put', p.row.id, p.version);
+          imported++;
+        }
+        if (settings) await this.db.settings.put(settings);
+      },
+    );
+
     return { imported };
   }
+}
+
+/** True for a row safe to import (has the base identity/versioning fields). */
+function isImportableRecord(r: unknown): r is BaseRecord {
+  if (!r || typeof r !== 'object') return false;
+  const o = r as Record<string, unknown>;
+  return (
+    typeof o.id === 'string' &&
+    typeof o.version === 'number' &&
+    (o.deleted_at === null || typeof o.deleted_at === 'number')
+  );
+}
+
+const VALID_THEMES: ThemeChoice[] = ['system', 'light', 'dark'];
+
+/** Coerce imported settings to a valid singleton so a bad backup can't break it. */
+function sanitiseSettings(s: Partial<AppSettings>): AppSettings {
+  return {
+    id: 'app',
+    onboarded: s.onboarded === true,
+    theme: VALID_THEMES.includes(s.theme as ThemeChoice) ? (s.theme as ThemeChoice) : 'system',
+    persistent_storage_granted:
+      typeof s.persistent_storage_granted === 'boolean' ? s.persistent_storage_granted : null,
+    schema_version: SCHEMA_VERSION,
+  };
 }
 
 function labelFor(table: SoftDeletableTable, r: BaseRecord): string {

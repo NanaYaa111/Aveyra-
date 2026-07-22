@@ -50,6 +50,7 @@ export interface KeyVaultRecord {
  */
 export class KeyManager {
   private dataKey: CryptoKey | null = null;
+  private initInFlight: Promise<void> | null = null;
 
   /** Bound to a specific database so it shares the caller's store (tests, and
    *  the DatabaseService, pass their own db). Defaults to the app singleton. */
@@ -75,8 +76,22 @@ export class KeyManager {
     return this.dataKey === null;
   }
 
-  /** Create the vault. Called once during onboarding. */
-  async initialise(passphrase?: string): Promise<void> {
+  /**
+   * Create the vault. Idempotent AND concurrency-safe: the in-flight init is
+   * cached so two concurrent first-writes cannot each generate and persist a
+   * different content key (which would make data written under the superseded
+   * key permanently undecryptable). Reset on failure so a retry is possible.
+   */
+  initialise(passphrase?: string): Promise<void> {
+    if (this.initInFlight) return this.initInFlight;
+    this.initInFlight = this.doInitialise(passphrase).catch((e) => {
+      this.initInFlight = null;
+      throw e;
+    });
+    return this.initInFlight;
+  }
+
+  private async doInitialise(passphrase?: string): Promise<void> {
     if (await this.isInitialised()) return;
     const device = await generateDeviceKeyPair();
     const device_public = await exportPublicKey(device.publicKey);
