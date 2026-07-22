@@ -3,14 +3,17 @@
 Implements the [web-first amendment](constitution/amendment-2026-07-21-web-first-two-device.md).
 Presented for approval (cadence A). **Nothing is torn out until this is approved.**
 
-> ⏸️ **On hold:** code build does not start until the full **Volume 2 Parts 3–4**
-> arrive. **Part 3 Sections A–I received (2026-07-22)** — feature specs for auth,
-> relationship space, onboarding, home dashboard, daily questions, memories,
-> timeline, journal, and search — recorded in
-> [Part 3 A–D](constitution/volume-2-part-3-sections-a-d.md) and
-> [Part 3 E–I](constitution/volume-2-part-3-sections-e-to-i.md). **Still pending:
-> Part 3 Sections J–T and all of Part 4 (schema DDL / RLS / deploy blueprint)** —
-> so the build stays on hold.
+> ⏸️ **On hold:** code build does not start until **Volume 2 · Part 4** arrives.
+> **Volume 2 · Part 3 is COMPLETE (all 20 sections A–T, received 2026-07-22)** —
+> the full feature specs, recorded across
+> [A–D](constitution/volume-2-part-3-sections-a-d.md),
+> [E–I](constitution/volume-2-part-3-sections-e-to-i.md),
+> [J–N](constitution/volume-2-part-3-sections-j-to-n.md),
+> [O–R](constitution/volume-2-part-3-sections-o-to-r.md), and
+> [S–T](constitution/volume-2-part-3-sections-s-t.md); all conflicts resolved
+> (Q13–Q17). **Only Part 4 (Technical Architecture & Engineering Spec — schema
+> DDL / RLS / API / sync / deploy / CI-CD / monitoring) remains** before the
+> build, and each screen still needs a design proposal → approval.
 
 ## Locked decisions (confirmed by Volume 2 Sections E–P, 2026-07-21)
 - **Backend: Supabase** — Auth + Postgres + Realtime + Row-Level Security.

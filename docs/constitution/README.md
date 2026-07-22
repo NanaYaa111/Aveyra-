@@ -50,7 +50,8 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [volume-2-part-3-sections-e-to-i.md](volume-2-part-3-sections-e-to-i.md) | **Part 3 feature specs E–I** — Daily Questions, Shared Memories, Timeline, Private Journal, Search & Discovery *(question categories: 9 canonical from Section E supersede the draft bank's 10 — Q14; M2 schema additions catalogued)* |
 | [love-maps-example-questions.md](love-maps-example-questions.md) | Author-provided example Love Maps questions (Discovery sub-category) — tone/depth reference to seed the M2 question bank |
 | [volume-2-part-3-sections-j-to-n.md](volume-2-part-3-sections-j-to-n.md) | **Part 3 feature specs J–N** — Notifications, Relationship Settings, Media Storage, Account/Identity/Auth, Offline-First Architecture *(🔺 conflicts: Section M passwords vs OTP — Q15; Section N offline-first vs web-first — Q16)* |
-| [volume-2-part-3-sections-o-to-r.md](volume-2-part-3-sections-o-to-r.md) | **Part 3 feature specs O–R** — Privacy/Security/Trust, Error Handling & Empty States, Performance/Reliability/QA, Product Analytics & Experimentation *(🔺 conflict: analytics/A-B vs the permanent no-analytics prohibition — Q17; P & Q largely validate the built M1)* |
+| [volume-2-part-3-sections-o-to-r.md](volume-2-part-3-sections-o-to-r.md) | **Part 3 feature specs O–R** — Privacy/Security/Trust, Error Handling & Empty States, Performance/Reliability/QA, Product Analytics → Telemetry *(Q17 resolved: narrow telemetry exception; P & Q largely validate the built M1)* |
+| [volume-2-part-3-sections-s-t.md](volume-2-part-3-sections-s-t.md) | **Part 3 feature specs S–T (Part 3 COMPLETE)** — Legal/Compliance/Data Governance, Product Philosophy/Governance/Future Evolution + Part 4 scope preview *(no conflicts; confirms Q15 passwordless-OTP + Q16 web-first)* |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
 > two-device, and connected** — **offline-first has been dropped** as a product
@@ -61,18 +62,18 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 
 **Status:** Volume 1 complete (Parts 1–5, as amended). Volume 2: Parts 1–2
 (Sections A–P), the product-strategy directives, the user-research report, a
-**Parts 3–4 scope-preview + decisions batch**, and now **Part 3 Sections A–R**
-received; **Part 3 Sections S–T and all of Part 4 (schema/RLS/deploy blueprint)
-still to come**. Volumes 3–4 pending. Milestone 1 (built foundation) shipped and
-approved; Milestone 2 planned in detail but **code build remains on hold until the
-full Parts 3–4 arrive** (18 of Part 3's 20 sections are in). Resolved along the
-way: Section D five-nav → keep four (Q13); question categories → 9 canonical from
-Section E (Q14). **Part 3 J–R conflicts resolved 2026-07-22:** Q15 → passwordless
-email OTP / magic link (Section M's password language superseded); Q16 →
-web-first stays, Section N reframed as graceful disconnection (cloud = source of
-truth); Q17 → narrow telemetry exception (opt-in, aggregate, non-content crash +
-performance only; behavioral analytics / activity dashboards / user A-B remain
-banned — permanent-prohibitions amendment above).
+**Parts 3–4 scope-preview + decisions batch**, and now **Volume 2 · Part 3 is
+COMPLETE — all 20 sections A–T recorded.** **Only Volume 2 · Part 4 (Technical
+Architecture & Engineering Specification — schema DDL / RLS / API / deploy /
+sync / testing / CI-CD) remains** before the Milestone-2 build; Volumes 3–4
+pending. Milestone 1 (built foundation) shipped and approved; Milestone 2 planned
+in detail but **code build remains on hold until Part 4 arrives** (and each screen
+still needs a design proposal → approval per the Design Research Policy). All
+Part-3 conflicts resolved: Section D five-nav → keep four (Q13); categories → 9
+canonical (Q14); **Q15 → passwordless email OTP; Q16 → web-first (Section N
+reframed as graceful disconnection); Q17 → narrow telemetry exception** (crash +
+performance only — see the permanent-prohibitions amendment above). Part 4's own
+scope preview confirms passwordless OTP + web-first.
 
 ## North Star (Volume 2)
 

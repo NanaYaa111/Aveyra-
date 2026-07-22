@@ -104,9 +104,13 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   amendment.
 
 ## 🔴 Still pending
-- **Remaining Part 3 sections (S–T) and all of Part 4** (schema DDL, RLS
-  policies, deploy blueprint) — pending. Milestone 2 code build stays on hold
-  until they arrive.
+- **Volume 2 · Part 3 is COMPLETE (A–T, 20 sections).** The only remaining spec
+  gate is **Volume 2 · Part 4 — Technical Architecture & Engineering
+  Specification** (schema DDL, RLS policies, API standards, sync engine, deploy
+  blueprint, CI/CD, monitoring). Milestone 2 code build stays on hold until Part 4
+  arrives (and each screen passes the Design Research Policy: research → design
+  proposal → approval).
+- No open conflicts — Q13/Q14/Q15/Q16/Q17 all resolved.
 
 ---
 
