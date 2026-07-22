@@ -118,6 +118,12 @@ stage; the M1 device keypairs remain reserved for the later E2EE stage.
 
 ## Retained rules (unchanged)
 All §1.2 prohibitions (no streaks/scores/comparison), "support connection, never
-control" (no monitoring/location/read-receipts/proof-of-activity), consent &
+control" (no user monitoring/location/read-receipts/proof-of-activity), consent &
 explicit reveal states, WCAG 2.2 AA, reversibility. The Design Research Policy
 governs every screen.
+
+**Auth = passwordless email OTP / magic link** (Q15; no passwords). **Architecture
+= web-first** (Q16; cloud = source of truth, local = cache + pending-actions queue,
+graceful disconnection). **Telemetry (Q17 narrow amendment):** opt-in, aggregate,
+**non-content** crash + performance metrics only — **no** behavioral/feature-usage
+analytics, activity dashboards, third-party analytics scripts, or user A/B.

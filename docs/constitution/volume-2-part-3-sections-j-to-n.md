@@ -7,20 +7,18 @@
 > "implementation-ready" restatement of J–N and a research synthesis accompanied
 > this batch — treated as refinement references, consistent with the primaries.
 
-> 🔺🔺 **TWO MAJOR CONFLICTS with resolved, author-approved decisions — flagged
-> for decision (open-questions Q15, Q16); NOT silently reconciled:**
-> 1. **Q15 — Auth method.** Section M (and the polished version) specify
->    **password**-based registration/login/recovery. This contradicts **Section A
->    + the resolved decision: passwordless email OTP / magic link, "no
->    passwords."**
-> 2. **Q16 — Offline-first vs web-first.** Section N reasserts **offline-first /
->    local-first** ("the device is the primary place… the cloud exists to
->    synchronize"). This contradicts the deliberate **2026-07-21 web-first pivot**
->    (offline-first dropped as a promise; cloud = source of truth; graceful
->    disconnection only).
+> ✅ **TWO CONFLICTS RESOLVED 2026-07-22 (author decided):**
+> 1. **Q15 — Auth → passwordless email OTP / magic link.** Section M's password /
+>    recovery language is **superseded**; credential = email + OTP / magic link
+>    (recovery = request a new code/link; passkeys a future option).
+> 2. **Q16 — Architecture → web-first stays; Section N reframed** as the
+>    graceful-disconnection layer ("local-first EXPERIENCE, cloud source of
+>    truth"). Local = cache + pending-actions queue; **conflict-preservation**;
+>    keep the UX copy ("Saved safely. Waiting to sync."), drop full
+>    local-first / CRDT architecture.
 >
-> Recorded faithfully below with the conflicts marked; the resolution the author
-> chooses will update these.
+> See [open-questions.md](open-questions.md) Q15, Q16. The section text below is
+> kept as written; these banners + reconciliation notes carry the resolution.
 
 ---
 
@@ -201,7 +199,7 @@ new for M2. Location-metadata-hidden-by-default aligns with no-tracking.
 
 ---
 
-## Section M — Account, Identity & Authentication  🔺 *(auth method — Q15)*
+## Section M — Account, Identity & Authentication  ✅ *(Q15 resolved: passwordless OTP)*
 
 **Purpose.** Secure access, data ownership, partner connection, control. Auth is
 **the foundation of trust.**
@@ -268,20 +266,26 @@ content; sensitive actions require verification; sync on reconnect.
 
 **Reconciliation.** ✅ Individual identity ≠ relationship identity, consent-based
 linking, authZ boundaries, session management → all match the **participants**
-model + staged-privacy RLS. 🔺 **Auth method (password vs OTP) — Q15** (all
-`*`-marked password items depend on the resolution). Rate limiting + suspicious-
-activity + secure sessions are consistent regardless of method (Supabase Auth
-provides both OTP and password flows).
+model + staged-privacy RLS. ✅ **Q15 resolved → passwordless email OTP / magic
+link** (Option A): every `*`-marked password item (password field, confirmation,
+password recovery, password hashing, "forgotten passwords") is **superseded** —
+the credential is email + OTP/magic link, recovery is a new code/link, passkeys
+are a future option. Rate limiting + suspicious-activity + secure sessions carry
+over unchanged (Supabase Auth provides OTP natively).
 
 ---
 
-## Section N — Offline-First Architecture & Synchronization  🔺 *(vs web-first — Q16)*
+## Section N — Offline-First Architecture & Synchronization  ✅ *(Q16 resolved: reframed under web-first)*
 
-**🔺 Purpose (CONFLICT — Q16).** Section N: *"The user's device is the primary
-place where experiences happen. The cloud exists to synchronize, protect, and
-extend."* — **offline-first / local-first.** **This contradicts the 2026-07-21
-web-first pivot** (offline-first dropped as a product promise; cloud = source of
-truth; graceful *disconnection* only). Recorded as written; resolution pending.
+**✅ Purpose (Q16 resolved → web-first, Section N reframed).** As written, Section
+N says *"the device is the primary place… the cloud exists to synchronize"* —
+full offline-first / local-first. **Resolution:** **web-first stays** — the cloud
+is the canonical **source of truth**; the local device holds a **cache + a
+pending-actions queue**, not the primary store. Section N is read as **"local-first
+EXPERIENCE, cloud source of truth"**: the entire UX (offline create/edit → sync
+queue → auto-sync → "Saved safely. Waiting to sync." → conflict-preservation)
+survives; only the *architecture* framing (local is truth / full local-first /
+CRDT) is dropped.
 
 **Principles (as written).** Local first, cloud enhanced · never lose a
 meaningful moment · sync is invisible · transparency on failure ("Your memory is
@@ -333,16 +337,14 @@ protected even on an unlocked device.**
   al.) · HIG · Material resilience · distributed-systems · survey. *"A meaningful
   memory should never depend on whether the internet happens to be available."*
 
-**Reconciliation.** 🔺 **Q16.** Section N's *substance* (save-locally-first, sync
-queue, conflict-preservation, "Saved safely. Waiting to sync.", encrypted local
-DB) largely **matches the "graceful disconnection + draft cache" layer the
-web-first amendment already preserved** — the web-first pivot dropped the offline
-*guarantee/promise* and the "local is source of truth" *framing*, not the
-resilience work. **So two readings are possible:** (a) **reframe** Section N as
-that graceful-disconnection layer under web-first (cloud = source of truth) — most
-of the spec survives; or (b) **reverse** the pivot to offline-first/local-first
-(Section N governs). This is a strategic direction call for the author. Tech note:
-web-first uses **Dexie/IndexedDB + Supabase**, not SQLite/Realm.
+**Reconciliation.** ✅ **Q16 → reframe under web-first (Option A, author decided).**
+Section N's substance (save-locally-first, sync queue, conflict-**preservation**,
+"Saved safely. Waiting to sync.", encrypted local cache) is the **graceful-
+disconnection + draft-cache layer under a cloud source of truth** — most of the
+spec survives; only the "local is source of truth / full local-first / CRDT"
+framing is dropped. Tech: web-first uses **Dexie/IndexedDB + Supabase**, not
+SQLite/Realm. The M1 **outbox + sync-engine stub already model the
+pending-actions queue** the reframed Section N needs.
 
 ---
 

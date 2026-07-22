@@ -73,43 +73,40 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   engine is category-agnostic, so this is content-only — no code decision needed
   now; done as part of the M2 question-bank build.
 
-## 🔴 Still open — conflicts from Part 3 J–R (need author decisions)
+## ✅ Resolved 2026-07-22 — Part 3 J–R conflicts (author decided)
 
-- **Q15 — Auth method: passwordless OTP vs passwords.** 🔴 Section M (Part 3)
-  specifies **password** registration/login/recovery; **Section A + the resolved
-  decision specify passwordless email OTP / magic link, "no passwords."** Two
-  Part-3 sections disagree. *Recommendation:* keep **passwordless OTP** (Section A
-  + the resolved decision); treat Section M's password language as legacy.
-  **Decision:** ⏳ author.
+- **Q15 — Auth → passwordless email OTP / magic link (Option A).** 🟢 Section A +
+  the resolved decision govern; **Section M's password/recovery language is
+  superseded.** Credential = email + OTP/magic link; recovery = request a new
+  code/link (no password reset); device/session management retained; passkeys a
+  future option. Canonical layer = Supabase email OTP / magic link.
 
-- **Q16 — Offline-first vs web-first.** 🔴 Section N ("the device is the primary
-  place… cloud synchronizes") and Section Q §1/§3 reassert **offline-first /
-  local-first**, contradicting the deliberate **2026-07-21 web-first pivot**
-  (offline-first dropped as a promise; cloud = source of truth; graceful
-  *disconnection* only). *Recommendation:* keep **web-first** and **reframe**
-  Section N's substance (save-locally-first draft cache, sync queue, conflict-
-  preservation, "Saved safely. Waiting to sync.") as the graceful-disconnection
-  layer under web-first — most of the spec survives. Alt: reverse the pivot to
-  offline-first (Section N governs). **Decision:** ⏳ author.
+- **Q16 — Architecture → web-first; Section N reframed (Option A).** 🟢 Cloud is
+  the canonical **source of truth**; local = cache + pending-actions queue.
+  Offline UX preserved (create/edit locally → "pending" → auto-sync later, with
+  **conflict-preservation**, not blind last-writer-wins). Section N is reworded to
+  **"local-first EXPERIENCE, cloud source of truth"** — keep the UX language
+  ("Saved safely. Waiting to sync."), drop full local-first / CRDT architecture.
+  Section Q §1/§3 "offline-first" reads the same way.
 
-- **Q17 — Analytics & experimentation vs the permanent prohibition.** 🔴 Section R
-  (+ O §15) build **product analytics + A/B experimentation** (feature-usage
-  telemetry, experiments). The **permanent prohibition** (Part 2 §1.2) bans
-  *"analytics, telemetry, tracking, third-party scripts"* and *"activity
-  dashboards"* — "never build, any phase." R's philosophy aligns (no manipulation/
-  dark patterns/engagement optimization; content never analyzed without consent),
-  but the mechanics conflict. Amendment-level. *Options:* (a) prohibition governs
-  — no analytics/telemetry/A-B (keep R's ethical guardrails as design rules); (b)
-  amend to permit strictly operational, aggregate, consented, **non-content,
-  non-behavioral** telemetry (crash + performance) + ethical time-limited A/B on
-  usability; (c) middle — opt-in crash/performance only, no feature-usage/
-  behavioral analytics, no user A/B. *Recommendation:* (c) or (a). **Decision:**
-  ⏳ author.
+- **Q17 — Analytics → narrow telemetry exception (Option B). AMENDS a permanent
+  prohibition.** 🟢 **Still banned:** behavioral analytics, clickstreams,
+  engagement funnels, **activity dashboards**, tracking, third-party analytics
+  scripts, and **A/B experiments that alter the user experience for
+  optimization.** **Newly permitted (by amendment):** **opt-in, aggregate,
+  non-content operational telemetry** — crash reports + performance/reliability
+  metrics (launch/search/timeline/media times, sync success, error counts, API
+  times) — **with PII and all user content stripped**, ideally processed
+  in-house. Section R is reframed as **"Performance & Reliability Telemetry"**
+  (not a general analytics system); O §15 = operational only. R's ethical
+  guardrails (no dark patterns, no engagement optimization, content never analyzed
+  without consent) remain binding. See the README permanent-prohibitions
+  amendment.
 
-## 🔴 Also pending
+## 🔴 Still pending
 - **Remaining Part 3 sections (S–T) and all of Part 4** (schema DDL, RLS
   policies, deploy blueprint) — pending. Milestone 2 code build stays on hold
-  until they arrive **and** Q15/Q16/Q17 are resolved.
+  until they arrive.
 
 ---
 

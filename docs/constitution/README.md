@@ -65,12 +65,14 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 received; **Part 3 Sections S–T and all of Part 4 (schema/RLS/deploy blueprint)
 still to come**. Volumes 3–4 pending. Milestone 1 (built foundation) shipped and
 approved; Milestone 2 planned in detail but **code build remains on hold until the
-full Parts 3–4 arrive AND three open conflicts are resolved** (18 of Part 3's 20
-sections are in). Resolved along the way: Section D five-nav → keep four (Q13);
-question categories → 9 canonical from Section E (Q14). **Open conflicts needing
-author decisions:** Q15 (Section M passwords vs the resolved OTP passwordless),
-Q16 (Section N/Q offline-first vs the web-first pivot), Q17 (Section R analytics/
-experimentation vs the permanent no-analytics prohibition).
+full Parts 3–4 arrive** (18 of Part 3's 20 sections are in). Resolved along the
+way: Section D five-nav → keep four (Q13); question categories → 9 canonical from
+Section E (Q14). **Part 3 J–R conflicts resolved 2026-07-22:** Q15 → passwordless
+email OTP / magic link (Section M's password language superseded); Q16 →
+web-first stays, Section N reframed as graceful disconnection (cloud = source of
+truth); Q17 → narrow telemetry exception (opt-in, aggregate, non-content crash +
+performance only; behavioral analytics / activity dashboards / user A-B remain
+banned — permanent-prohibitions amendment above).
 
 ## North Star (Volume 2)
 
@@ -99,8 +101,19 @@ features, so no developer discipline is required to avoid them.*
 - Leaderboards or comparison of any kind
 - Features locked behind earned progress
 - Anything that renders one partner's behaviour as a deficit to the other
-- Analytics, telemetry, tracking, third-party scripts
+- Behavioral analytics, tracking, third-party analytics scripts, clickstreams /
+  engagement funnels *(⚠️ narrowly amended 2026-07-22 — see note)*
 - "Relationship health" scores / metrics / activity dashboards
+- A/B experiments that alter the user experience for optimization
+
+> **⚠️ Amendment 2026-07-22 (Q17):** the blanket analytics ban is **narrowly**
+> amended. **Still banned:** behavioral analytics, tracking, third-party analytics
+> scripts, activity dashboards, and A/B experiments that change the UX for
+> optimization. **Newly permitted:** **opt-in, aggregate, non-content operational
+> telemetry only** — crash reports + performance/reliability metrics — with **PII
+> and all user content stripped**, ideally processed in-house. Volume 2 Section R
+> is reframed as *"Performance & Reliability Telemetry."* See
+> [open-questions.md](open-questions.md) Q17.
 
 *(Amendment history: 2026-07-20 permitted a backend as an E2EE-only relay; the
 [2026-07-21 web-first amendment](amendment-2026-07-21-web-first-two-device.md)

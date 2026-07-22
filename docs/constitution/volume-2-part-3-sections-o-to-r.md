@@ -7,20 +7,20 @@
 > captured, S–T + all of Part 4 pending.** Each section shipped with a research
 > corroboration (PbD, OWASP ASVS, NN/g, HIG) — treated as supporting reference.
 
-> 🔺 **MAJOR CONFLICT — Q17 (analytics vs a permanent prohibition):** Section R
-> (and O §15) define **product analytics + A/B experimentation** (product
-> metrics, feature-usage counts, experiments). This collides with the
-> **permanent prohibition** (Part 2 §1.2): *"Analytics, telemetry, tracking,
-> third-party scripts"* and *"no relationship-health scores / metrics / activity
-> dashboards"* — declared "never build, any phase." R is deliberately ethical
-> (aggregate, consent-gated, no dark patterns, no engagement optimization), so
-> this is the **letter** of the prohibition vs a tightly-constrained framework.
-> **Amendment-level — author decision required (open-questions Q17).** Recorded
-> as written; NOT adopted pending resolution.
+> ✅ **Q17 RESOLVED 2026-07-22 (author decided → Option B: narrow telemetry
+> exception; this AMENDS a permanent prohibition).** **Still banned:** behavioral
+> analytics, clickstreams, engagement funnels, **activity dashboards**, tracking,
+> third-party analytics scripts, and **A/B experiments that alter the UX for
+> optimization.** **Newly permitted:** **opt-in, aggregate, non-content
+> operational telemetry only** — crash + performance/reliability metrics, with PII
+> and all user content stripped, ideally processed in-house. **Section R is
+> reframed as "Performance & Reliability Telemetry"** (not a general analytics
+> system). See [open-questions.md](open-questions.md) Q17 + the README
+> permanent-prohibitions amendment.
 
-> Also reinforced this batch: **Q16 (offline-first)** — Section Q §1/§3 again
-> assume "offline-first functionality," consistent with Section N's framing and
-> the same web-first conflict.
+> **Q16 (offline-first) — resolved 2026-07-22 → web-first stays.** Section Q §1/§3
+> "offline-first functionality" reads as the graceful-disconnection / strong local
+> caching layer under a cloud source of truth (same resolution as Section N).
 
 ---
 
@@ -230,15 +230,16 @@ ties into **Q16**; §14 "monitoring" ties into **Q17** (operational metrics).
 
 ---
 
-## Section R — Product Analytics, Experimentation & Continuous Improvement  🔺 *(Q17)*
+## Section R — Product Analytics → **Performance & Reliability Telemetry**  ✅ *(Q17 resolved)*
 
-**🔺 Purpose (CONFLICT — Q17).** Aveyra must evolve on **evidence, feedback,
-careful observation — not maximising engagement/attention.** Defines how Aveyra
-**learns from product usage while respecting privacy.** *"Analytics exist to
+**✅ Purpose (Q17 resolved → Option B).** Aveyra evolves on **evidence, feedback,
+careful observation — not maximising engagement/attention.** *"Analytics exist to
 improve the product, not to manipulate user behavior."* Every improvement answers
 *"Does this help people build healthier, more meaningful relationships?"*
-**This introduces analytics/experimentation the permanent prohibition bans —
-recorded, not adopted, pending Q17.**
+**Adopted narrowly:** the section is reframed as **Performance & Reliability
+Telemetry** — **opt-in, aggregate, non-content** crash + performance metrics only.
+The general-analytics + feature-usage + A/B-experimentation mechanics are **NOT
+adopted** (they remain banned; see below).
 
 **Principles.** **People before metrics** (success = experience quality, not time-
 in-app; metrics support decisions, never become the purpose) · **privacy-
@@ -296,31 +297,34 @@ privacy/sustainability — **popularity alone never decides.**
   accessibility · maintain trust · align with long-term vision — *else redesign or
   reject.*
 
-**Reconciliation.** 🔺🔺 **Q17 — amendment-level conflict.** The permanent
-prohibition bans "analytics, telemetry, tracking" and "activity dashboards"
-outright, "any phase." Section R builds a (careful, ethical, privacy-respecting)
-analytics + experimentation framework. **The philosophy aligns** (no manipulation,
-no engagement optimization, no dark patterns, content never analyzed without
-consent) **but the mechanics conflict** (feature-usage telemetry, A/B
-experiments). **Author must choose** how to resolve (see Q17 options). Note: the
-**ethical guardrails in R are themselves consistent** with the prohibitions'
-*spirit* and can stand regardless; the disputed part is operational/behavioral
-data collection + experimentation on users.
+**Reconciliation.** ✅ **Q17 resolved → Option B (narrow telemetry exception;
+amends the permanent prohibition).**
+- **ADOPTED:** opt-in, aggregate, **non-content** operational telemetry — crash
+  reports + performance/reliability metrics (launch/search/timeline/media times,
+  sync success, error/crash counts, API times) — with **PII and all user content
+  stripped**, ideally in-house. Voluntary user feedback, voluntary research
+  (surveys/interviews/usability/beta/a11y), release evaluation, feature lifecycle,
+  and **all of R's ethical guardrails** (no dark patterns, no engagement
+  optimization, no manipulation) remain **binding**.
+- **NOT adopted / still banned:** feature-usage & behavioral analytics
+  (clickstreams, engagement funnels), activity dashboards, third-party analytics
+  scripts, and **A/B experiments that alter the UX for optimization** (the §7–8
+  experimentation framework). The `Experiment` data-model + "Feature usage"
+  metrics are shelved.
+See the README permanent-prohibitions amendment (2026-07-22).
 
 ---
 
 ## Batch reconciliation summary (O–R)
 
-- **Q17 (analytics/experimentation) — decision required.** Options: (a)
-  **prohibition governs** — no analytics/telemetry/A-B at all (local-only; keep
-  R's *ethical guardrails* as design rules); (b) **amend** to permit strictly
-  operational, aggregate, consented, **non-content, non-behavioral** telemetry
-  (crash + performance only) + ethical, time-limited A/B on usability; (c)
-  **middle** — crash/performance operational monitoring (opt-in) only, **no**
-  feature-usage/behavioral analytics, **no** user A/B. *Guardian recommendation:
-  (c) or (a) — protect the permanent prohibition unless you deliberately amend
-  it.*
-- **Q16 (offline-first)** reinforced by Q §1/§3 — still pending.
+- **Q17 (analytics) — RESOLVED → Option B (narrow telemetry exception).** Adopted:
+  opt-in, aggregate, non-content crash + performance telemetry only. Banned still:
+  behavioral/feature-usage analytics, activity dashboards, third-party analytics
+  scripts, user A/B. Section R reframed as *Performance & Reliability Telemetry.*
+- **Q16 (offline-first) — RESOLVED → web-first stays;** Section N (and Q §1/§3)
+  reframed as graceful disconnection under a cloud source of truth.
+- **Q15 (auth) — RESOLVED → passwordless email OTP / magic link** (Section M
+  password language superseded).
 - **Strong positives:** Section **P** is largely **already built** (M1 feedback
   components + Recently Deleted); Section **Q**'s QA bar is largely **already
   met** (tests + axe + e2e + CI); Section **O** aligns with staged privacy +
