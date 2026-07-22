@@ -59,7 +59,8 @@ invitations reduce anxiety. (NN/g cognitive load, Page Flows end-to-end, onboard
 
 ## Section C — Home Dashboard
 
-⚠️ *"Home" is the disputed **fifth destination** (four-vs-five nav decision).*
+✅ *Nav resolved (Q13): four destinations govern — "Home" is **not** a fifth
+tab; this dashboard folds into **Today**.*
 
 ### Purpose & principles
 Answers *what should I do now / what happened recently / how is our journey
