@@ -18,6 +18,50 @@ This pass **fixed 9 confirmed issues** (1 High, 3 Medium, 5 Low) surfaced by the
 
 ---
 
+## Remediation Update (same day)
+
+After the initial report, the outstanding items were worked down. **10 of the 12
+recommendations are now fixed**; 1 is deferred by design and 1 is a minor inert
+item.
+
+**Fixed:**
+- **QA-10 (High) — encryption now wired into storage.** `KeyManager` is
+  db-injectable; the DatabaseService auto-initialises a no-passphrase vault and
+  transparently encrypts designated content fields (`partner_name`, answer/
+  journal `content`, memory `title`/`description`) on write and decrypts on read
+  (including Recently-Deleted labels). Tests prove **ciphertext at rest** and
+  plaintext round-trip.
+- **QA-11 (High) — export/import shipped.** `exportSnapshot`/`importSnapshot`
+  (decrypted, re-encrypted on import, includes soft-deleted rows) + a versioned
+  backup envelope (`lib/backup`) + functional Settings controls. Round-trip onto
+  a different-key device verified.
+- **QA-13** — SW navigations now network-first (fresh after deploys), cache
+  fallback offline. **QA-14** — soft-delete/restore/purge bump `version` and
+  journal the real version. **QA-15** — top-level `ErrorBoundary`. **QA-16** —
+  removed the four unused deps. **QA-17** — PBKDF2 raised to 600k. **QA-19** —
+  added `identity` + `platform/storage` tests. **QA-20** —
+  `persistent_storage_granted` now recorded. **QA-21** — rotation cycles use a
+  mixed `hash(seed, cycle)` to decorrelate seed-adjacent relationships.
+
+**Still open:**
+- **QA-12 (Medium, deferred by design)** — the "offline-first" copy in
+  `layout.tsx`/`package.json`/`sw.js` is reconciled *with* the M2 web-first
+  migration, not before (correcting it now would misrepresent the still-local
+  code). Settings copy was updated where it was already inaccurate.
+- **QA-18 (Low, inert)** — outbox pruning; nothing marks mutations synced until
+  a real transport exists, so there is nothing to prune yet.
+
+**Revised scores** (post-remediation): Database 6→**7**, Security 5→**7**,
+Privacy 6→**7**, Reliability 5→**7**, Maintainability **8**. **Overall ≈ 7.0 /
+10.** Functionality stays **5** — the core daily-question *product* is still
+Milestone-2 work, so the release call remains **🟠 Needs Major Revisions**, now
+appreciably closer to 🟡 Beta (both High foundation gaps closed).
+
+Test count: **152** (was 133). Verification after remediation: typecheck ✓, lint
+✓ (0 warnings), 152/152 tests ✓, static build ✓, 9/9 Playwright + axe ✓.
+
+---
+
 ## Strengths
 
 - **Architecture & boundaries.** Backend-agnostic modules (invitation, sync, identity, questions) sit behind clean interfaces; the DatabaseService is the single storage path; the SyncTransport boundary lets a real backend drop in without touching callers.

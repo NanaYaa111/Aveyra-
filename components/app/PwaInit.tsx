@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { requestPersistentStorage } from '@/lib/platform/storage';
+import { getService } from '@/lib/database';
 
 /**
  * Client-side platform init: registers the offline service worker and requests
@@ -14,7 +15,10 @@ export function PwaInit() {
       navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
     // Ask once; browsers may defer granting until the app earns engagement.
-    void requestPersistentStorage();
+    // Record the outcome so Settings can reflect it honestly.
+    requestPersistentStorage()
+      .then((granted) => getService().updateSettings({ persistent_storage_granted: granted }))
+      .catch(() => {});
   }, []);
 
   return null;

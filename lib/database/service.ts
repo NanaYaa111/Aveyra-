@@ -1,5 +1,7 @@
 import { getDB, type AveyraDB } from './db';
 import { getOutbox, type Outbox } from '../sync/outbox';
+import { KeyManager } from '../encryption/keyManager';
+import { Cipher } from '../encryption/cipher';
 import type { MutationOp } from '../sync/types';
 import {
   SCHEMA_VERSION,
@@ -11,7 +13,20 @@ import {
   type Answer,
   type Memory,
   type JournalEntry,
+  type BackupData,
 } from './types';
+
+/**
+ * Content fields encrypted at rest, per table (Constitution Part 3 §9). Index
+ * and metadata fields (ids, timestamps, category, question_id, memory_date)
+ * stay plaintext so the store remains queryable.
+ */
+const ENCRYPTED_FIELDS: Record<SoftDeletableTable, readonly string[]> = {
+  relationships: ['partner_name'],
+  answers: ['content'],
+  memories: ['title', 'description'],
+  journalEntries: ['title', 'content'],
+};
 
 /** Stable id + time helpers. */
 export function newId(): string {
@@ -48,10 +63,47 @@ const isLive = <T extends BaseRecord>(r: T): boolean => r.deleted_at === null;
  * of this in a later step; the service itself stays storage-focused.
  */
 export class DatabaseService {
+  private vaultReady = false;
+
   constructor(
     private db: AveyraDB = getDB(),
     private outbox: Outbox = getOutbox(),
+    private keys: KeyManager = new KeyManager(db),
+    private cipher: Cipher = new Cipher(keys),
   ) {}
+
+  /**
+   * Ensure a content key exists before encrypting/decrypting. Auto-initialises
+   * a no-passphrase vault on first use (honest: protects data at rest against
+   * casual inspection, not device compromise — see KeyManager). Idempotent.
+   */
+  private async ready(): Promise<void> {
+    if (this.vaultReady) return;
+    if (!(await this.keys.isInitialised())) await this.keys.initialise();
+    this.vaultReady = true;
+  }
+
+  /** Encrypt the designated content fields of a record or patch (copy). */
+  private async encryptFields<T extends object>(name: SoftDeletableTable, rec: T): Promise<T> {
+    await this.ready();
+    const out = { ...rec } as Record<string, unknown>;
+    for (const f of ENCRYPTED_FIELDS[name]) {
+      const v = out[f];
+      if (typeof v === 'string' && v.length > 0) out[f] = await this.cipher.encrypt(v);
+    }
+    return out as T;
+  }
+
+  /** Decrypt the designated content fields of a stored record (copy). */
+  private async decryptFields<T extends object>(name: SoftDeletableTable, rec: T): Promise<T> {
+    await this.ready();
+    const out = { ...rec } as Record<string, unknown>;
+    for (const f of ENCRYPTED_FIELDS[name]) {
+      const v = out[f];
+      if (typeof v === 'string') out[f] = await this.cipher.decrypt(v);
+    }
+    return out as T;
+  }
 
   /**
    * Journal a mutation to the outbox for future sync. Non-blocking to the write
@@ -67,30 +119,41 @@ export class DatabaseService {
     return this.db[name];
   }
 
-  /** All live (non-deleted) rows in a soft-deletable table. */
+  /** All live (non-deleted) rows in a soft-deletable table (decrypted). */
   async listLive<T extends BaseRecord>(name: SoftDeletableTable): Promise<T[]> {
     const rows = (await this.table(name).toArray()) as unknown as T[];
-    return rows.filter(isLive);
+    const live = rows.filter(isLive);
+    return Promise.all(live.map((r) => this.decryptFields(name, r)));
   }
 
   async get<T extends BaseRecord>(name: SoftDeletableTable, id: string): Promise<T | undefined> {
-    return (await this.table(name).get(id)) as unknown as T | undefined;
+    const row = (await this.table(name).get(id)) as unknown as T | undefined;
+    return row ? this.decryptFields(name, row) : undefined;
+  }
+
+  /** Next monotonic version for a record (0 if it is gone). */
+  private async nextVersion(name: SoftDeletableTable, id: string): Promise<number> {
+    const existing = (await this.table(name).get(id)) as unknown as BaseRecord | undefined;
+    return (existing?.version ?? 0) + 1;
   }
 
   /** Soft delete: mark deleted, never remove (Part 3 §12). Returns an undo fn. */
   async softDelete(name: SoftDeletableTable, id: string): Promise<() => Promise<void>> {
-    await this.table(name).update(id, { deleted_at: now() });
-    await this.journal(name, 'put', id, 0);
+    const version = await this.nextVersion(name, id);
+    await this.table(name).update(id, { deleted_at: now(), updated_at: now(), version });
+    await this.journal(name, 'put', id, version);
     return async () => {
-      await this.table(name).update(id, { deleted_at: null, updated_at: now() });
-      await this.journal(name, 'put', id, 0);
+      const v = await this.nextVersion(name, id);
+      await this.table(name).update(id, { deleted_at: null, updated_at: now(), version: v });
+      await this.journal(name, 'put', id, v);
     };
   }
 
   /** Restore a soft-deleted record from Recently Deleted. */
   async restore(name: SoftDeletableTable, id: string): Promise<void> {
-    await this.table(name).update(id, { deleted_at: null, updated_at: now() });
-    await this.journal(name, 'put', id, 0);
+    const version = await this.nextVersion(name, id);
+    await this.table(name).update(id, { deleted_at: null, updated_at: now(), version });
+    await this.journal(name, 'put', id, version);
   }
 
   /**
@@ -98,8 +161,9 @@ export class DatabaseService {
    * explicit user action in Recently Deleted, never automatically (Part 2 §4.4).
    */
   async purge(name: SoftDeletableTable, id: string): Promise<void> {
+    const version = await this.nextVersion(name, id);
     await this.table(name).delete(id);
-    await this.journal(name, 'delete', id, 0);
+    await this.journal(name, 'delete', id, version);
   }
 
   /** Recently Deleted, unified across tables and sorted newest-first. */
@@ -110,7 +174,9 @@ export class DatabaseService {
       const rows = (await this.db[t].toArray()) as unknown as BaseRecord[];
       for (const r of rows) {
         if (r.deleted_at !== null) {
-          out.push({ table: t, id: r.id, deleted_at: r.deleted_at, label: labelFor(t, r) });
+          // Only the label fields need decrypting; id/deleted_at are metadata.
+          const dec = await this.decryptFields(t, r);
+          out.push({ table: t, id: r.id, deleted_at: r.deleted_at, label: labelFor(t, dec) });
         }
       }
     }
@@ -122,25 +188,26 @@ export class DatabaseService {
     fields: CreatableFields<Relationship>,
   ): Promise<Relationship> {
     const rec = stamp<Relationship>(fields);
-    await this.db.relationships.add(rec);
+    await this.db.relationships.add(await this.encryptFields('relationships', rec));
     await this.journal('relationships', 'put', rec.id, rec.version);
     return rec;
   }
   async getRelationship(): Promise<Relationship | undefined> {
-    const all = (await this.db.relationships.toArray()).filter(isLive);
-    return all[0];
+    const first = (await this.db.relationships.toArray()).filter(isLive)[0];
+    return first ? this.decryptFields('relationships', first) : undefined;
   }
   async updateRelationship(id: string, patch: Partial<Relationship>): Promise<void> {
     const existing = await this.db.relationships.get(id);
     const version = (existing?.version ?? 0) + 1;
-    await this.db.relationships.update(id, { ...patch, updated_at: now(), version });
+    const encPatch = await this.encryptFields('relationships', { ...patch });
+    await this.db.relationships.update(id, { ...encPatch, updated_at: now(), version });
     await this.journal('relationships', 'put', id, version);
   }
 
   // ---- Answer ------------------------------------------------------------
   async createAnswer(fields: CreatableFields<Answer>): Promise<Answer> {
     const rec = stamp<Answer>(fields);
-    await this.db.answers.add(rec);
+    await this.db.answers.add(await this.encryptFields('answers', rec));
     await this.journal('answers', 'put', rec.id, rec.version);
     return rec;
   }
@@ -148,7 +215,7 @@ export class DatabaseService {
   // ---- Memory ------------------------------------------------------------
   async createMemory(fields: CreatableFields<Memory>): Promise<Memory> {
     const rec = stamp<Memory>(fields);
-    await this.db.memories.add(rec);
+    await this.db.memories.add(await this.encryptFields('memories', rec));
     await this.journal('memories', 'put', rec.id, rec.version);
     return rec;
   }
@@ -156,14 +223,15 @@ export class DatabaseService {
   // ---- Journal -----------------------------------------------------------
   async createJournalEntry(fields: CreatableFields<JournalEntry>): Promise<JournalEntry> {
     const rec = stamp<JournalEntry>(fields);
-    await this.db.journalEntries.add(rec);
+    await this.db.journalEntries.add(await this.encryptFields('journalEntries', rec));
     await this.journal('journalEntries', 'put', rec.id, rec.version);
     return rec;
   }
   async updateJournalEntry(id: string, patch: Partial<JournalEntry>): Promise<void> {
     const existing = await this.db.journalEntries.get(id);
     const version = (existing?.version ?? 0) + 1;
-    await this.db.journalEntries.update(id, { ...patch, updated_at: now(), version });
+    const encPatch = await this.encryptFields('journalEntries', { ...patch });
+    await this.db.journalEntries.update(id, { ...encPatch, updated_at: now(), version });
     await this.journal('journalEntries', 'put', id, version);
   }
 
@@ -196,6 +264,56 @@ export class DatabaseService {
       item_count: itemCount,
       schema_version: SCHEMA_VERSION,
     });
+  }
+
+  // ---- Backup (export / import) -----------------------------------------
+  /**
+   * A full DECRYPTED snapshot of user content (live + soft-deleted, so a backup
+   * never silently drops Recently Deleted). The user owns their data (Part 3
+   * §4). Note: image blobs are not yet included — a v1 limitation.
+   */
+  async exportSnapshot(): Promise<BackupData> {
+    const all = async <T extends BaseRecord>(name: SoftDeletableTable): Promise<T[]> => {
+      const rows = (await this.table(name).toArray()) as unknown as T[];
+      return Promise.all(rows.map((r) => this.decryptFields(name, r)));
+    };
+    const [relationships, answers, memories, journalEntries] = await Promise.all([
+      all<Relationship>('relationships'),
+      all<Answer>('answers'),
+      all<Memory>('memories'),
+      all<JournalEntry>('journalEntries'),
+    ]);
+    return {
+      relationships,
+      answers,
+      memories,
+      journalEntries,
+      settings: (await this.db.settings.get('app')) ?? null,
+    };
+  }
+
+  /**
+   * Restore a snapshot, re-encrypting content with THIS device's key. Records
+   * are upserted by id (idempotent re-import). Returns how many were written.
+   */
+  async importSnapshot(data: BackupData): Promise<{ imported: number }> {
+    let imported = 0;
+    const put = async (name: SoftDeletableTable, rows: BaseRecord[] = []): Promise<void> => {
+      // `table(name)` is a union of EntityTables, so its `.put` is over-typed;
+      // narrow to a put-shaped view (records are already the right shape).
+      const table = this.table(name) as unknown as { put: (v: BaseRecord) => Promise<unknown> };
+      for (const r of rows) {
+        await table.put(await this.encryptFields(name, r));
+        imported++;
+      }
+    };
+    await put('relationships', data.relationships);
+    await put('answers', data.answers);
+    await put('memories', data.memories);
+    await put('journalEntries', data.journalEntries);
+    if (data.settings) await this.db.settings.put(data.settings);
+    await this.recordExport(imported);
+    return { imported };
   }
 }
 

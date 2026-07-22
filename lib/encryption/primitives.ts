@@ -12,7 +12,8 @@
  * access, not against a compromised bundle, malware, or forensic recovery.
  */
 
-export const PBKDF2_ITERATIONS = 210_000;
+// OWASP 2023 guidance for PBKDF2-HMAC-SHA256.
+export const PBKDF2_ITERATIONS = 600_000;
 const IV_BYTES = 12;
 
 const subtle = () => globalThis.crypto.subtle;

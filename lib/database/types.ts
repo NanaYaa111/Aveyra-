@@ -117,3 +117,17 @@ export interface DeletedItem {
   deleted_at: number;
   label: string;
 }
+
+/**
+ * A full DECRYPTED snapshot of user content for export/import (Constitution
+ * Part 3 §4 — the user owns their data and can take it with them). Content is
+ * plaintext here so a backup is portable and human-readable; it is re-encrypted
+ * on import with the importing device's key.
+ */
+export interface BackupData {
+  relationships: Relationship[];
+  answers: Answer[];
+  memories: Memory[];
+  journalEntries: JournalEntry[];
+  settings: AppSettings | null;
+}

@@ -1,4 +1,4 @@
-import { getDB } from '../database/db';
+import { getDB, type AveyraDB } from '../database/db';
 import {
   type Envelope,
   aesEncrypt,
@@ -51,9 +51,9 @@ export interface KeyVaultRecord {
 export class KeyManager {
   private dataKey: CryptoKey | null = null;
 
-  private get db() {
-    return getDB();
-  }
+  /** Bound to a specific database so it shares the caller's store (tests, and
+   *  the DatabaseService, pass their own db). Defaults to the app singleton. */
+  constructor(private db: AveyraDB = getDB()) {}
 
   async getVault(): Promise<KeyVaultRecord | undefined> {
     return this.db.keyvault.get(VAULT_ID);

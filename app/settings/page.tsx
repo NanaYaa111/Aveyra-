@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Card } from '@/components/ui';
 import { ThemeToggle } from '@/components/app/ThemeToggle';
+import { DataControls } from '@/components/app/DataControls';
 
 export const metadata: Metadata = { title: 'Settings' };
 
@@ -26,10 +27,12 @@ export default function SettingsPage() {
 
         <Card>
           <h2 className="text-heading mb-1">Your data stays yours</h2>
-          <p className="text-text-soft">
-            Aveyra stores everything on this device. Profile, lock, storage, export &amp; import, and
-            Recently Deleted arrive as the app grows — nothing here ever leaves without you.
+          <p className="text-text-soft mb-4">
+            Export a copy of everything you&apos;ve saved as a file you own, or restore from one.
+            Because a browser can clear its storage, keeping an occasional backup is the surest way
+            to protect your memories. (Profile, lock, and Recently Deleted arrive as the app grows.)
           </p>
+          <DataControls />
         </Card>
       </div>
     </section>

@@ -3,6 +3,7 @@ import './globals.css';
 import { ThemeScript } from '@/components/app/ThemeScript';
 import { AppShell } from '@/components/app/AppShell';
 import { PwaInit } from '@/components/app/PwaInit';
+import { ErrorBoundary } from '@/components/app/ErrorBoundary';
 import { ToastProvider } from '@/components/ui';
 
 export const metadata: Metadata = {
@@ -38,9 +39,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeScript />
         <PwaInit />
-        <ToastProvider>
-          <AppShell>{children}</AppShell>
-        </ToastProvider>
+        <ErrorBoundary>
+          <ToastProvider>
+            <AppShell>{children}</AppShell>
+          </ToastProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

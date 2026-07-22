@@ -138,7 +138,10 @@ export function createRotation(
 /** Reshuffle into the next cycle, avoiding an immediate repeat of the last id. */
 function beginNextCycle(state: RotationState): void {
   state.cycle += 1;
-  const order = shuffle(state.pool, state.seed + state.cycle);
+  // Mix seed and cycle (rather than add) so relationships with seed-adjacent
+  // hashes don't produce correlated per-cycle orders.
+  const cycleSeed = (state.seed ^ Math.imul(state.cycle + 1, 0x9e3779b1)) >>> 0;
+  const order = shuffle(state.pool, cycleSeed);
   // Guard against a cross-cycle consecutive repeat.
   if (order.length > 1 && order[0] === state.lastServedId) {
     const swap = order[1]!;
