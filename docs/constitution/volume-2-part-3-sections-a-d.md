@@ -5,13 +5,13 @@
 > code build. Recorded faithfully; reconciliation notes flag where a section
 > meets or conflicts with already-resolved decisions.
 
-> 🔺 **One conflict flagged for the author (Section D):** the spec lists a
+> ✅ **Nav conflict resolved (2026-07-22, Q13): four governs.** Section D lists a
 > **five**-destination bottom nav (Home / Timeline / Memories / Journal /
-> Settings). The durable record already **resolved four** (Today · Story ·
-> Write · Settings — "Home + Questions fold into Today; no fifth ever",
-> 2026-07-21), and the built app uses four. Recorded below mapped onto the
-> four-nav model, **pending the author's explicit confirmation**. See
-> [open-questions.md](open-questions.md) Q13.
+> Settings), but the durable record's **four** (Today · Story · Write · Settings)
+> stands — author expressed no preference, so the resolved decision + built shell
+> are preserved. Section D is recorded mapped onto the four-nav model: **Home →
+> Today · Timeline + Memories → Story · Journal → Write · Settings → Settings.**
+> See [open-questions.md](open-questions.md) Q13.
 
 ---
 
@@ -349,10 +349,9 @@ intentional-connection + privacy principles.
 **Reconciliation.**
 - ✅ Hero = Daily Question · snapshot-as-narrative-not-score · calm indicators ·
   no gamification → all match resolved principles and the permanent prohibitions.
-- 🔺 **CONFLICT — navigation count.** Five destinations (Home/Timeline/Memories/
-  Journal/Settings) vs the **resolved four** (Today/Story/Write/Settings). The
-  four-nav resolution folds: **Home → Today** (this whole dashboard *is* the
-  Today screen), **Timeline + Memories → Story** (the compounding archive of
-  entries, memories, milestones), **Journal → Write**, **Settings → Settings**.
-  Recorded under the four-nav model pending author confirmation (Q13). Every
-  Section-D requirement maps cleanly onto **Today** (the dashboard) with no loss.
+- ✅ **Navigation count — RESOLVED (Q13, 2026-07-22): four governs.** Five
+  destinations (Home/Timeline/Memories/Journal/Settings) fold onto the resolved
+  four: **Home → Today** (this whole dashboard *is* the Today screen), **Timeline
+  + Memories → Story** (the compounding archive of entries, memories,
+  milestones), **Journal → Write**, **Settings → Settings**. Every Section-D
+  requirement maps cleanly onto **Today** with no loss; the built shell stands.

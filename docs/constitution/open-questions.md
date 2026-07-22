@@ -46,17 +46,17 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
 - **Offline-era work → repurposed** as draft cache/graceful reconnection/
   resilience; all "offline-first" messaging to be corrected. 🟢
 
+## ✅ Resolved 2026-07-22 — Part 3 Section D
+- **Q13 — Navigation count (four vs five).** 🟢 **Four governs** (Today · Story ·
+  Write · Settings). Section D's five-destination nav (Home/Timeline/Memories/
+  Journal/Settings) is the older IA; author expressed **no preference**, so the
+  resolved four-nav decision (Q2) stands and the built shell is preserved.
+  **Mapping:** Home → **Today** (the dashboard *is* the Today screen), Timeline +
+  Memories → **Story**, Journal → **Write**, Settings → **Settings**. Every
+  Section-D requirement maps on with no loss. Revisitable if the full Part 3
+  (E–T) + Part 4 IA argues otherwise.
+
 ## 🔴 Still open
-- **Q13 — Navigation count (four vs five), re-raised by Part 3 Section D.** 🔴
-  Section D (received 2026-07-22) specifies a **five**-destination bottom nav
-  (Home / Timeline / Memories / Journal / Settings). This contradicts the
-  **resolved four** (Today · Story · Write · Settings — "Home + Questions fold
-  into Today; no fifth ever", Q2, 2026-07-21), which the shipped app is built to.
-  - **Recommendation:** keep **four**; Section D is the older IA. Map: Home →
-    **Today** (the dashboard *is* Today), Timeline + Memories → **Story**,
-    Journal → **Write**, Settings → **Settings**. Every Section-D requirement
-    maps on with no loss, and it avoids re-architecting the built shell.
-  - **Decision:** ⏳ awaiting author confirmation.
 - **Remaining Part 3 sections (E–T) and all of Part 4** (schema DDL, RLS
   policies, deploy blueprint) — pending. Milestone 2 code build stays on hold
   until they arrive.
