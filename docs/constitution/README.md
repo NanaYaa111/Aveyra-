@@ -47,6 +47,8 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [user-research-report.md](user-research-report.md) | Validation survey (n=13) — the empirical basis for communication-first; feature-priority signal |
 | [volume-2-parts-3-4-decisions.md](volume-2-parts-3-4-decisions.md) | Preview of Parts 3–4 scope + a full decisions batch (Supabase sequencing, auth, question bank, domain/hosting, notifications, beta, milestones) |
 | [volume-2-part-3-sections-a-d.md](volume-2-part-3-sections-a-d.md) | **Part 3 feature specs A–D** — Authentication, Relationship Space & Invitation, Onboarding, Home Dashboard *(nav conflict resolved: four destinations govern; Section D mapped on — Home→Today, Timeline+Memories→Story, Journal→Write, Q13)* |
+| [volume-2-part-3-sections-e-to-i.md](volume-2-part-3-sections-e-to-i.md) | **Part 3 feature specs E–I** — Daily Questions, Shared Memories, Timeline *(from recap)*, Private Journal, Search & Discovery *(question categories: 9 canonical from Section E supersede the draft bank's 10 — Q14; M2 schema additions catalogued)* |
+| [love-maps-example-questions.md](love-maps-example-questions.md) | Author-provided example Love Maps questions (Discovery sub-category) — tone/depth reference to seed the M2 question bank |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
 > two-device, and connected** — **offline-first has been dropped** as a product
@@ -57,13 +59,14 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 
 **Status:** Volume 1 complete (Parts 1–5, as amended). Volume 2: Parts 1–2
 (Sections A–P), the product-strategy directives, the user-research report, a
-**Parts 3–4 scope-preview + decisions batch**, and now **Part 3 Sections A–D**
-(auth, relationship space, onboarding, home dashboard) received; **Part 3
-Sections E–T and all of Part 4 (schema/RLS/deploy blueprint) still to come**.
-Volumes 3–4 pending. Milestone 1 (built foundation) shipped and approved;
-Milestone 2 planned in detail but **code build remains on hold until the full
-Parts 3–4 arrive** (only 4 of Part 3's 20 sections are in). Section D's five-nav
-conflict resolved in favour of the existing four-nav (Q13).
+**Parts 3–4 scope-preview + decisions batch**, and now **Part 3 Sections A–I**
+(auth, relationship space, onboarding, home dashboard, daily questions, memories,
+timeline, journal, search) received; **Part 3 Sections J–T and all of Part 4
+(schema/RLS/deploy blueprint) still to come**. Volumes 3–4 pending. Milestone 1
+(built foundation) shipped and approved; Milestone 2 planned in detail but **code
+build remains on hold until the full Parts 3–4 arrive** (9 of Part 3's 20
+sections are in). Resolved along the way: Section D five-nav → keep four (Q13);
+question categories → 9 canonical from Section E, draft bank to be re-mapped (Q14).
 
 ## North Star (Volume 2)
 

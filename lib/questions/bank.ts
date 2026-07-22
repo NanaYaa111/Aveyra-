@@ -3,7 +3,15 @@
  * DRAFT QUESTION BANK — for review, not final.
  * ============================================================================
  *
- * ~200 questions across the ten categories, plus the fixed opening question.
+ * ⚠️ CATEGORY RECONCILIATION (Volume 2 Part 3 Section E, open-questions Q14):
+ * Section E defines the CANONICAL 9 categories — Discovery, Appreciation,
+ * Memories, Communication, Dreams & Future, Growth, Reflection, Fun & Play,
+ * Conflict & Repair (+ a Love Maps sub-category under Discovery). The ten ad-hoc
+ * slugs below predate that spec and must be RE-MAPPED to the 9 when the M2
+ * question bank is built. The rotation engine is category-agnostic, so this is a
+ * content change only. See docs/constitution/love-maps-example-questions.md.
+ *
+ * ~200 questions across the ten (draft) categories, plus the fixed opening question.
  * Authored to the spec (Parts 3–4 decisions batch): warm, open, invitation-
  * style prompts; questions deepen gradually WITHIN a category (the `depth`
  * hint) but difficulty is never surfaced (open-questions Q9). Nothing here

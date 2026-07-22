@@ -56,8 +56,21 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   Section-D requirement maps on with no loss. Revisitable if the full Part 3
   (E–T) + Part 4 IA argues otherwise.
 
+## 🟡 Reconciliation pending build — 2026-07-22 (Part 3 Section E)
+- **Q14 — Question categories: 9 canonical (Section E) supersede "10".** 🟡
+  Section E's authoritative categories are **Discovery · Appreciation · Memories ·
+  Communication · Dreams & Future · Growth · Reflection · Fun & Play · Conflict &
+  Repair** (+ **Love Maps** sub-category under Discovery). The built **draft** bank
+  (`lib/questions/bank.ts`) uses 10 different ad-hoc slugs and was always flagged
+  draft. **Resolution:** Section E governs. **Action (M2 content build):** re-map
+  the draft questions to the 9 categories, add Conflict & Repair (reserved for
+  matured relationships), fold Love Maps under Discovery, seed from
+  [love-maps-example-questions.md](love-maps-example-questions.md). The rotation
+  engine is category-agnostic, so this is content-only — no code decision needed
+  now; done as part of the M2 question-bank build.
+
 ## 🔴 Still open
-- **Remaining Part 3 sections (E–T) and all of Part 4** (schema DDL, RLS
+- **Remaining Part 3 sections (J–T) and all of Part 4** (schema DDL, RLS
   policies, deploy blueprint) — pending. Milestone 2 code build stays on hold
   until they arrive.
 - Nothing else is currently blocking.
