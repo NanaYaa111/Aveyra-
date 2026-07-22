@@ -103,6 +103,27 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   without consent) remain binding. See the README permanent-prohibitions
   amendment.
 
+## ✅ Resolved by default 2026-07-22 (author: "no preference" → Claude defaults; revisitable)
+
+Pre-Part-4 ambiguity sweep of Part 3. Author deferred; guardian defaults applied.
+
+- **Q18 — Media in MVP → photos only (video later).** 🟢 Resolves the Section F
+  (video = future) vs Section L (video = supported) ambiguity in favour of
+  **images only for v1**; video is a documented future enhancement. Keeps Part 4
+  media architecture simpler (no transcoding/large-file pipeline at launch).
+- **Q19 — Minimum age → 18+.** 🟢 Adults-only; simplest legal posture for a
+  romantic-relationship product (avoids child-privacy regimes). Enforced at
+  onboarding; firm value confirmed with legal review before public launch
+  (Section S).
+- **Q20 — Data region → EU (London/Frankfurt).** 🟢 Best latency to West Africa
+  among Supabase regions + strong GDPR regime. Applied when Part 4 provisions the
+  production Supabase project; final region reconfirmed at provisioning.
+- **Q21 — Partner leaves / relationship ends → both keep a copy.** 🟢 Intent for
+  the Part-4 dissolution policy: the shared space is **archived** and **each
+  partner keeps their own frozen copy/export** of shared memories (no immediate
+  deletion; no one loses their history). Exact mechanics (grace period, export
+  packaging, RLS on the archived space) detailed in Part 4.
+
 ## 🔴 Still pending
 - **Volume 2 · Part 3 is COMPLETE (A–T, 20 sections).** The only remaining spec
   gate is **Volume 2 · Part 4 — Technical Architecture & Engineering
