@@ -131,8 +131,10 @@ graceful disconnection). **Telemetry (Q17 narrow amendment):** opt-in, aggregate
 **non-content** crash + performance metrics only — **no** behavioral/feature-usage
 analytics, activity dashboards, third-party analytics scripts, or user A/B.
 
-**Provisional product defaults (2026-07-22, Q18–Q21; revisitable):** media v1 =
-**photos only** (video later); **18+** minimum age; **EU** data region
-(London/Frankfurt) for Supabase; on relationship dissolution **both partners keep
-a frozen copy** of shared memories (space archived, no immediate deletion). Age,
-region, and dissolution mechanics are firmed in Part 4 / legal review.
+**Product decisions (2026-07-22, Q18–Q21, author-confirmed):** media v1 = **photos
+only** (JPEG/PNG/HEIC/WebP; video later — image-only pipeline: upload / compress /
+thumbnail / cache); **18+** minimum age (no child-consent flows); **EU** Supabase
+region (London/Frankfurt); relationship dissolution → **Relationship Archive**
+(space archived, each partner keeps a read-only, exportable copy of shared
+memories; private journals unaffected). Exact archive mechanics + final region
+confirmed in Part 4.

@@ -103,26 +103,32 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   without consent) remain binding. See the README permanent-prohibitions
   amendment.
 
-## ✅ Resolved by default 2026-07-22 (author: "no preference" → Claude defaults; revisitable)
+## ✅ Author-confirmed 2026-07-22 (pre-Part-4 ambiguity sweep)
 
-Pre-Part-4 ambiguity sweep of Part 3. Author deferred; guardian defaults applied.
+All four chosen as recommended (Option A), with reasoning + concrete spec impact.
 
-- **Q18 — Media in MVP → photos only (video later).** 🟢 Resolves the Section F
-  (video = future) vs Section L (video = supported) ambiguity in favour of
-  **images only for v1**; video is a documented future enhancement. Keeps Part 4
-  media architecture simpler (no transcoding/large-file pipeline at launch).
-- **Q19 — Minimum age → 18+.** 🟢 Adults-only; simplest legal posture for a
-  romantic-relationship product (avoids child-privacy regimes). Enforced at
-  onboarding; firm value confirmed with legal review before public launch
-  (Section S).
-- **Q20 — Data region → EU (London/Frankfurt).** 🟢 Best latency to West Africa
-  among Supabase regions + strong GDPR regime. Applied when Part 4 provisions the
-  production Supabase project; final region reconfirmed at provisioning.
-- **Q21 — Partner leaves / relationship ends → both keep a copy.** 🟢 Intent for
-  the Part-4 dissolution policy: the shared space is **archived** and **each
-  partner keeps their own frozen copy/export** of shared memories (no immediate
-  deletion; no one loses their history). Exact mechanics (grace period, export
-  packaging, RLS on the archived space) detailed in Part 4.
+- **Q18 — Media in MVP → photos only (video later).** 🟢 Section L v1 = **images
+  only (JPEG / PNG / HEIC / WebP)**; video is an explicit future enhancement.
+  Part 4 media pipeline focuses on **image upload, compression, thumbnails,
+  caching** — no transcoding/streaming at launch (heavier storage/egress avoided).
+- **Q19 — Minimum age → 18+.** 🟢 Adults-only at launch (GDPR Art. 8 sets 16 as
+  default child-consent age; a couples/journaling product is simpler/safer as an
+  adult product). Section S + onboarding: *"Aveyra is for users 18 and older."*
+  **No child-specific consent / parental-verification flows in v1.** Revisit only
+  with legal review.
+- **Q20 — Data region → EU (London / Frankfurt).** 🟢 Primary production Supabase
+  project in an **EU region** — best latency to Accra/West Africa among available
+  regions + clean GDPR-grade posture aligned with Section O. Part 4: *"Primary
+  production environment: Supabase project in EU region."* Region reconfirmed at
+  provisioning.
+- **Q21 — Relationship ends / partner leaves → "Relationship Archive" (both keep a
+  copy).** 🟢 Concrete policy: the shared relationship space is marked
+  **archived** (no new content); **each partner retains a read-only personal copy
+  of the shared memories and can export them**; the archive follows the retention/
+  deletion rules — **no silent data loss**. **Private journals are unaffected**
+  (only shared data is archived). Part 4 / Section B: define the **Relationship
+  Archive** state + per-partner frozen copies (grace period, export packaging, RLS
+  on the archived space).
 
 ## 🔴 Still pending
 - **Volume 2 · Part 3 is COMPLETE (A–T, 20 sections).** The only remaining spec
