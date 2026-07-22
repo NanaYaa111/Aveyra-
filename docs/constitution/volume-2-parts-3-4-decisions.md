@@ -45,8 +45,12 @@ Research sources: Gottman Institute, Esther Perel, Arthur Aron (36 Questions),
 relationship psychology research, the user survey, Aveyra's own philosophy.
 **Categories (expanded from 5 to 10):** Discovery · Appreciation · Memories ·
 Communication · Dreams & Future · Growth · Reflection · Gratitude · Fun & Play ·
-Conflict & Repair. Tone: natural, warm, conversational. *(Supersedes the
-5-category list in the Sections B–D doc — this 10-category set now governs.)*
+Conflict & Repair. Tone: natural, warm, conversational. *(Superseded the
+5-category list in the Sections B–D doc.)* **⚠️ Refined by Part 3 Section E to the
+canonical 9 — this list minus standalone "Gratitude" (folded into Appreciation),
+plus a Love Maps sub-category under Discovery. Section E governs; see
+[open-questions.md](open-questions.md) Q14 and
+[volume-2-part-3-sections-e-to-i.md](volume-2-part-3-sections-e-to-i.md).**
 
 ## 6. First shared question — official
 > **"What's one small thing about yourself that you hope I always remember?"**

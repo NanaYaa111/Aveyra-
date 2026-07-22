@@ -150,7 +150,7 @@ React Hook Form · Zod · PWA · Vitest · ESLint · Prettier · pnpm.
 | Supabase sequencing | **Option B** — build against a local mock first; provision the production project when Part 4 begins. |
 | Auth | **Email OTP / magic link**; email is the primary identifier. |
 | Hosting / domain | **Vercel** + Supabase; domain **aveyra.app**. |
-| Question bank | **~200 questions, 10 categories** (see decisions batch); first question fixed. |
+| Question bank | **~200 questions, 9 canonical categories** (Part 3 Section E — refines the earlier "10" by folding standalone Gratitude into Appreciation, + a Love Maps sub-category; Q14); first question fixed. |
 | Notifications v1 | **None** — in-app only; push/email later. |
 | Beta | Private beta, **5–10 couples**, before public release. |
 

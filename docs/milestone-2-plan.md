@@ -4,10 +4,13 @@ Implements the [web-first amendment](constitution/amendment-2026-07-21-web-first
 Presented for approval (cadence A). **Nothing is torn out until this is approved.**
 
 > ⏸️ **On hold:** code build does not start until the full **Volume 2 Parts 3–4**
-> (detailed feature specs + schema/RLS/deploy blueprint) arrive. The 2026-07-21
-> decisions batch ([volume-2-parts-3-4-decisions.md](constitution/volume-2-parts-3-4-decisions.md))
-> previews their scope and resolves most open questions — reflected below —
-> but the per-feature specs and DDL are still to come.
+> arrive. **Part 3 Sections A–I received (2026-07-22)** — feature specs for auth,
+> relationship space, onboarding, home dashboard, daily questions, memories,
+> timeline, journal, and search — recorded in
+> [Part 3 A–D](constitution/volume-2-part-3-sections-a-d.md) and
+> [Part 3 E–I](constitution/volume-2-part-3-sections-e-to-i.md). **Still pending:
+> Part 3 Sections J–T and all of Part 4 (schema DDL / RLS / deploy blueprint)** —
+> so the build stays on hold.
 
 ## Locked decisions (confirmed by Volume 2 Sections E–P, 2026-07-21)
 - **Backend: Supabase** — Auth + Postgres + Realtime + Row-Level Security.
@@ -32,10 +35,13 @@ Presented for approval (cadence A). **Nothing is torn out until this is approved
   `.io` / `.com`).
 - **Supabase sequencing: build against a local mock first** (Option B) — the
   production project is provisioned **when Part 4 begins**, not before.
-- **Question bank: ~200 questions across 10 categories** (Discovery,
-  Appreciation, Memories, Communication, Dreams & Future, Growth, Reflection,
-  Gratitude, Fun & Play, Conflict & Repair). **First shared question:** *"What's
-  one small thing about yourself that you hope I always remember?"*
+- **Question bank: ~200 questions across the canonical 9 categories** (Part 3
+  Section E — Discovery, Appreciation, Memories, Communication, Dreams & Future,
+  Growth, Reflection, Fun & Play, Conflict & Repair; + a **Love Maps** sub-
+  category under Discovery). *(Refines the earlier "10" — standalone Gratitude
+  folded into Appreciation; Q14. The built draft bank must be re-mapped to these
+  9 during the content build.)* **First shared question:** *"What's one small
+  thing about yourself that you hope I always remember?"*
 - **Question timing:** synced to the relationship's primary timezone (set at
   space creation); exhaustion → shuffle → new randomized cycle, never repeat
   consecutively. **Skip:** silent, no partner notification, question returns later.
@@ -87,6 +93,28 @@ against a schema that's still evolving.
 7. **Private beta** — 5–10 couples; feedback form, interview guide, bug-report
    and feature-request templates; validate real relationship interactions, not
    just technical function.
+
+## Feature specs → build stages (Part 3 A–I received)
+The received specs map onto the stages above: **A** Auth → stages 1–2 · **B**
+Relationship Space & Invitation → stage 2 · **C** Onboarding → stage 2 · **D**
+Home Dashboard → **Today** (stage 3) · **E** Daily Questions → stage 3
+(*selection rules already implemented* by `lib/questions/rotation.ts`) · **F**
+Memories + **G** Timeline → **Story** (stage 4) · **H** Journal → **Write**
+(stage 4) · **I** Search & Discovery → a search surface within Today/Story
+(after stage 4).
+
+**M2 schema additions implied by E–I** (for the Part-4 DDL): Memory +tags / mood
+/ related_question_id / multiple photos / creator_id · JournalEntry +mood / tags
+/ photos (≤3) / favorite · new DailyQuestion instance + per-partner Answer +
+reveal state · **TimelineEvent** (event+reference model) · **search index** ·
+question↔memory links. **Hard RLS rule:** journal is owner-only everywhere —
+never in shared search, timeline, or partner views.
+
+**M1 head start:** field-level **encryption at rest is already implemented**
+(`DatabaseService` auto-inits a vault and encrypts content fields) and **export /
+import** ships — a running start on the staged-privacy "encrypted at rest" +
+data-portability requirements. The at-rest crypto carries into the Supabase
+stage; the M1 device keypairs remain reserved for the later E2EE stage.
 
 ## Retained rules (unchanged)
 All §1.2 prohibitions (no streaks/scores/comparison), "support connection, never

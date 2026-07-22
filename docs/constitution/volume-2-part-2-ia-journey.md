@@ -34,7 +34,7 @@ user also has an independent **Personal Space**: private journals, drafts,
 personal preferences, device-specific settings. *(This matches the two-device
 amendment's data model and the shared/private encryption boundary.)*
 
-## 4. High-Level Navigation — ⚠️ five destinations (DISPUTED)
+## 4. High-Level Navigation — ✅ RESOLVED: four govern (Q13); the five below fold on
 | V2P2 destination | Purpose | Maps to V1's four |
 |---|---|---|
 | **Home** | Session start: greeting, relationship summary, today's question, recent activity, upcoming milestones | (part of) **Today** |
@@ -43,8 +43,11 @@ amendment's data model and the shared/private encryption boundary.)*
 | **Journal** | Private entries, drafts, search, history (owner only) | **Write** |
 | **Profile** | Relationship details, partner info, backup/restore, privacy, notifications, export/import, help, about | **Settings** |
 
-The only structural change vs Volume 1 is **splitting Today into Home +
-Questions** (the added fifth destination). Everything else is a rename.
+This proposed five-destination split was **NOT adopted.** Resolved 2026-07-21
+(Q2) and reaffirmed against Part 3 Section D (Q13, 2026-07-22): **keep four** —
+Today · Story · Write · Settings. Home + Questions stay folded into **Today**;
+Memories + Timeline → **Story**; Journal → **Write**; Profile → **Settings**. The
+"Maps to V1's four" column above is the binding mapping.
 
 ## 5. User Journey (six stages)
 1. **Discovery** — learn about Aveyra, build trust, create curiosity.

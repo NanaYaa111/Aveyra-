@@ -34,6 +34,8 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
 - **Hosting/domain → Vercel + Supabase; aveyra.app** (fallbacks .co/.io/.com). 🟢
 - **Question bank → ~200 questions, 10 categories**; first question fixed
   ("What's one small thing about yourself that you hope I always remember?"). 🟢
+  *(⚠️ later refined to the canonical **9** by Part 3 Section E — dropped standalone
+  Gratitude; see Q14 below.)*
 - **Question timing → relationship's primary timezone**; exhaustion → shuffle →
   new cycle, no consecutive repeats. 🟢
 - **Skip → silent, no partner notification, returns later.** 🟢
@@ -60,9 +62,11 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
 - **Q14 — Question categories: 9 canonical (Section E) supersede "10".** 🟡
   Section E's authoritative categories are **Discovery · Appreciation · Memories ·
   Communication · Dreams & Future · Growth · Reflection · Fun & Play · Conflict &
-  Repair** (+ **Love Maps** sub-category under Discovery). The built **draft** bank
-  (`lib/questions/bank.ts`) uses 10 different ad-hoc slugs and was always flagged
-  draft. **Resolution:** Section E governs. **Action (M2 content build):** re-map
+  Repair** (+ **Love Maps** sub-category under Discovery). Two earlier "10"s are
+  superseded: (a) the decisions-batch's 10 — **Section E's 9 = that list minus
+  standalone Gratitude, folded into Appreciation**; and (b) the built **draft**
+  bank (`lib/questions/bank.ts`), which uses 10 different ad-hoc slugs and was
+  always flagged draft. **Resolution:** Section E governs. **Action (M2 content build):** re-map
   the draft questions to the 9 categories, add Conflict & Repair (reserved for
   matured relationships), fold Love Maps under Discovery, seed from
   [love-maps-example-questions.md](love-maps-example-questions.md). The rotation

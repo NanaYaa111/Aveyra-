@@ -3,6 +3,14 @@
 *Version 1.0 · Approved for Phase 1 Development.*
 *(Written under the "Weave" working title — read as **Aveyra**.)*
 
+> 🔺 **Amended (2026-07-21):** "**offline-first**" throughout this doc is
+> **superseded** — Aveyra is now **web-first, two-device, and connected** (see the
+> [web-first amendment](amendment-2026-07-21-web-first-two-device.md)). Read
+> "offline-first platform" as "private, connected platform with graceful
+> disconnection." The navigation described here also predates the **four-destination**
+> resolution (Today · Story · Write · Settings — Q13); four govern. All
+> emotional-safety and privacy rules remain fully in force.
+
 ## Purpose
 Defines the product vision, UX philosophy, information architecture, navigation
 model, target users, and Phase 1 scope.
