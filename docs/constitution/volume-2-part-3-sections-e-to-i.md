@@ -9,10 +9,13 @@
 > Future Enhancements · Research Basis** — to keep the spec implementation-ready.
 > Applied below.
 
-> **Two guardian flags:**
-> 1. **Section G (Timeline)** arrived only as a *research recap* (its data model,
->    flows, edge cases, acceptance), **not** a numbered primary spec. Recorded
->    from the recap; if the primary text differs, it supersedes.
+> **Guardian flags:**
+> 1. ✅ **Section G (Timeline) — primary spec received 2026-07-22.** Originally
+>    recorded from its research recap; the authoritative numbered spec has now
+>    arrived and is captured below. It **matches the recap** (identical data
+>    model, flows, edge cases, acceptance) and **adds** layout, event cards, event
+>    types, navigation, empty state, anniversary highlights, and Memory
+>    Collections. No conflict.
 > 2. 🔺 **Question categories — reconciliation (see the batch summary).** Section E
 >    lists **9** canonical categories; the earlier decision said "**10**", and the
 >    built **draft** bank uses 10 different ad-hoc slugs. Section E governs — the
@@ -159,42 +162,96 @@ creator_id. Filter/search = Section I.
 
 ---
 
-## Section G — Timeline  *(reconstructed from research recap — primary spec pending)*
+## Section G — Timeline  *(authoritative primary spec, received 2026-07-22)*
 
-**Purpose.** A calm, chronological "living storybook" combining memories,
-milestones, and saved conversations into one co-owned, private, reflective
-journey (not social, not algorithmic).
+**Purpose.** Aveyra's **living storybook** — the relationship's meaningful moments
+in a single chronological journey, to look back on where they've been and
+rediscover shaping experiences. **Not a social feed; a private archive for
+reflection, not consumption.**
 
-- **Data Model (event).** Event id · relationship id · **event type** (memory /
-  milestone / conversation / anniversary…) · **reference id** (→ underlying
-  record) · title · preview (short text from source) · cover image (opt) ·
-  **timestamp** (the "when") · tags · created · updated. *(Clean separation:
-  timeline event + referenced entity → chronological ordering independent of
-  content type, fast listing, auto-update when the source changes.)*
-- **User Flow.** A meaningful event occurs (memory/milestone/saved question) →
-  app creates/updates a linked Timeline event → appears in the vertical
-  chronological view → browse/search by year/month/type/tags/keywords → open card
-  → full detail. **Editing the source updates the card; the Timeline itself is
-  read-only.**
-- **Edge Cases.** Empty relationship · very large histories (hundreds/thousands) ·
-  missing images (fallback) · deleted memories (card updated/soft-removed) ·
-  duplicate timestamps (order by timestamp then created_at) · timezone (display in
+**Objectives.** Present the story chronologically · encourage reflection · make
+important moments easy to revisit · give context to memories/milestones · stay
+visually calm · scale gracefully over years.
+
+**Principles.** Every relationship has a story · **reflection over consumption**
+(explored thoughtfully, not endlessly scrolled) · chronological clarity · **equal
+representation** (belongs equally to both; neither partner's contributions
+dominate visually).
+
+**Content.** Shared Memories · saved Daily Questions · Milestones · Anniversaries
+· Firsts (First Memory, First Question, First Month…) · future manually-pinned
+moments. **Private Journal entries NEVER appear in the Timeline.**
+
+**Layout.** Vertical chronological, grouped by **Year / Month / Day** (where
+appropriate); each event a **card connected by a subtle timeline line**; elegant,
+spacious, scannable.
+
+**Event cards.** Title · date · event type · cover photo (if any) · short preview.
+Tap → full details.
+
+**Event types.** Shared Memory (manual or from a question) · Milestone (auto or
+manual) · Conversation (a saved Daily Question) · Anniversary (auto, from start
+date) · future types (shared goals/achievements).
+
+**Navigation.** Scroll naturally through time · jump to a specific year · jump to
+the beginning · return quickly to the present. Intuitive even after many years.
+
+**Search & filters.** By year · month · event type · tags · photos · milestones ·
+keyword.
+
+**Empty state.** "Your story is just beginning. Every meaningful conversation and
+memory you choose to save will become part of your journey together." Actions:
+*Answer Today's Question* · *Create Your First Memory*.
+
+**Anniversary highlights.** One Month · Six Months · One Year · Five Years get
+**subtle** emphasis — no flashy celebrations; warm and reflective.
+
+**Memory Collections.** As it grows, Aveyra *may* auto-group related memories
+(e.g. "Summer 2026", "Vacation Memories", "Anniversary Week") to simplify
+navigation **without changing chronological order.**
+
+**Editing.** Users **cannot edit the Timeline itself** — they edit the underlying
+memory/milestone; changes appear automatically. (Timeline is read-only.)
+
+**Sharing.** Private. Future: export selected memories, anniversary books,
+printable collections. **No public sharing in the MVP.**
+
+**Visual/UX.** A modern digital scrapbook: large whitespace, soft dividers,
+rounded cards, elegant type, calm animations — invites slow exploration. Feels
+nostalgic, warm, personal, peaceful, rewarding — *invited to remember, not to
+consume.*
+
+- **Data Model (event).** Event id · relationship id · **event type** · **reference
+  id** (→ Memory/Milestone/etc.) · title · preview · cover image · **timestamp** ·
+  tags · created · updated. *(Clean separation of Timeline event + referenced
+  entity → chronological order independent of content type, fast listing,
+  auto-update when the source changes.)*
+- **User Flow.** Meaningful event occurs → saved → appears automatically in the
+  Timeline → browse/search → open for full detail → editing the original updates
+  the Timeline automatically.
+- **Edge Cases.** Empty relationship · hundreds/thousands of events · missing
+  images (fallback) · deleted memories (card updated/soft-removed) · duplicate
+  timestamps (order by timestamp then created_at) · timezone (display in
   relationship tz, respect original timestamps) · large photo collections (keep
   cards light) · corrupted media refs (safe fallback).
-- **Acceptance.** Correct chronological order across types · conversations/
-  memories/milestones consistently shown as cards · reliable filter/search by
-  date/type/tags/text · smooth performance across years/many events · source
-  edits update cards automatically · a11y (screen readers, headings, keyboard,
-  text size, high contrast, reduced motion).
-- **Future.** Map view · interactive journey viz · optional AI recap stories ·
-  printed books · themes (all optional, privacy-preserving).
-- **Research.** Autobiographical memory & intimacy · romantic nostalgia &
-  relationship functioning · digital-memory/journaling design · HIG · Material ·
-  NN/g/Mobbin archive patterns.
+- **Acceptance.** Correct chronological order · memories/milestones/saved
+  conversations shown consistently as cards · working search/filters · fast on
+  large datasets · source edits update cards automatically · a11y (screen readers,
+  **clearly announced chronological headings**, keyboard, text size, high
+  contrast, reduced motion).
+- **Future.** Map view · interactive journey viz · optional/transparent AI yearly
+  recap stories · shared-goal achievements · printed books · video highlights ·
+  collaboration themes (all reflection/privacy/storytelling-first).
+- **Research.** Survey · autobiographical memory, nostalgia & relationship
+  satisfaction · Mobbin archive/gallery · HIG · Material · NN/g.
 
-**Reconciliation.** Timeline maps to the resolved **Story** destination (four-nav,
-Q13). New `TimelineEvent` table for M2 (event+reference model above). No current
-equivalent; additive.
+**Reconciliation.** Timeline = the resolved **Story** destination (four-nav, Q13).
+New `TimelineEvent` table for M2 (event+reference model above); read-only view
+over Memories/Milestones/saved-Questions. **Firsts + anniversaries** align with
+the resolved minimal-milestones set (Relationship Created, Partner Joined, First
+Question Answered, First Shared Memory, First Month, Anniversary). **Memory
+Collections** (auto-grouping) is a new, additive, non-reordering concept. Private
+Journal exclusion reinforces the hard owner-only RLS rule.
 
 ---
 

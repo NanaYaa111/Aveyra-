@@ -47,7 +47,7 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [user-research-report.md](user-research-report.md) | Validation survey (n=13) — the empirical basis for communication-first; feature-priority signal |
 | [volume-2-parts-3-4-decisions.md](volume-2-parts-3-4-decisions.md) | Preview of Parts 3–4 scope + a full decisions batch (Supabase sequencing, auth, question bank, domain/hosting, notifications, beta, milestones) |
 | [volume-2-part-3-sections-a-d.md](volume-2-part-3-sections-a-d.md) | **Part 3 feature specs A–D** — Authentication, Relationship Space & Invitation, Onboarding, Home Dashboard *(nav conflict resolved: four destinations govern; Section D mapped on — Home→Today, Timeline+Memories→Story, Journal→Write, Q13)* |
-| [volume-2-part-3-sections-e-to-i.md](volume-2-part-3-sections-e-to-i.md) | **Part 3 feature specs E–I** — Daily Questions, Shared Memories, Timeline *(from recap)*, Private Journal, Search & Discovery *(question categories: 9 canonical from Section E supersede the draft bank's 10 — Q14; M2 schema additions catalogued)* |
+| [volume-2-part-3-sections-e-to-i.md](volume-2-part-3-sections-e-to-i.md) | **Part 3 feature specs E–I** — Daily Questions, Shared Memories, Timeline, Private Journal, Search & Discovery *(question categories: 9 canonical from Section E supersede the draft bank's 10 — Q14; M2 schema additions catalogued)* |
 | [love-maps-example-questions.md](love-maps-example-questions.md) | Author-provided example Love Maps questions (Discovery sub-category) — tone/depth reference to seed the M2 question bank |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
