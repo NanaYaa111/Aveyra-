@@ -209,11 +209,11 @@ new for M2. Location-metadata-hidden-by-default aligns with no-tracking.
 connected via permission-based relationships) · privacy by default (private info,
 no public profile, no discoverability) · simple security.
 
-**🔺 Account creation (CONFLICT — Q15).** Section M: **Email registration
-requires email + password + confirmation** (optional name/photo); §8 password
-requirements; §9 password recovery. *Future:* Google/Apple/passkeys/phone. **This
-contradicts Section A + the resolved decision (passwordless email OTP / magic
-link, no passwords).**
+**✅ Account creation (Q15 resolved → passwordless).** As written, Section M has
+**email + password + confirmation** (optional name/photo); §8 password
+requirements; §9 password recovery; *future:* Google/Apple/passkeys/phone. **This
+was superseded** — the credential is **email + OTP / magic link** (Section A + the
+resolved decision); the password items are recorded for history only.
 
 **Registration flow.** Open → Create Account → info → accept Terms & Privacy →
 account created → onboarding → create/join relationship.
