@@ -46,6 +46,7 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [volume-2-product-strategy.md](volume-2-product-strategy.md) | Positioning (communication-first), product principles, metrics, brand voice, feature-entry criteria, AI boundaries, North Star |
 | [user-research-report.md](user-research-report.md) | Validation survey (n=13) — the empirical basis for communication-first; feature-priority signal |
 | [volume-2-parts-3-4-decisions.md](volume-2-parts-3-4-decisions.md) | Preview of Parts 3–4 scope + a full decisions batch (Supabase sequencing, auth, question bank, domain/hosting, notifications, beta, milestones) |
+| [volume-2-part-3-sections-a-d.md](volume-2-part-3-sections-a-d.md) | **Part 3 feature specs A–D** — Authentication, Relationship Space & Invitation, Onboarding, Home Dashboard *(nav conflict flagged: Section D lists five destinations vs the resolved four — awaiting author confirmation, Q13)* |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
 > two-device, and connected** — **offline-first has been dropped** as a product
@@ -55,12 +56,14 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 > remain fully in force.
 
 **Status:** Volume 1 complete (Parts 1–5, as amended). Volume 2: Parts 1–2
-(Sections A–P), the product-strategy directives, the user-research report, and a
-**Parts 3–4 scope-preview + decisions batch** received; **the full Parts 3–4
-documents (per-feature specs, schema/RLS/deploy blueprint) still to come**.
+(Sections A–P), the product-strategy directives, the user-research report, a
+**Parts 3–4 scope-preview + decisions batch**, and now **Part 3 Sections A–D**
+(auth, relationship space, onboarding, home dashboard) received; **Part 3
+Sections E–T and all of Part 4 (schema/RLS/deploy blueprint) still to come**.
 Volumes 3–4 pending. Milestone 1 (built foundation) shipped and approved;
-Milestone 2 planned in detail but **code build on hold until the full Parts 3–4
-arrive**.
+Milestone 2 planned in detail but **code build remains on hold until the full
+Parts 3–4 arrive** (only 4 of Part 3's 20 sections are in). One open conflict to
+confirm: Section D's five-nav vs the resolved four-nav (Q13).
 
 ## North Star (Volume 2)
 
