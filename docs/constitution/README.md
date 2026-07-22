@@ -49,6 +49,8 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 | [volume-2-part-3-sections-a-d.md](volume-2-part-3-sections-a-d.md) | **Part 3 feature specs A–D** — Authentication, Relationship Space & Invitation, Onboarding, Home Dashboard *(nav conflict resolved: four destinations govern; Section D mapped on — Home→Today, Timeline+Memories→Story, Journal→Write, Q13)* |
 | [volume-2-part-3-sections-e-to-i.md](volume-2-part-3-sections-e-to-i.md) | **Part 3 feature specs E–I** — Daily Questions, Shared Memories, Timeline, Private Journal, Search & Discovery *(question categories: 9 canonical from Section E supersede the draft bank's 10 — Q14; M2 schema additions catalogued)* |
 | [love-maps-example-questions.md](love-maps-example-questions.md) | Author-provided example Love Maps questions (Discovery sub-category) — tone/depth reference to seed the M2 question bank |
+| [volume-2-part-3-sections-j-to-n.md](volume-2-part-3-sections-j-to-n.md) | **Part 3 feature specs J–N** — Notifications, Relationship Settings, Media Storage, Account/Identity/Auth, Offline-First Architecture *(🔺 conflicts: Section M passwords vs OTP — Q15; Section N offline-first vs web-first — Q16)* |
+| [volume-2-part-3-sections-o-to-r.md](volume-2-part-3-sections-o-to-r.md) | **Part 3 feature specs O–R** — Privacy/Security/Trust, Error Handling & Empty States, Performance/Reliability/QA, Product Analytics & Experimentation *(🔺 conflict: analytics/A-B vs the permanent no-analytics prohibition — Q17; P & Q largely validate the built M1)* |
 
 > 🔺 **Major direction change (2026-07-21):** Aveyra is now **web-first,
 > two-device, and connected** — **offline-first has been dropped** as a product
@@ -59,14 +61,16 @@ visual system **"First Light on the Path"** (Evergreen · Dawn Gold · Paper).
 
 **Status:** Volume 1 complete (Parts 1–5, as amended). Volume 2: Parts 1–2
 (Sections A–P), the product-strategy directives, the user-research report, a
-**Parts 3–4 scope-preview + decisions batch**, and now **Part 3 Sections A–I**
-(auth, relationship space, onboarding, home dashboard, daily questions, memories,
-timeline, journal, search) received; **Part 3 Sections J–T and all of Part 4
-(schema/RLS/deploy blueprint) still to come**. Volumes 3–4 pending. Milestone 1
-(built foundation) shipped and approved; Milestone 2 planned in detail but **code
-build remains on hold until the full Parts 3–4 arrive** (9 of Part 3's 20
+**Parts 3–4 scope-preview + decisions batch**, and now **Part 3 Sections A–R**
+received; **Part 3 Sections S–T and all of Part 4 (schema/RLS/deploy blueprint)
+still to come**. Volumes 3–4 pending. Milestone 1 (built foundation) shipped and
+approved; Milestone 2 planned in detail but **code build remains on hold until the
+full Parts 3–4 arrive AND three open conflicts are resolved** (18 of Part 3's 20
 sections are in). Resolved along the way: Section D five-nav → keep four (Q13);
-question categories → 9 canonical from Section E, draft bank to be re-mapped (Q14).
+question categories → 9 canonical from Section E (Q14). **Open conflicts needing
+author decisions:** Q15 (Section M passwords vs the resolved OTP passwordless),
+Q16 (Section N/Q offline-first vs the web-first pivot), Q17 (Section R analytics/
+experimentation vs the permanent no-analytics prohibition).
 
 ## North Star (Volume 2)
 

@@ -73,11 +73,43 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   engine is category-agnostic, so this is content-only — no code decision needed
   now; done as part of the M2 question-bank build.
 
-## 🔴 Still open
-- **Remaining Part 3 sections (J–T) and all of Part 4** (schema DDL, RLS
+## 🔴 Still open — conflicts from Part 3 J–R (need author decisions)
+
+- **Q15 — Auth method: passwordless OTP vs passwords.** 🔴 Section M (Part 3)
+  specifies **password** registration/login/recovery; **Section A + the resolved
+  decision specify passwordless email OTP / magic link, "no passwords."** Two
+  Part-3 sections disagree. *Recommendation:* keep **passwordless OTP** (Section A
+  + the resolved decision); treat Section M's password language as legacy.
+  **Decision:** ⏳ author.
+
+- **Q16 — Offline-first vs web-first.** 🔴 Section N ("the device is the primary
+  place… cloud synchronizes") and Section Q §1/§3 reassert **offline-first /
+  local-first**, contradicting the deliberate **2026-07-21 web-first pivot**
+  (offline-first dropped as a promise; cloud = source of truth; graceful
+  *disconnection* only). *Recommendation:* keep **web-first** and **reframe**
+  Section N's substance (save-locally-first draft cache, sync queue, conflict-
+  preservation, "Saved safely. Waiting to sync.") as the graceful-disconnection
+  layer under web-first — most of the spec survives. Alt: reverse the pivot to
+  offline-first (Section N governs). **Decision:** ⏳ author.
+
+- **Q17 — Analytics & experimentation vs the permanent prohibition.** 🔴 Section R
+  (+ O §15) build **product analytics + A/B experimentation** (feature-usage
+  telemetry, experiments). The **permanent prohibition** (Part 2 §1.2) bans
+  *"analytics, telemetry, tracking, third-party scripts"* and *"activity
+  dashboards"* — "never build, any phase." R's philosophy aligns (no manipulation/
+  dark patterns/engagement optimization; content never analyzed without consent),
+  but the mechanics conflict. Amendment-level. *Options:* (a) prohibition governs
+  — no analytics/telemetry/A-B (keep R's ethical guardrails as design rules); (b)
+  amend to permit strictly operational, aggregate, consented, **non-content,
+  non-behavioral** telemetry (crash + performance) + ethical time-limited A/B on
+  usability; (c) middle — opt-in crash/performance only, no feature-usage/
+  behavioral analytics, no user A/B. *Recommendation:* (c) or (a). **Decision:**
+  ⏳ author.
+
+## 🔴 Also pending
+- **Remaining Part 3 sections (S–T) and all of Part 4** (schema DDL, RLS
   policies, deploy blueprint) — pending. Milestone 2 code build stays on hold
-  until they arrive.
-- Nothing else is currently blocking.
+  until they arrive **and** Q15/Q16/Q17 are resolved.
 
 ---
 
