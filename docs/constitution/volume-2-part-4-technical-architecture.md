@@ -314,6 +314,25 @@ consistent with, or below, what M1 already ships — no new conflicts:
   quota-safe partial-export handling. **Aligns with our built backup/export engine**
   (`lib/backup`, `exportRecords`) and the Q21 Relationship-Archive decision. Entity
   list (memories/journal/messages/dates) is the six-feature scope → Q22.
+- **R — Internationalization & Localization** *(Proposed — not yet locked)*.
+  English-first, **localization-ready**: string externalization, locale-aware
+  date/number formatting, **RTL-ready** component structure; storage format stays
+  locale-independent. Consistent with our recorded "English only, localization-ready"
+  decision. i18n library choice is TBD → folds into Q24; Framer/Date-Planner refs →
+  Q24/Q22.
+- **S — Legal, Compliance & Data Governance** *(Proposed — not yet locked)*. Data
+  inventory, retention, and the engineering requirements a privacy policy / ToS must
+  be checked against — explicitly *"a technical spec, not legal counsel; AI-drafted
+  policy text is never final."* Flags the Q21 relationship-ending question as a
+  product decision to surface, not resolve unilaterally. Aligns with the pending
+  **ToS/Privacy drafting** next-step; no conflict.
+- **T — Future Architecture & Technical Roadmap** *(closing meta-document)*.
+  Consolidates every deferred/optional/"Proposed" item across 0 and A–S into a
+  phased roadmap and recommends a disposition (adopt/revise/drop) for the Proposed
+  sections O/Q/R/S. Its rule — *"do not resolve a cross-document conflict by quietly
+  picking one side; surface it for a human decision"* — validates this register.
+  Reveals the structure: **original outline = A–N, P, T; O, Q, R, S were added later**
+  as gap-fillers.
 
 **Where our build is *stricter* than the spec (keep ours; no action):**
 - **Encryption:** we ship client-side AES-GCM field encryption + PBKDF2-600k;
