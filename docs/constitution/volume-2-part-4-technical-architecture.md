@@ -235,6 +235,54 @@ C-4 to cover Phase-1 auth transport, not just the future sync layer.
 
 ---
 
+## FULL specifications received (B, C, D, E, F, G, P — 2026-07-23)
+
+Beyond the scaffolds, **seven sections arrived as complete, filled-in specs** (10–17K
+each). They add concrete detail but **no new conflict category** — each sharpens one
+of the four already open. Read in full:
+
+- **B (Tech Stack, full).** Pins the entire Document-0 stack with versions:
+  shadcn/ui, framer-motion ^11, zustand ^4.5, react-hook-form ^7.5, zod ^3.22,
+  recharts ^2.10, workbox, clsx, class-variance-authority, date-fns, uuid, husky.
+  Also: **`src/` layout** with `@/*` aliases; **`next build`/`next start` (SSR)** not
+  static export; Husky pre-commit; `@types/react ^18`. → all **C-3/Q24**. (Our M1:
+  bespoke, runtime deps = dexie/next/react/react-dom only; static `output:'export'`.)
+- **C (Frontend, full).** Routes = **`/memories`, `/journal`, `/planner`, `/chat`,
+  `/wellness`, `/settings`** (+ `/sign-in`, `/verify-otp`). **No Daily-Questions
+  surface at all** — no `/today`, `/story`, `/write`. Our entire four-nav is absent.
+  → strongest evidence for **C-1/Q22**. Also `features/` + Zustand stores + shadcn/ui
+  + RHF/Zod (**Q24**) and a **navy/maroon palette `#1F2A44` / `#8A3B52`** vs our
+  Evergreen "First Light on the Path" (design divergence under Q24).
+- **D (Backend/Sync, full).** **NestJS + PostgreSQL + TypeORM** Phase-2 blueprint;
+  custom `/auth` + JWT guards; LWW conflict resolution; treats Supabase as merely one
+  managed-Postgres *host* option. → **C-4/Q25** (we chose Supabase-native: GoTrue +
+  RLS + Realtime, no NestJS tier). Correctly keeps Phase-1 backend-agnostic. Tables
+  include `dates`, `messages` (**Q22**).
+- **E (Dexie schema, full).** Tables = **`memories, journal_entries, dates,
+  messages, settings`** — **omits the Daily-Questions core** (no `questions`/`answers`/
+  `revealSessions`) and **adds `dates`+`messages`** (**Q22**). `src/lib/db.ts`,
+  repository pattern, `sync_state`, soft-deletes. **Plaintext local storage** (no
+  field encryption) — *weaker* than our built client-side AES-GCM encryption. Has a
+  `rating?: 1–5` on memories ("how memorable") — a private self-rating, watch under
+  **Q23** but not gamification/comparison as written.
+- **F (Offline/Sync, full).** Optimistic writes; 5-state sync machine; IndexedDB
+  queue; exponential backoff (1s→30s); LWW; **Zustand `syncStore`**; SW background
+  sync (Phase 2). Consistent with our **outbox** model; only Zustand touches **Q24**.
+  (Note: F says "offline-first" in one line — superseded by web-first, Q16.)
+- **G (Auth, full).** Custom OTP → self-signed **HS256 JWT** (`sub/email/
+  relationshipId/exp/iss/aud`, 30-day); **Zustand `authStore`**; hybrid
+  memory+localStorage token; relationship scoping via JWT claim + FK check; rate
+  limits; 403-not-404. → **C-4/Q25** (Supabase Auth provides all this) and **Q24**
+  (Zustand). Principles (no passwords, relationship isolation, no-PII logs) ✓.
+- **P (API, full).** Recorded in its own section above.
+
+**Where our build is *stricter* than the spec (keep ours; no action):**
+- **Encryption:** we ship client-side AES-GCM field encryption + PBKDF2-600k;
+  D/E store local data in plaintext and treat E2EE as "optional/future." We exceed.
+- **Accessibility:** WCAG **2.2 AA** vs the specs' 2.1 AA (C-5). We exceed.
+
+---
+
 ## GUARDIAN CONFLICT REGISTER — OPEN (pending your decision)
 
 Document 0 predates several decisions we later locked together (Volume 1, Volume 2
