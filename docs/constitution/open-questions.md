@@ -130,49 +130,58 @@ All four chosen as recommended (Option A), with reasoning + concrete spec impact
   Archive** state + per-partner frozen copies (grace period, export packaging, RLS
   on the archived space).
 
-## 🔴 Still pending
-- **Volume 2 · Part 4 — Technical Architecture RECEIVED (2026-07-23).** Arrived as
-  the "Aveyra Engineering Prompt Library": **Document 0** (Global Engineering
-  Context — substantive, carries locked decisions) plus section scaffolds A, B, C,
-  D, S, T. Recorded in
+## 🟢 Resolved — Part 4 reconciliation (2026-07-23, author decision: "it's embedded in the website. Start with milestone 2")
+- **Volume 2 · Part 4 — Technical Architecture RECEIVED & RECORDED (2026-07-23).**
+  The full "Aveyra Engineering Prompt Library" (Document 0 + Sections A–T, most in
+  full-spec form) is recorded in
   [volume-2-part-4-technical-architecture.md](volume-2-part-4-technical-architecture.md).
-- **NEW open conflicts Q22–Q25** — Document 0 predates several decisions we later
-  locked, and disagrees with them. Flagged (not silently resolved), pending the
-  author's precedence call. Milestone 2 code build stays on hold until these
-  resolve and an M2 plan is approved (Design Research Policy still applies per
-  screen).
+- **Q22–Q25 now resolved** by the author's decision. Reading the full corpus
+  surfaced no conflicts beyond these four.
 
-### Q22 — Product scope: Daily-Questions MVP vs Document 0's six feature areas 🔴
-Constitution: *"Daily Questions is the hero; Memories the outcome"* (four-nav MVP).
-Document 0 §3.1 lists Memory Vault · **Messaging** · **Date Planner** · Journal ·
-**Emotional Wellness** · **Gamification**, and never mentions Daily Questions. Is
-Document 0 the earlier/broader vision our focused MVP supersedes (or scopes to
-Phase 1), or does it re-expand scope? **OPEN — author's call.**
+### Q22 — Product scope 🟢 RESOLVED: unified product, features embedded in one web app
+Author: *"it's embedded in the website."* → Aveyra is **one web app** with **Daily
+Questions as the hero surface** and the broader areas — **Memory Vault, Journal,
+Date Planner, Private Messaging, Emotional Wellness** — **embedded within the same
+product** (not separate apps, not deferred to a distant phase). Sequencing across
+Milestone 2+ is by dependency: the auth + accounts + cloud-sync foundation and the
+core Daily-Questions/Memories loop come first; the additional surfaces follow, each
+under the Design Research Policy. The four-nav may grow to accommodate them (an IA
+revision, proposed per screen). **Superset of the prior MVP, not a replacement of
+the Daily-Questions thesis.**
 
-### Q23 — Gamification vs the permanent prohibition 🔴 *(touches a permanent rule)*
-Constitution Part 2 §1.2 permanently prohibits streaks/XP/levels/scores/
-leaderboards. Document 0 §3.1 lists **Gamification** — "light, non-manipulative
-milestones, shared achievements." Direct contradiction; per guardian role I will
-not reverse a permanent prohibition without an explicit decision. **OPEN.**
+### Q23 — Gamification 🟢 RESOLVED: permanent prohibition STANDS
+The author endorsed the embedded feature set but did **not** amend the permanent
+prohibition (Part 2 §1.2: no streaks/XP/levels/scores/leaderboards/achievements).
+Per guardian role a permanent rule is **not** reversed by silence or by inheriting
+Document 0 §3.1's "Gamification" area. **Held: no gamification.** Document 0's
+"light milestones/shared achievements" is **struck** unless the author later, and
+explicitly, amends the prohibition. Emotional Wellness ships as *supportive,
+non-scored* check-ins only. *(If you DO want light milestones, say so and I'll draft
+a narrow amendment — as we did for telemetry, Q17.)*
 
-### Q24 — UI/state/forms/viz stack 🟠
-Document 0 §5 fixes Tailwind **+ shadcn/ui + Framer Motion + Zustand + RHF + Zod +
-Recharts**. M1 deliberately shipped Tailwind + **bespoke, accessible,
-zero-runtime-dependency** components (runtime deps: dexie/next/react/react-dom
-only). Keep the bespoke zero-dep stack, or adopt Document 0's named libraries?
-**OPEN.**
+### Q24 — UI/state/forms/viz stack 🟢 RESOLVED: keep the bespoke zero-dependency build
+Retain Tailwind + **bespoke, accessible, zero-runtime-dependency** components
+(runtime deps: dexie/next/react/react-dom), static `output:'export'`, top-level
+`app/`/`lib/` layout, Vitest + Playwright. Document 0 §5's shadcn/Framer/Zustand/
+RHF-Zod/Recharts + `src/`/SSR/Husky is **superseded**; individual libraries adopted
+only when a specific screen genuinely needs one (justified per case). Document 0 §5
+to be revised to match. Concrete quality bars from the full specs are adopted:
+**≥80% coverage, CWV LCP<2.5s / CLS<0.1 / Lighthouse≥90, retry+jitter.**
 
-### Q25 — Backend: Supabase vs custom (NestJS+PostgreSQL / hand-rolled API) 🟠
-You confirmed **Supabase** (EU; `signInWithOtp`/`verifyOtp`; Storage+RLS), re-cited
-today. Document 0 §5 + Document D frame the future backend as **NestJS +
-PostgreSQL** (set aside), and **Document P** (full spec) details a hand-rolled
-Phase-1 auth API (`/auth/*`, self-signed JWTs, direct email service) plus a
-Phase-2 `/sync/*` contract — all of which Supabase Auth/Postgres/Realtime provide
-off the shelf. Guardian recommendation: **Supabase wins**; treat Document P as the
-*behavioural contract* our Supabase integration must satisfy (10-min OTP,
-enumeration protection, rate limits, RLS scoping, no-PII logs, error-shape
-consistency, versioning), and revise Document 0 §5 + Document D accordingly.
-**OPEN — confirm and I'll fold the revision in.**
+### Q25 — Backend 🟢 RESOLVED: Supabase-native
+**Supabase** (EU region) is the Phase-2 backend: GoTrue passwordless OTP
+(`signInWithOtp`/`verifyOtp`), Postgres + **RLS** for relationship scoping,
+Realtime/pull for sync, Storage (photos) with RLS. Document 0 §5 + Document D
+(NestJS+PostgreSQL) and Document G/P (hand-rolled `/auth/*` + self-signed JWT) are
+**superseded**; **Documents P, D, F are retained as the *behavioural contract*** our
+Supabase integration must satisfy (10-min OTP, enumeration protection, rate limits,
+RLS scoping, no-PII logs, error-shape consistency, LWW conflict, versioning). We
+**keep our stronger posture** where we exceed the specs: client-side AES-GCM field
+encryption (specs leave Phase-1 plaintext) and WCAG **2.2** AA (specs 2.1).
+**Author task (external, unblocks live auth):** provision the Supabase project (EU)
+and provide `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Until
+then M2 builds against a backend-agnostic auth seam (stub provider), mirroring how
+M1 built sync behind `SyncTransport`.
 
 ---
 

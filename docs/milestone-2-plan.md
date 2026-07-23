@@ -3,17 +3,26 @@
 Implements the [web-first amendment](constitution/amendment-2026-07-21-web-first-two-device.md).
 Presented for approval (cadence A). **Nothing is torn out until this is approved.**
 
-> ⏸️ **On hold:** code build does not start until **Volume 2 · Part 4** arrives.
-> **Volume 2 · Part 3 is COMPLETE (all 20 sections A–T, received 2026-07-22)** —
-> the full feature specs, recorded across
-> [A–D](constitution/volume-2-part-3-sections-a-d.md),
-> [E–I](constitution/volume-2-part-3-sections-e-to-i.md),
-> [J–N](constitution/volume-2-part-3-sections-j-to-n.md),
-> [O–R](constitution/volume-2-part-3-sections-o-to-r.md), and
-> [S–T](constitution/volume-2-part-3-sections-s-t.md); all conflicts resolved
-> (Q13–Q17). **Only Part 4 (Technical Architecture & Engineering Spec — schema
-> DDL / RLS / API / sync / deploy / CI-CD / monitoring) remains** before the
-> build, and each screen still needs a design proposal → approval.
+> ▶️ **BUILD STARTED — 2026-07-23.** **Volume 2 · Part 4 is RECEIVED & RECORDED**
+> (the full "Aveyra Engineering Prompt Library", Document 0 + Sections A–T; see
+> [volume-2-part-4-technical-architecture.md](constitution/volume-2-part-4-technical-architecture.md)).
+> **Q22–Q25 resolved** (author: *"it's embedded in the website. Start with
+> milestone 2"*): **Q22** unified product — Daily Questions is the hero, the other
+> areas embedded in the same web app; **Q23** the gamification prohibition **stands**
+> (no streaks/scores/achievements — Emotional Wellness is supportive, non-scored);
+> **Q24** keep the **bespoke zero-dependency** stack; **Q25** **Supabase-native**
+> (Documents P/D/F retained as the behavioural contract). Each screen still needs a
+> design proposal → approval (Design Research Policy).
+
+## Product scope (Q22 — embedded, sequenced by dependency)
+Aveyra is **one web app**. **Daily Questions is the hero surface**; **Memory Vault,
+Journal, Date Planner, Private Messaging, Emotional Wellness** are **embedded within
+the same product**. Build order follows dependency, not the feature list:
+**auth + accounts + relationship space + cloud sync foundation** and the **core
+Daily-Questions / Memories loop first** (build stages 1–6 below), then the additional
+surfaces — **Date Planner → Private Messaging → Emotional Wellness (supportive,
+non-scored)** — each as its own gated stage (stages 8–10) with an IA/nav revision
+proposed at that point. **No gamification anywhere** (Q23).
 
 ## Locked decisions (confirmed by Volume 2 Sections E–P, 2026-07-21)
 - **Backend: Supabase** — Auth + Postgres + Realtime + Row-Level Security.
