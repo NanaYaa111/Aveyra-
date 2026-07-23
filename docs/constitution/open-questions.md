@@ -131,13 +131,42 @@ All four chosen as recommended (Option A), with reasoning + concrete spec impact
   on the archived space).
 
 ## 🔴 Still pending
-- **Volume 2 · Part 3 is COMPLETE (A–T, 20 sections).** The only remaining spec
-  gate is **Volume 2 · Part 4 — Technical Architecture & Engineering
-  Specification** (schema DDL, RLS policies, API standards, sync engine, deploy
-  blueprint, CI/CD, monitoring). Milestone 2 code build stays on hold until Part 4
-  arrives (and each screen passes the Design Research Policy: research → design
-  proposal → approval).
-- No open conflicts — Q13/Q14/Q15/Q16/Q17 all resolved.
+- **Volume 2 · Part 4 — Technical Architecture RECEIVED (2026-07-23).** Arrived as
+  the "Aveyra Engineering Prompt Library": **Document 0** (Global Engineering
+  Context — substantive, carries locked decisions) plus section scaffolds A, B, C,
+  D, S, T. Recorded in
+  [volume-2-part-4-technical-architecture.md](volume-2-part-4-technical-architecture.md).
+- **NEW open conflicts Q22–Q25** — Document 0 predates several decisions we later
+  locked, and disagrees with them. Flagged (not silently resolved), pending the
+  author's precedence call. Milestone 2 code build stays on hold until these
+  resolve and an M2 plan is approved (Design Research Policy still applies per
+  screen).
+
+### Q22 — Product scope: Daily-Questions MVP vs Document 0's six feature areas 🔴
+Constitution: *"Daily Questions is the hero; Memories the outcome"* (four-nav MVP).
+Document 0 §3.1 lists Memory Vault · **Messaging** · **Date Planner** · Journal ·
+**Emotional Wellness** · **Gamification**, and never mentions Daily Questions. Is
+Document 0 the earlier/broader vision our focused MVP supersedes (or scopes to
+Phase 1), or does it re-expand scope? **OPEN — author's call.**
+
+### Q23 — Gamification vs the permanent prohibition 🔴 *(touches a permanent rule)*
+Constitution Part 2 §1.2 permanently prohibits streaks/XP/levels/scores/
+leaderboards. Document 0 §3.1 lists **Gamification** — "light, non-manipulative
+milestones, shared achievements." Direct contradiction; per guardian role I will
+not reverse a permanent prohibition without an explicit decision. **OPEN.**
+
+### Q24 — UI/state/forms/viz stack 🟠
+Document 0 §5 fixes Tailwind **+ shadcn/ui + Framer Motion + Zustand + RHF + Zod +
+Recharts**. M1 deliberately shipped Tailwind + **bespoke, accessible,
+zero-runtime-dependency** components (runtime deps: dexie/next/react/react-dom
+only). Keep the bespoke zero-dep stack, or adopt Document 0's named libraries?
+**OPEN.**
+
+### Q25 — Phase-2 backend: Supabase vs NestJS+PostgreSQL 🟠
+You confirmed **Supabase** (EU; `signInWithOtp`/`verifyOtp`; Storage+RLS), re-cited
+today. Document 0 §5 + Document D still frame the future backend as **NestJS +
+PostgreSQL** (set aside). Guardian recommendation: Supabase wins; revise Document 0
+§5 + Document D to name it. **OPEN — confirm and I'll fold the revision in.**
 
 ---
 
