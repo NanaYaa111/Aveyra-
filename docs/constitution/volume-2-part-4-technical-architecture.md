@@ -299,6 +299,21 @@ consistent with, or below, what M1 already ships — no new conflicts:
 - **L — Error Handling.** Retry with exponential backoff **+ jitter**; typed error
   taxonomy; **error boundary**; safe logging (no PII). Matches our ErrorBoundary +
   outbox retry. Adopt the ±10% jitter detail when we build M2 sync.
+- **M — Deployment & DevOps.** Phase-1 = **Next.js on Vercel** + **GitHub Actions**
+  CI/CD, preview deploys, one-click rollback → **matches** our Vercel + GH-Actions
+  decision (our static `output:'export'` deploys fine as a subset). Phase-2 = NestJS
+  + PostgreSQL → **Q25**. Mentions **Vercel Analytics** — allowed only if kept
+  operational/opt-in, never behavioral (**Q17 guardrail**).
+- **N — Monitoring/Telemetry.** **Operational telemetry only, no behavioral
+  analytics**, no-PII (✓ Q17). Names **Sentry** for error/crash + perf tracking —
+  a concrete fit for Q17's narrow **opt-in** crash/perf exception. Guardrail: Sentry
+  must be opt-in, content-free, crash/perf-only to stay inside Q17.
+- **O — Data Export, Portability & Backup** *(itself marked "Proposed — not yet
+  locked"; not in the original A–N/P/T outline)*. On-device export of all
+  couple-owned data (no server, no third-party cloud), precise deletion semantics,
+  quota-safe partial-export handling. **Aligns with our built backup/export engine**
+  (`lib/backup`, `exportRecords`) and the Q21 Relationship-Archive decision. Entity
+  list (memories/journal/messages/dates) is the six-feature scope → Q22.
 
 **Where our build is *stricter* than the spec (keep ours; no action):**
 - **Encryption:** we ship client-side AES-GCM field encryption + PBKDF2-600k;
