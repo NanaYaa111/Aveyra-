@@ -40,8 +40,9 @@ function makeRotation(relId = 'rel-test') {
 // ---- bank integrity -------------------------------------------------------
 
 describe('question bank — integrity', () => {
-  it('has a healthy pool size (~200)', () => {
-    expect(QUESTION_BANK.length).toBeGreaterThanOrEqual(195);
+  it('has a healthy pool size (~190)', () => {
+    // Draft bank: the fixed opener + nine canonical categories (Section E).
+    expect(QUESTION_BANK.length).toBeGreaterThanOrEqual(175);
     expect(QUESTION_BANK.length).toBeLessThanOrEqual(215);
   });
 
@@ -58,10 +59,10 @@ describe('question bank — integrity', () => {
     );
   });
 
-  it('covers all ten categories', () => {
+  it('covers all nine canonical categories', () => {
     const present = new Set(QUESTION_BANK.map((q) => q.category));
     for (const slug of CATEGORY_SLUGS) expect(present.has(slug)).toBe(true);
-    expect(present.size).toBe(10);
+    expect(present.size).toBe(CATEGORY_SLUGS.length);
   });
 
   it('gives every category a human label', () => {

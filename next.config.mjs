@@ -1,11 +1,10 @@
 /**
  * Aveyra — Next.js configuration.
  *
- * Offline-first, static export: the frontend ships as pure static assets with
- * no server runtime, no API routes, and no server hosting (Constitution
- * Part 3; Milestone 1 §3). A future E2EE sync relay (Milestone 2) is a
- * SEPARATE backend the static client talks to — it never becomes part of this
- * build.
+ * Static export: the frontend ships as pure static assets with no server
+ * runtime and no API routes (Constitution Part 3; Milestone 1 §3). The
+ * Milestone-2 backend (Supabase — web-first, staged privacy) is a SEPARATE
+ * service the static client talks to; it never becomes part of this build.
  *
  * `basePath` supports hosting under a sub-path (e.g. GitHub Pages project
  * sites). Set NEXT_PUBLIC_BASE_PATH at build time; defaults to root.

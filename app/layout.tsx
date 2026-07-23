@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: '%s · Aveyra',
   },
   description:
-    'A private, offline-first home for your relationship. Your memories stay on your device.',
+    'A private, calm home for your relationship — meaningful conversations and the memories you keep together.',
   applicationName: 'Aveyra',
   manifest: '/manifest.webmanifest',
   icons: { icon: '/favicon.svg' },

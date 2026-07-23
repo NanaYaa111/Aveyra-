@@ -2,7 +2,7 @@
   "name": "aveyra",
   "version": "0.1.0",
   "private": true,
-  "description": "Aveyra — a private, offline-first, two-device home for your relationship.",
+  "description": "Aveyra — a private, two-device home for your relationship.",
   "type": "module",
   "scripts": {
     "dev": "next dev",

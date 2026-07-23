@@ -32,10 +32,10 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   Part 4 begins** (not now). 🟢
 - **Auth → Email OTP / magic link**, email as primary identifier. 🟢
 - **Hosting/domain → Vercel + Supabase; aveyra.app** (fallbacks .co/.io/.com). 🟢
-- **Question bank → ~200 questions, 10 categories**; first question fixed
+- **Question bank → ~190 questions, 9 canonical categories**; first question fixed
   ("What's one small thing about yourself that you hope I always remember?"). 🟢
-  *(⚠️ later refined to the canonical **9** by Part 3 Section E — dropped standalone
-  Gratitude; see Q14 below.)*
+  *(Refined to the canonical **9** by Part 3 Section E — dropped standalone
+  Gratitude, folded into Appreciation; re-mapped in code (V-03). See Q14 below.)*
 - **Question timing → relationship's primary timezone**; exhaustion → shuffle →
   new cycle, no consecutive repeats. 🟢
 - **Skip → silent, no partner notification, returns later.** 🟢
@@ -58,20 +58,20 @@ resolved ones move to the README decisions log. Status: 🔴 open · 🟡 leanin
   Section-D requirement maps on with no loss. Revisitable if the full Part 3
   (E–T) + Part 4 IA argues otherwise.
 
-## 🟡 Reconciliation pending build — 2026-07-22 (Part 3 Section E)
-- **Q14 — Question categories: 9 canonical (Section E) supersede "10".** 🟡
+## 🟢 Reconciled — 2026-07-23 (Part 3 Section E)
+- **Q14 — Question categories: 9 canonical (Section E) supersede "10".** 🟢 **DONE**
   Section E's authoritative categories are **Discovery · Appreciation · Memories ·
   Communication · Dreams & Future · Growth · Reflection · Fun & Play · Conflict &
-  Repair** (+ **Love Maps** sub-category under Discovery). Two earlier "10"s are
+  Repair** (+ **Love Maps** sub-category under Discovery). Two earlier "10"s were
   superseded: (a) the decisions-batch's 10 — **Section E's 9 = that list minus
-  standalone Gratitude, folded into Appreciation**; and (b) the built **draft**
-  bank (`lib/questions/bank.ts`), which uses 10 different ad-hoc slugs and was
-  always flagged draft. **Resolution:** Section E governs. **Action (M2 content build):** re-map
-  the draft questions to the 9 categories, add Conflict & Repair (reserved for
-  matured relationships), fold Love Maps under Discovery, seed from
-  [love-maps-example-questions.md](love-maps-example-questions.md). The rotation
-  engine is category-agnostic, so this is content-only — no code decision needed
-  now; done as part of the M2 question-bank build.
+  standalone Gratitude, folded into Appreciation**; and (b) the earlier built **draft**
+  bank, which used 10 ad-hoc slugs and was always flagged draft. **Resolution:** Section E governs.
+  **Done (V-03, 2026-07-23):** `lib/questions/types.ts` now declares the 9 canonical
+  `CategorySlug`s + a `love-maps` `SubCategory`; `lib/questions/bank.ts` re-maps the
+  draft (~188 questions) across the 9 categories, adds a Conflict & Repair set
+  (reserved for matured relationships), and folds Love Maps under Discovery (seeded
+  from [love-maps-example-questions.md](love-maps-example-questions.md)). The rotation
+  engine is category-agnostic, so this was content-only — no code decision was needed.
 
 ## ✅ Resolved 2026-07-22 — Part 3 J–R conflicts (author decided)
 

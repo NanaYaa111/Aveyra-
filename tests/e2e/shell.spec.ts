@@ -36,7 +36,7 @@ test.describe('app shell', () => {
   });
 });
 
-test.describe('offline-first', () => {
+test.describe('graceful offline', () => {
   test('the app still opens with the network offline', async ({ page, context }) => {
     await page.goto('/today/');
     // Wait for the service worker to take control, then cache the shell.

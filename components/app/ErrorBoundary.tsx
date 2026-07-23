@@ -43,8 +43,8 @@ export class ErrorBoundary extends Component<Props, State> {
           </span>
           <h1 className="text-heading">Something went quiet</h1>
           <p className="text-text-soft">
-            The app hit an unexpected snag. Nothing you&apos;ve saved is affected — it&apos;s all
-            still on your device. Reloading usually sets things right.
+            The app hit an unexpected snag. Nothing you&apos;ve saved is affected — it&apos;s
+            safely stored. Reloading usually sets things right.
           </p>
           <button
             onClick={this.handleReload}

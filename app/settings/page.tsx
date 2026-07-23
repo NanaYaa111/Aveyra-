@@ -16,7 +16,7 @@ export default function SettingsPage() {
       <h1 id="settings-heading" className="text-display mb-2">
         Settings
       </h1>
-      <p className="text-text-soft mb-6">Your relationship, your data — always on your device.</p>
+      <p className="text-text-soft mb-6">Your relationship, your data — private and yours.</p>
 
       <div className="flex flex-col gap-4">
         <Card>

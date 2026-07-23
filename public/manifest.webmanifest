@@ -1,7 +1,7 @@
 {
   "name": "Aveyra",
   "short_name": "Aveyra",
-  "description": "A private, offline-first home for your relationship. Your memories stay on your device.",
+  "description": "A private, calm home for your relationship — meaningful conversations and the memories you keep together.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

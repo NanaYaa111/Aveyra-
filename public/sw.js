@@ -1,4 +1,4 @@
-/* Aveyra service worker — offline-first (Constitution Part 2 §5).
+/* Aveyra service worker — graceful offline support (Constitution Part 2 §5).
  *
  * Precaches the app shell so every destination opens with no network. HTML
  * navigations are stale-while-revalidate: the cached page is served instantly
