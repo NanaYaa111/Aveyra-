@@ -276,6 +276,30 @@ of the four already open. Read in full:
   (Zustand). Principles (no passwords, relationship isolation, no-PII logs) ✓.
 - **P (API, full).** Recorded in its own section above.
 
+**Quality-attribute full specs (Security, Accessibility, Performance, Testing,
+Error Handling) — 2026-07-23.** *(Note: this FULL batch re-lettered — H=Security,
+I=Accessibility, J=Performance, K=Testing, L=Error Handling — a shift from the
+scaffold lettering where H=Privacy/I=Security/J=Accessibility/etc.)* All are
+consistent with, or below, what M1 already ships — no new conflicts:
+- **H — Security.** Threat model; CSP + HSTS + HTTPS/TLS 1.3; Zod input validation;
+  parameterized queries; rate limits; no-PII logs; GDPR 72h breach + RTBF hard-delete
+  on account deletion; Dependabot/Snyk; quarterly/annual pen-tests. §7.2 states
+  **Phase-1 does not encrypt at rest** (device trusted) and E2EE is a Phase-2 option
+  → **we exceed** (AES-GCM field encryption now). Zod/TypeORM refs → Q24/Q25.
+- **I — Accessibility.** **WCAG 2.1 AA**, semantic HTML/ARIA, keyboard, jest-axe +
+  Lighthouse + manual AT testing, contrast 4.5:1. We run **2.2 AA** via
+  @axe-core/playwright → **we meet/exceed** (C-5).
+- **J — Performance.** Core Web Vitals targets — **LCP < 2.5s, FID < 100ms, CLS <
+  0.1, Lighthouse ≥ 90**, `<2s` on 4G, bundle budget, WebP @75%, `React.memo`/
+  `useMemo`, Zustand batching. Concrete targets worth adopting regardless of the Q24
+  outcome; Zustand/Framer references → Q24.
+- **K — Testing.** **≥80% coverage (90% goal)**; but leans **jest + Cypress**
+  where M1 uses **Vitest + Playwright + @axe-core/playwright** → Q24 (test tooling).
+  Coverage ≥80% is a useful concrete bar to adopt.
+- **L — Error Handling.** Retry with exponential backoff **+ jitter**; typed error
+  taxonomy; **error boundary**; safe logging (no PII). Matches our ErrorBoundary +
+  outbox retry. Adopt the ±10% jitter detail when we build M2 sync.
+
 **Where our build is *stricter* than the spec (keep ours; no action):**
 - **Encryption:** we ship client-side AES-GCM field encryption + PBKDF2-600k;
   D/E store local data in plaintext and treat E2EE as "optional/future." We exceed.
