@@ -162,11 +162,17 @@ zero-runtime-dependency** components (runtime deps: dexie/next/react/react-dom
 only). Keep the bespoke zero-dep stack, or adopt Document 0's named libraries?
 **OPEN.**
 
-### Q25 — Phase-2 backend: Supabase vs NestJS+PostgreSQL 🟠
+### Q25 — Backend: Supabase vs custom (NestJS+PostgreSQL / hand-rolled API) 🟠
 You confirmed **Supabase** (EU; `signInWithOtp`/`verifyOtp`; Storage+RLS), re-cited
-today. Document 0 §5 + Document D still frame the future backend as **NestJS +
-PostgreSQL** (set aside). Guardian recommendation: Supabase wins; revise Document 0
-§5 + Document D to name it. **OPEN — confirm and I'll fold the revision in.**
+today. Document 0 §5 + Document D frame the future backend as **NestJS +
+PostgreSQL** (set aside), and **Document P** (full spec) details a hand-rolled
+Phase-1 auth API (`/auth/*`, self-signed JWTs, direct email service) plus a
+Phase-2 `/sync/*` contract — all of which Supabase Auth/Postgres/Realtime provide
+off the shelf. Guardian recommendation: **Supabase wins**; treat Document P as the
+*behavioural contract* our Supabase integration must satisfy (10-min OTP,
+enumeration protection, rate limits, RLS scoping, no-PII logs, error-shape
+consistency, versioning), and revise Document 0 §5 + Document D accordingly.
+**OPEN — confirm and I'll fold the revision in.**
 
 ---
 

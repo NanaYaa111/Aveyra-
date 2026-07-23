@@ -110,11 +110,11 @@ Section B. **→ Resolved by the user as web-first (open-questions Q16).**
 
 ## Documents A–T — section prompt scaffolds
 
-**Received (2026-07-23):** Documents A–T **except P** — i.e. A, B, C, D, E, F, G,
-H, I, J, K, L, M, N, O, Q, R, S, T (duplicate copies of 0, A, S, T were sent and are
-byte-identical). Each is a *master prompt* for generating one section's spec (role ·
-scope · deliverables · diagrams · "Do Not" list) — **not a filled-in spec**; the
-substantive locked decisions all live in Document 0. Per-section notes:
+**Received (2026-07-23):** Document 0 + the **complete A–T set** (A, B, C, D, E, F,
+G, H, I, J, K, L, M, N, O, P, Q, R, S, T; duplicate copies of 0, A, S, T are
+byte-identical). **All are prompt scaffolds EXCEPT Document P**, which arrived as a
+FULL, filled-in specification (see its own subsection below). The substantive locked
+decisions otherwise all live in Document 0. Per-section notes:
 
 - **A — Architecture Principles & Technical Vision.** Role: Principal Software
   Architect. Wants: technical-vision statement; 8–12 architecture principles;
@@ -189,7 +189,49 @@ substantive locked decisions all live in Document 0. Per-section notes:
 - **R — Mobile & Native App Strategy.** Phase-3 native (React Native / Flutter /
   native); feature parity; app-store deployment. Deferred; consistent with our
   web-first-with-native-path posture.
-- **P — not yet received.**
+
+---
+
+## Document P — API Design & Integration (the one FULL spec)
+
+Unlike the scaffolds, P is a complete API contract. Substance:
+
+**Phase-1 auth (passwordless OTP):**
+- `POST /auth/request-otp` → `{requestId, expiresIn:600}`; 6-digit code, **10-min**
+  validity; rate limit **3/min per email, 10/hr per IP**; response **does not reveal
+  whether the email is registered** (enumeration protection).
+- `POST /auth/verify-otp` → `{token(JWT), expiresIn:2592000 (30d), user}`; **5
+  attempts per requestId** then backoff; OTP invalidated after 3 failed attempts.
+- `POST /auth/logout` (204; server-side revocation optional in Phase 1);
+  `GET /auth/me` (validate token on load).
+- Sessions = **signed JWT** (`sub/email/iat/exp`), stateless, stored client-side
+  (localStorage/IndexedDB), sent as `Authorization: Bearer`.
+
+**Phase-2 sync (deferred contract):** `POST /sync/pull` (delta since timestamp for
+named entities — uses `memories`, `journal_entries` snake_case) and `POST
+/sync/push` (client changes → acks with server timestamps + conflict metadata).
+**Last-write-wins** by timestamp; all sync scoped to the relationship.
+
+**Cross-cutting:** uniform error schema `{error, message, details}` + a fixed status
+/ error-code table (400/401/403/404/409/429/500/503); rate-limit headers
+(`X-RateLimit-*`, `Retry-After`); **URL versioning** (`/v1/…`, 6-mo deprecation);
+testing via mock server (MSW/Mirage) + contract tests (Pact) + integration + E2E;
+OTP email via a third-party service (SendGrid/Mailgun/SES) — subject "Your Aveyra
+verification code…", **no tracking pixels**; **no PII/OTP/JWT in logs**;
+operational-only telemetry (p50/p95/p99, error rates, email success); TLS 1.2+,
+CORS to trusted origins only, `SameSite=Strict`.
+
+**Guardian reconciliation (feeds C-4/Q25):** P describes a **hand-rolled** auth +
+sync backend. Our confirmed choice is **Supabase**, whose Auth (GoTrue
+`signInWithOtp`/`verifyOtp`) already provides these `/auth/*` semantics, JWT
+sessions, email delivery, and RLS-based relationship scoping. So P is best treated
+as the **behavioural contract our Supabase integration must satisfy**, not an
+instruction to build a custom server. Its *principles* (10-min OTP, enumeration
+protection, rate limits, relationship scoping, no-PII logs, operational-only
+telemetry, versioning, error-shape consistency) are all consistent with our
+decisions and worth honoring regardless of transport. The only conflict is the
+same one already open: **custom backend (P/D) vs Supabase (confirmed)** — P widens
+C-4 to cover Phase-1 auth transport, not just the future sync layer.
 
 ---
 
@@ -236,6 +278,10 @@ pick a winner. Each conflict below is a decision that is genuinely yours.
   `signInWithOtp` / `verifyOtp`, Storage with RLS.
 - **Document 0 §5 + Document D:** frame the future backend as **NestJS +
   PostgreSQL** (set aside for now). Document D still asks for a NestJS template.
+- **Document P (full spec)** widens this: it specifies a **hand-rolled Phase-1
+  auth API** (`/auth/*`, self-signed JWTs, direct email-service integration) —
+  work Supabase Auth provides off the shelf. Under Supabase we consume the SDK
+  rather than build these endpoints; P becomes the *behavioural contract* to match.
 - Recommendation (guardian): Supabase wins — it is the more recent, explicit,
   repeatedly-confirmed decision. Document 0 §5 and Document D should be **revised**
   to name Supabase as the Phase-2 sync backend. I flag this rather than editing
