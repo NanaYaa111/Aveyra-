@@ -108,9 +108,13 @@ Section B. **→ Resolved by the user as web-first (open-questions Q16).**
 
 ---
 
-## Documents A, B, C, D, S, T — section prompt scaffolds
+## Documents A–T — section prompt scaffolds
 
-Each is a *master prompt* for generating one section's spec. Substance to note:
+**Received (2026-07-23):** Documents A–T **except P** — i.e. A, B, C, D, E, F, G,
+H, I, J, K, L, M, N, O, Q, R, S, T (duplicate copies of 0, A, S, T were sent and are
+byte-identical). Each is a *master prompt* for generating one section's spec (role ·
+scope · deliverables · diagrams · "Do Not" list) — **not a filled-in spec**; the
+substantive locked decisions all live in Document 0. Per-section notes:
 
 - **A — Architecture Principles & Technical Vision.** Role: Principal Software
   Architect. Wants: technical-vision statement; 8–12 architecture principles;
@@ -142,6 +146,50 @@ Each is a *master prompt* for generating one section's spec. Substance to note:
   apps.** Wants: phased roadmap; inter-phase dependencies; known tech debt
   (NestJS backend, multi-device sync, native apps); research items (CRDTs, E2EE);
   graduation criteria between phases.
+
+### Sections E–R — remaining scaffolds (notes + how they touch our build)
+- **E — Local Data Layer & Dexie Schema.** Entities named: memories, journal
+  entries, **messages, dates**, relationships, settings; "Zustand slices" for the
+  data-access layer. → reinforces **Q22** (scope: messages/dates) and **Q24**
+  (Zustand). Also wants ERD + migration patterns + backup/export (we have export).
+- **F — Offline & Sync Architecture.** Define "works offline" per feature; sync
+  state machine (online/offline, queued/syncing/done); conflict resolution;
+  cache invalidation. Future-phase; consistent with our outbox/pending-queue model.
+- **G — Authentication & Authorization.** End-to-end **passwordless OTP** flow;
+  session lifecycle (no stored passwords); authz = a user only sees their own
+  relationship's data. ✓ consistent (Q15).
+- **H — Privacy & Data Protection.** Data-collection lockdown; **encryption at
+  rest + in transit**; retention/deletion; GDPR. ✓ consistent (matches our field
+  encryption + archive-on-dissolution).
+- **I — Security Architecture.** Threat model (unauthorized access, exfiltration,
+  account takeover); per-layer controls; secure coding (input validation, XSS,
+  CSRF). ✓ consistent.
+- **J — Accessibility Architecture.** **WCAG 2.1 AA**, build-time a11y, semantic
+  HTML/ARIA/keyboard/screen-reader, contrast/focus/motion. We exceed at **2.2 AA**
+  (see C-5). ✓
+- **K — Performance & Optimization.** Measurable budgets (initial paint,
+  interaction latency, bundle size); code-split/lazy-load/image opt; caching. ✓
+  consistent with our perf posture.
+- **L — Testing Strategy & Coverage.** Names **Vitest + RTL + Playwright** and
+  a11y testing. ✓ matches our actual lanes (extends Document 0 §5, which listed
+  only Vitest+RTL — Playwright is a welcome, consistent addition).
+- **M — Error Handling & Resilience.** "Never silently fails or loses data";
+  error boundaries; retry logic; storage-quota handling. ✓ matches our
+  ErrorBoundary + atomic import + outbox.
+- **N — Deployment & DevOps.** CI/CD (test/staging/prod); rollout + rollback;
+  hosting/CDN/domain/SSL; incident runbooks. (Phase-appropriate; Supabase +
+  Vercel per our decisions — see C-4.)
+- **O — Monitoring, Logging & Telemetry.** **Operational telemetry only**, no
+  behavioral analytics/engagement metrics; health dashboards without invading
+  privacy. ✓ consistent (Q17).
+- **Q — Frontend Components & Design System.** "**shadcn/ui as the base**, extended
+  with Aveyra-specific components"; **design tokens** (colors, spacing, typography,
+  shadows, animations). Our token-based "First Light on the Path" system matches
+  the *tokens* intent; the *shadcn/ui base* reinforces **Q24**.
+- **R — Mobile & Native App Strategy.** Phase-3 native (React Native / Flutter /
+  native); feature parity; app-store deployment. Deferred; consistent with our
+  web-first-with-native-path posture.
+- **P — not yet received.**
 
 ---
 
