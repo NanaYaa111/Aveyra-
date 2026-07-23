@@ -7,9 +7,11 @@
  * without a manual CACHE bump. Hashed static assets are cache-first (they are
  * immutable). Bump CACHE to force an immediate full refresh.
  */
-const CACHE = 'aveyra-v1';
+const CACHE = 'aveyra-v2';
 const SHELL = [
   '/',
+  '/sign-in/',
+  '/verify/',
   '/today/',
   '/story/',
   '/write/',

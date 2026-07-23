@@ -5,6 +5,7 @@ import { AppShell } from '@/components/app/AppShell';
 import { PwaInit } from '@/components/app/PwaInit';
 import { ErrorBoundary } from '@/components/app/ErrorBoundary';
 import { ToastProvider } from '@/components/ui';
+import { AuthProvider } from '@/lib/auth/context';
 
 export const metadata: Metadata = {
   title: {
@@ -41,7 +42,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PwaInit />
         <ErrorBoundary>
           <ToastProvider>
-            <AppShell>{children}</AppShell>
+            <AuthProvider>
+              <AppShell>{children}</AppShell>
+            </AuthProvider>
           </ToastProvider>
         </ErrorBoundary>
       </body>
