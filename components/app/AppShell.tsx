@@ -12,6 +12,7 @@ import {
   type NavItem,
 } from '@/components/ui';
 import { useAuth } from '@/lib/auth/context';
+import { useOnboarding } from '@/lib/relationship/context';
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/today', label: 'Today', icon: <TodayIcon /> },
@@ -22,6 +23,8 @@ const NAV_ITEMS: NavItem[] = [
 
 /** Pre-authentication routes: rendered full-screen, no navigation. */
 const AUTH_ROUTES = ['/sign-in', '/verify'];
+/** Authenticated-but-chrome-less route: first-run setup. */
+const ONBOARDING_ROUTE = '/onboarding';
 
 function SkipLink() {
   return (
@@ -31,8 +34,8 @@ function SkipLink() {
   );
 }
 
-/** A calm, centred column for the pre-auth screens (sign-in / verify). */
-function AuthLayout({ children }: { children: ReactNode }) {
+/** A calm, centred column for the chrome-less screens (auth / onboarding). */
+function BareLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-dvh grid place-items-center px-4 py-10">
       <SkipLink />
@@ -60,7 +63,7 @@ function AppLayout({ children }: { children: ReactNode }) {
   );
 }
 
-/** A minimal, calm placeholder while the session resolves — no nav flash. */
+/** A minimal, calm placeholder while auth / onboarding state resolves. */
 function Resolving() {
   return (
     <div className="min-h-dvh grid place-items-center px-4" aria-busy="true">
@@ -72,29 +75,51 @@ function Resolving() {
 }
 
 /**
- * The top-level shell. It decides — from the auth state and the route — whether
- * to show the pre-auth layout, the authenticated app, or a brief resolving state,
- * and enforces the guard: signed-out visitors are sent to /sign-in, and a
- * signed-in visitor never sits on an auth screen.
+ * The top-level shell. From the auth + onboarding state and the current route it
+ * chooses the layout and enforces the guard:
+ *  - signed-out visitors are sent to /sign-in;
+ *  - signed-in but not-yet-set-up visitors are kept in /onboarding;
+ *  - fully set-up visitors never sit on an auth or onboarding screen.
+ * A brief "one moment" state covers resolution so nothing flashes.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { status } = useAuth();
+  const { onboarded } = useOnboarding();
+
   const isAuthRoute = AUTH_ROUTES.some((r) => pathname === r || pathname.startsWith(r + '/'));
+  const isOnboardingRoute = pathname === ONBOARDING_ROUTE || pathname.startsWith(ONBOARDING_ROUTE + '/');
 
   useEffect(() => {
     if (status === 'loading') return;
-    if (status === 'unauthenticated' && !isAuthRoute) router.replace('/sign-in');
-    if (status === 'authenticated' && isAuthRoute) router.replace('/today');
-  }, [status, isAuthRoute, router]);
+    if (status === 'unauthenticated') {
+      if (!isAuthRoute) router.replace('/sign-in');
+      return;
+    }
+    // Authenticated:
+    if (isAuthRoute) {
+      router.replace('/today');
+      return;
+    }
+    if (onboarded === null) return; // still resolving onboarding state
+    if (!onboarded && !isOnboardingRoute) router.replace('/onboarding');
+    if (onboarded && isOnboardingRoute) router.replace('/today');
+  }, [status, onboarded, isAuthRoute, isOnboardingRoute, router]);
 
+  // Pre-auth screens.
   if (isAuthRoute) {
-    // Don't flash an auth screen to an already-signed-in user mid-redirect.
     if (status === 'authenticated') return <Resolving />;
-    return <AuthLayout>{children}</AuthLayout>;
+    return <BareLayout>{children}</BareLayout>;
   }
 
-  if (status !== 'authenticated') return <Resolving />;
+  // Everything else requires a signed-in, set-up account.
+  if (status !== 'authenticated' || onboarded === null) return <Resolving />;
+
+  if (!onboarded) {
+    return isOnboardingRoute ? <BareLayout>{children}</BareLayout> : <Resolving />;
+  }
+  // Onboarded: keep them out of the onboarding route.
+  if (isOnboardingRoute) return <Resolving />;
   return <AppLayout>{children}</AppLayout>;
 }

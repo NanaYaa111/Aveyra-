@@ -13,7 +13,7 @@
  * therefore reports `awaiting-partner` until the backend confirms a real link.
  */
 import { getService, type DatabaseService } from '../database/service';
-import { createInvitation } from '../invitation';
+import { createInvitation, validateInvitation } from '../invitation';
 import type { Relationship } from '../database/types';
 
 /** Where the couple is in setup, derived from the relationship + link status. */
@@ -81,6 +81,27 @@ export async function createInvite(
     await service.updateRelationship(relationship.id, { status: 'pending' });
   }
   return { encoded, code: payload.code, expiresAt: payload.expires_at };
+}
+
+/**
+ * Join a partner's space from an invitation. Validates the token (calm throw on
+ * invalid/expired), then records a LOCAL `pending` space so the joiner can enter
+ * and use Aveyra while the real cross-device merge is completed server-side (M2
+ * backend). Honest state: `pending`, never `linked`, until the backend confirms.
+ */
+export async function joinWithInvite(
+  encoded: string,
+  joinerId: string,
+  service: DatabaseService = getService(),
+): Promise<Relationship> {
+  validateInvitation(encoded); // throws a human message if malformed or expired
+  return service.createRelationship({
+    creator_id: joinerId,
+    partner_id: null,
+    status: 'pending',
+    partner_name: '',
+    relationship_start_date: null,
+  });
 }
 
 /** The current onboarding state (relationship + derived step). */

@@ -13,7 +13,7 @@ const DESTINATIONS = [
  * delivered code inline (data-testid="dev-otp"). Leaves the app authenticated and
  * on /today.
  */
-async function signIn(page: Page, email = 'e2e@example.com') {
+async function verifyEmail(page: Page, email = 'e2e@example.com') {
   await page.goto('/sign-in/');
   await page.getByLabel('Email').fill(email);
   await page.getByRole('button', { name: /send my code/i }).click();
@@ -21,6 +21,18 @@ async function signIn(page: Page, email = 'e2e@example.com') {
   const code = (await page.getByTestId('dev-otp').textContent())!.trim();
   await page.getByLabel(/6-digit code/i).fill(code);
   await page.getByRole('button', { name: /verify and continue/i }).click();
+}
+
+/** Sign in AND complete first-run onboarding (create path). Lands on /today. */
+async function signIn(page: Page, email = 'e2e@example.com') {
+  await verifyEmail(page, email);
+  await expect(page).toHaveURL(/\/onboarding\/?$/);
+  await page.getByLabel('Your name').fill('E2E');
+  await page.getByRole('button', { name: /^continue$/i }).click();
+  await page.getByRole('button', { name: /start our space/i }).click();
+  await page.getByRole('button', { name: /create our space/i }).click();
+  await expect(page.getByTestId('invite-code')).toBeVisible();
+  await page.getByRole('button', { name: /continue to aveyra/i }).click();
   await expect(page).toHaveURL(/\/today\/?$/);
 }
 
@@ -31,7 +43,13 @@ test.describe('authentication', () => {
     await expect(page.getByRole('heading', { name: 'Welcome to Aveyra', level: 1 })).toBeVisible();
   });
 
-  test('passwordless OTP signs the user in and lands on Today', async ({ page }) => {
+  test('a new account is taken to onboarding after verifying', async ({ page }) => {
+    await verifyEmail(page);
+    await expect(page).toHaveURL(/\/onboarding\/?$/);
+    await expect(page.getByRole('heading', { name: /set up your space/i, level: 1 })).toBeVisible();
+  });
+
+  test('completing onboarding lands on Today', async ({ page }) => {
     await signIn(page);
     await expect(page.getByRole('heading', { name: 'Today', level: 1 })).toBeVisible();
   });
@@ -95,6 +113,18 @@ test.describe('accessibility (WCAG 2.2 AA)', () => {
   test('no serious/critical axe violations on the sign-in screen', async ({ page }) => {
     await page.goto('/sign-in/');
     await expect(page.getByRole('heading', { name: 'Welcome to Aveyra', level: 1 })).toBeVisible();
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    const seriousOrWorse = results.violations.filter(
+      (v) => v.impact === 'serious' || v.impact === 'critical',
+    );
+    expect(seriousOrWorse, JSON.stringify(seriousOrWorse, null, 2)).toEqual([]);
+  });
+
+  test('no serious/critical axe violations on onboarding', async ({ page }) => {
+    await verifyEmail(page);
+    await expect(page.getByRole('heading', { name: /set up your space/i, level: 1 })).toBeVisible();
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();

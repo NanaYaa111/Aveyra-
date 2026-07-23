@@ -3,6 +3,7 @@ export {
   getOnboardingState,
   createSpace,
   createInvite,
+  joinWithInvite,
   completeOnboarding,
   type OnboardingStep,
   type OnboardingState,

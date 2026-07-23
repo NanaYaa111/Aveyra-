@@ -12,6 +12,7 @@ const SHELL = [
   '/',
   '/sign-in/',
   '/verify/',
+  '/onboarding/',
   '/today/',
   '/story/',
   '/write/',
@@ -21,12 +22,22 @@ const SHELL = [
   '/icons/maskable.svg',
 ];
 
+// Hashed build assets (JS/CSS under /_next/static). This list is injected at
+// build time by scripts/inject-sw-precache.mjs so a genuinely cold, offline
+// reload finds the shared entry chunks — which load on the first visit before
+// this worker is controlling and would otherwise never be cached. Empty in dev.
+const PRECACHE_ASSETS = [
+  /*__PRECACHE_ASSETS__*/
+];
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE)
       // Best-effort precache: never fail install if one asset 404s in dev.
-      .then((cache) => Promise.allSettled(SHELL.map((url) => cache.add(url))))
+      .then((cache) =>
+        Promise.allSettled([...SHELL, ...PRECACHE_ASSETS].map((url) => cache.add(url))),
+      )
       .then(() => self.skipWaiting()),
   );
 });
