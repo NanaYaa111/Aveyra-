@@ -4,6 +4,7 @@ import type { Memory } from '@/lib/database/types';
 
 let memories: Memory[];
 vi.mock('@/lib/story', () => ({ getMemories: () => Promise.resolve(memories) }));
+vi.mock('@/lib/relationship/context', () => ({ useOnboarding: () => ({ relationship: { id: 'r1' } }) }));
 
 import StoryPage from '@/app/story/page';
 

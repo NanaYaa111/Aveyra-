@@ -38,11 +38,11 @@ describe('story — getMemories', () => {
       image_ref: null,
     });
 
-    const memories = await getMemories(service);
+    const memories = await getMemories('r1', service);
     expect(memories.map((m) => m.title)).toEqual(['Newer', 'Middle', 'Older']);
   });
 
   it('is empty when nothing has been kept', async () => {
-    expect(await getMemories(service)).toEqual([]);
+    expect(await getMemories('r1', service)).toEqual([]);
   });
 });

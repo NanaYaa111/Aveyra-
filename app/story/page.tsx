@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Card, EmptyState } from '@/components/ui';
 import { getMemories } from '@/lib/story';
+import { useOnboarding } from '@/lib/relationship/context';
 import type { Memory } from '@/lib/database/types';
 
 /**
@@ -10,17 +11,19 @@ import type { Memory } from '@/lib/database/types';
  * (and, later, added photos/moments) gathers here. Private journals never appear.
  */
 export default function StoryPage() {
+  const { relationship } = useOnboarding();
+  const relId = relationship?.id ?? null;
   const [memories, setMemories] = useState<Memory[] | null>(null);
 
   useEffect(() => {
     let active = true;
-    getMemories().then((m) => {
+    getMemories(relId).then((m) => {
       if (active) setMemories(m);
     });
     return () => {
       active = false;
     };
-  }, []);
+  }, [relId]);
 
   return (
     <section aria-labelledby="story-heading" className="flex flex-col gap-5">

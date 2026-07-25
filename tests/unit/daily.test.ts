@@ -38,14 +38,14 @@ describe('daily loop', () => {
 
   it('moves to waiting after I submit, and my answer is editable', async () => {
     const first = await getToday(REL, service);
-    await submitMyAnswer(first.question.id, '  my first thought  ', service);
+    await submitMyAnswer(REL, first.question.id, '  my first thought  ', service);
 
     let state = await getToday(REL, service);
     expect(state.status).toBe('waiting');
     expect(state.myAnswer?.content).toBe('my first thought'); // trimmed
 
     // Editable until reveal.
-    await submitMyAnswer(first.question.id, 'a better thought', service);
+    await submitMyAnswer(REL, first.question.id, 'a better thought', service);
     state = await getToday(REL, service);
     expect(state.status).toBe('waiting');
     expect(state.myAnswer?.content).toBe('a better thought');
@@ -53,7 +53,7 @@ describe('daily loop', () => {
 
   it('reveals only once both have answered', async () => {
     const first = await getToday(REL, service);
-    await submitMyAnswer(first.question.id, 'mine', service);
+    await submitMyAnswer(REL, first.question.id, 'mine', service);
     await devSimulatePartner(first.question.id, service);
 
     const state = await getToday(REL, service);
@@ -63,21 +63,21 @@ describe('daily loop', () => {
 
   it('rejects an edit after reveal', async () => {
     const first = await getToday(REL, service);
-    await submitMyAnswer(first.question.id, 'mine', service);
+    await submitMyAnswer(REL, first.question.id, 'mine', service);
     await devSimulatePartner(first.question.id, service);
-    await expect(submitMyAnswer(first.question.id, 'too late', service)).rejects.toThrow(
+    await expect(submitMyAnswer(REL, first.question.id, 'too late', service)).rejects.toThrow(
       /already revealed/i,
     );
   });
 
   it('rejects an empty answer', async () => {
     const first = await getToday(REL, service);
-    await expect(submitMyAnswer(first.question.id, '   ', service)).rejects.toThrow(/something/i);
+    await expect(submitMyAnswer(REL, first.question.id, '   ', service)).rejects.toThrow(/something/i);
   });
 
   it('saves a revealed exchange as a memory (question + both answers)', async () => {
     const first = await getToday(REL, service);
-    await submitMyAnswer(first.question.id, 'I hope you remember my laugh', service);
+    await submitMyAnswer(REL, first.question.id, 'I hope you remember my laugh', service);
     await devSimulatePartner(first.question.id, service);
     const state = await getToday(REL, service);
 
@@ -97,7 +97,7 @@ describe('daily loop', () => {
 
   it('only saves a revealed conversation', async () => {
     const first = await getToday(REL, service);
-    await submitMyAnswer(first.question.id, 'mine', service);
+    await submitMyAnswer(REL, first.question.id, 'mine', service);
     const waiting = await getToday(REL, service);
     await expect(saveAsMemory(REL, waiting, {}, service)).rejects.toThrow(/revealed/i);
   });

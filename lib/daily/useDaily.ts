@@ -45,11 +45,11 @@ export function useDaily() {
   }, [refresh]);
 
   const submit = useCallback(async () => {
-    if (!state || busy) return;
+    if (!state || !relId || busy) return;
     setBusy(true);
     setError(null);
     try {
-      await submitMyAnswer(state.question.id, draft);
+      await submitMyAnswer(relId, state.question.id, draft);
       setEditing(false);
       setDraft('');
       await refresh();
@@ -58,7 +58,7 @@ export function useDaily() {
     } finally {
       setBusy(false);
     }
-  }, [state, draft, busy, refresh]);
+  }, [state, relId, draft, busy, refresh]);
 
   const startEdit = useCallback(() => {
     if (state?.myAnswer) {

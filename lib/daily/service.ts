@@ -19,6 +19,9 @@
 import { getService, type DatabaseService } from '../database/service';
 import { getQuestion } from '../questions/bank';
 import { questionForDate, dateKeyInTimeZone } from '../questions/rotation';
+import { isSupabaseConfigured } from '../supabase/client';
+import { spAnswersFor, spSubmitAnswer } from './supabaseRepo';
+import { spCreateMemory, spGetMemories } from '../story/supabaseRepo';
 import type { QuestionSeed } from '../questions/types';
 import type { Answer, Memory } from '../database/types';
 import {
@@ -61,7 +64,9 @@ function todayKey(): string {
 async function answersFor(
   service: DatabaseService,
   questionId: string,
+  relId: string,
 ): Promise<{ mine: Answer | null; partner: Answer | null }> {
+  if (isSupabaseConfigured()) return spAnswersFor(relId, questionId);
   const all = await service.listLive<Answer>('answers');
   const forQ = all.filter((a) => a.question_id === questionId);
   return {
@@ -89,8 +94,9 @@ export async function getToday(
   const question = getQuestion(questionId);
   if (!question) throw new Error('Today’s question could not be found.');
 
-  const { mine, partner } = await answersFor(service, questionId);
-  const saved = mine != null && partner != null && (await isSavedAsMemory(service, question.text));
+  const { mine, partner } = await answersFor(service, questionId, relId);
+  const saved =
+    mine != null && partner != null && (await isSavedAsMemory(service, question.text, relId));
   return { question, dateKey, myAnswer: mine, partnerAnswer: partner, status: statusOf(mine, partner), saved };
 }
 
@@ -99,14 +105,19 @@ export async function getToday(
  * Rejects an edit after reveal — the exchange is then immutable.
  */
 export async function submitMyAnswer(
+  relId: string,
   questionId: string,
   content: string,
   service: DatabaseService = getService(),
 ): Promise<void> {
   const trimmed = content.trim();
   if (!trimmed) throw new Error('Write a little something before submitting.');
-  const { mine, partner } = await answersFor(service, questionId);
+  const { mine, partner } = await answersFor(service, questionId, relId);
   if (mine && partner) throw new Error('This answer is already revealed and can’t be changed.');
+  if (isSupabaseConfigured()) {
+    await spSubmitAnswer(relId, questionId, trimmed);
+    return;
+  }
   if (mine) {
     await service.updateAnswer(mine.id, { content: trimmed });
   } else {
@@ -129,18 +140,30 @@ export async function saveAsMemory(
     `“${state.question.text}”\n\n` +
     `You: ${state.myAnswer.content}\n\n` +
     `${partnerLabel}: ${state.partnerAnswer.content}`;
+  const title = opts.title?.trim() || state.question.text;
+  const memoryDate = Date.now();
+
+  if (isSupabaseConfigured()) {
+    return spCreateMemory(relId, { title, description, memory_date: memoryDate });
+  }
   const memory = await service.createMemory({
     relationship_id: relId,
-    title: opts.title?.trim() || state.question.text,
+    title,
     description,
-    memory_date: Date.now(),
+    memory_date: memoryDate,
     image_ref: null,
   });
   return memory.id;
 }
 
-async function isSavedAsMemory(service: DatabaseService, questionText: string): Promise<boolean> {
-  const memories = await service.listLive<Memory>('memories');
+async function isSavedAsMemory(
+  service: DatabaseService,
+  questionText: string,
+  relId: string,
+): Promise<boolean> {
+  const memories = isSupabaseConfigured()
+    ? await spGetMemories(relId)
+    : await service.listLive<Memory>('memories');
   return memories.some((m) => m.description.includes(`“${questionText}”`));
 }
 
@@ -151,7 +174,7 @@ export async function devSimulatePartner(
   questionId: string,
   service: DatabaseService = getService(),
 ): Promise<void> {
-  const { partner } = await answersFor(service, questionId);
+  const { partner } = await answersFor(service, questionId, '');
   if (partner) return;
   await service.createAnswer({
     question_id: questionId,
@@ -170,7 +193,7 @@ export async function devResetToday(
   questionId: string,
   service: DatabaseService = getService(),
 ): Promise<void> {
-  const { mine, partner } = await answersFor(service, questionId);
+  const { mine, partner } = await answersFor(service, questionId, '');
   if (mine) await service.softDelete('answers', mine.id);
   if (partner) await service.softDelete('answers', partner.id);
 }
