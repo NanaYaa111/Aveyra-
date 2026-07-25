@@ -91,6 +91,13 @@ test.describe('app shell (authenticated)', () => {
     await page.getByRole('radio', { name: 'Dark' }).click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   });
+
+  test('Write saves a private journal entry', async ({ page }) => {
+    await page.goto('/write/');
+    await page.getByLabel('Your entry').fill('A private note, just for me.');
+    await page.getByRole('button', { name: /save entry/i }).click();
+    await expect(page.getByText('A private note, just for me.')).toBeVisible();
+  });
 });
 
 test.describe('daily question loop (authenticated)', () => {
