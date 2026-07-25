@@ -20,7 +20,16 @@ import {
   joinWithInvite as joinWithInviteSvc,
   type Invite,
 } from './onboarding';
+import { isSupabaseConfigured } from '../auth';
+import { spCreateInvite, spCreateSpace, spGetRelationship, spJoin } from './supabaseRepo';
 import type { Relationship } from '../database/types';
+
+/** Pull the raw code/token from a pasted invite link or return the input as-is. */
+function inviteCodeFrom(input: string): string {
+  const trimmed = input.trim();
+  const match = trimmed.match(/[?&]invite=([^&\s]+)/);
+  return match ? decodeURIComponent(match[1]!) : trimmed;
+}
 
 interface CreateSpaceArgs {
   yourName: string;
@@ -57,11 +66,17 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
   const [relationship, setRelationship] = useState<Relationship | null>(null);
 
   const refresh = useCallback(async () => {
-    const [settings, rel] = await Promise.all([
-      getService().getSettings(),
-      getService().getRelationship(),
-    ]);
-    setRelationship(rel ?? null);
+    const rel = isSupabaseConfigured()
+      ? await spGetRelationship()
+      : ((await getService().getRelationship()) ?? null);
+    // Returning device: a fully-linked server space means setup is already done,
+    // so don't force a re-run of onboarding on a second device.
+    if (isSupabaseConfigured() && rel?.status === 'linked') {
+      const s = await getService().getSettings();
+      if (s.onboarded !== true) await getService().updateSettings({ onboarded: true });
+    }
+    const settings = await getService().getSettings();
+    setRelationship(rel);
     setOnboarded(settings.onboarded === true);
   }, []);
 
@@ -76,8 +91,12 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
 
   const createSpace = useCallback(
     async ({ yourName, partnerName, startDate }: CreateSpaceArgs) => {
-      const self = await ensureSelfUser(yourName.trim());
-      await createSpaceSvc({ creatorId: self.id, partnerName, startDate });
+      if (isSupabaseConfigured()) {
+        await spCreateSpace({ yourName, startDate });
+      } else {
+        const self = await ensureSelfUser(yourName.trim());
+        await createSpaceSvc({ creatorId: self.id, partnerName, startDate });
+      }
       await refresh();
     },
     [refresh],
@@ -85,15 +104,22 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
 
   const joinSpace = useCallback(
     async ({ yourName, encoded }: { yourName: string; encoded: string }) => {
-      const self = await ensureSelfUser(yourName.trim());
-      await joinWithInviteSvc(encoded, self.id);
+      const code = inviteCodeFrom(encoded);
+      if (isSupabaseConfigured()) {
+        await spJoin({ yourName, code });
+      } else {
+        const self = await ensureSelfUser(yourName.trim());
+        await joinWithInviteSvc(code, self.id);
+      }
       await refresh();
     },
     [refresh],
   );
 
   const createInvite = useCallback(async () => {
-    const invite = await createInviteSvc(await deviceKey());
+    const invite = isSupabaseConfigured()
+      ? await spCreateInvite()
+      : await createInviteSvc(await deviceKey());
     await refresh();
     return invite;
   }, [refresh]);

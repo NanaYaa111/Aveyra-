@@ -183,6 +183,23 @@ and provide `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Until
 then M2 builds against a backend-agnostic auth seam (stub provider), mirroring how
 M1 built sync behind `SyncTransport`.
 
+### Q26 — Encryption vs cross-device sync 🟢 RESOLVED: staged privacy (local-cache encrypted; Supabase plaintext-under-RLS)
+The M1 field encryption uses a **device-local** key that a partner's device cannot
+decrypt, so it cannot protect *shared* content across two devices as-is. Resolution
+(consistent with the staged-privacy decision; **no E2EE claim** at launch):
+- **Local Dexie cache** stays encrypted at rest with the device-local key (as built)
+  — protects the on-device copy.
+- **Supabase (source of truth)** stores shared content (answers, memories) and the
+  private journal **plaintext-under-RLS + Supabase at-rest encryption** — access is
+  gated by row-level security (members-only / owner-only), not E2EE.
+- **Sync boundary:** outbound = decrypt from local cache → send plaintext to
+  Supabase; inbound = pull plaintext → re-encrypt into local cache.
+- **Future E2EE stage (deferred):** introduce a shared *relationship key* (ECDH via
+  the device keypairs we already generate) so shared content is ciphertext before it
+  reaches Supabase; the schema's content columns become ciphertext then. Not now.
+- **Copy rule:** never claim end-to-end encryption; say "encrypted at rest, strict
+  access, never sold."
+
 ---
 
 ## A. Pivotal
