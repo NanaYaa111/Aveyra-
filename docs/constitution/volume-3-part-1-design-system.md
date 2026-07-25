@@ -177,6 +177,49 @@ the intent. **Gaps to build:** per-type cards (media-forward Memory card, Daily
 Question prominence), **skeleton loading** placeholders, favourite/edit/delete
 footers. No conflict — extensions.
 
+### Section K — Iconography & Imagery  ✅ *(consistent; gaps to build)*
+App icons are quiet and consistent; **user photos are the emotional focus** and get
+room to breathe (never competed with by chrome). Standard action-icon set: Create
+(+), Edit (pencil), Delete (trash + destructive styling), Favourite (heart), Search
+(magnifier), Back (platform chevron). Icon size scale (compact/standard/large).
+Original illustrations for onboarding/empty states; user photos carry alt text (a
+caption may double as alt). *Built:* nav icons + Logo exist; **gaps:** the action
+icons (create/edit/delete/favourite/search) and custom illustrations aren't built —
+we use emoji in `EmptyState` today. Extensions, no conflict.
+
+### Section L — Dialogs, Modals & Overlays  ✅ *(matches our Modal/Dialog + Toast)*
+Least-interruptive rule: inline/toast/next-screen before a modal. **Confirmation
+dialogs for destructive/irreversible only** (delete memory/journal, leave
+relationship) — **never confirm routine reversible actions**. Dialog anatomy:
+specific title ("Delete this memory?"), cancel + confirm with **cancel at least
+equal prominence**, destructive confirm **never the default-focused button**, no
+guilt/urgency copy (Doc 0 §6.2). Focus-trapped, ESC/backdrop dismissible, announced
+to AT; toasts don't steal focus and auto-dismiss; bottom sheets swipe-to-dismiss;
+100–200ms, reduced-motion. *Built:* `Modal` (with `useFocusTrap`), `Dialog`, `Toast`
+already follow this. **Gaps:** bottom-sheet pattern + the "destructive-not-default-
+focus" convention to formalise when we add delete flows.
+
+### Section M — Feedback, Loading & Empty States  ✅ *(matches; skeleton gap)*
+**Skeleton placeholders** that mirror final layout (not spinners) where layout is
+predictable — hidden from screen readers while announcing "loading"; subtle animation
+under reduced-motion. **Empty states as invitations, never "no data"**; every list/
+area/search result has one; distinguish *filter-empty* ("clear the filter") from
+*content-empty*. Quiet success (toast/inline; routine successes don't interrupt).
+Save state unambiguous on writing surfaces; offline/sync-pending read as normal, not
+broken; **no error discards content**; state changes announced. *Built:* `EmptyState`
+(warm), `LoadingState`, `Toast`, `ErrorMessage` match the intent. **Gap:** real
+**skeleton placeholders** (we show "One moment…" text) — build with the card work.
+
+### Section N — Motion & Animation  ✅ *(matches our tokens + reduced-motion)*
+Short transitions (**100–200ms** most; **<500ms** all) from a small **duration
+scale**; motion direction matches IA. **Reduced motion is first-class** — an
+equivalent path that preserves meaning (instant/cross-fade), applied immediately
+mid-session, not just stripped animation. **User content never animates** (photos/
+entries don't bounce/spin — only the chrome framing them moves); skeleton shimmer
+becomes static under reduced-motion. *Built:* we use `duration-fast`/`ease-emphasis`
+tokens and already honour `prefers-reduced-motion` in `globals.css`; content isn't
+animated. **Minor gap:** formalise a named duration-scale token set. Consistent.
+
 ---
 
 ## GUARDIAN CONFLICT REGISTER
