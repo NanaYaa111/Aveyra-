@@ -213,6 +213,19 @@ repainted unilaterally.** Recorded in
 in Volume 3 is adopted (contrast thresholds now; type-scale + button-taxonomy gaps in
 a later token/component pass).
 
+### Q28 — Nav naming: built "Story/Write" vs Volume 3 "Memory Vault/Journal" 🟠 OPEN
+Volume 3 §H + Document 0 §3.1/§9 name the areas **"Memory Vault"** and **"Journal"**
+(and demand exact terminology to avoid drift). The built four-nav (Volume 2 Q13) uses
+the warmer **"Story"** and **"Write."** Same features, different labels. Options:
+(a) keep the warm user-facing labels **Story/Write** while docs note the canonical
+feature names (Volume 3's own philosophy favours warmth); (b) rename the nav to
+**Memory Vault/Journal** for exact-terminology consistency. Guardian lean: (a) —
+Story/Write are on-brand and shipped/tested; but it's a **brand-voice call, author's
+to make.** Not renamed unilaterally. *(Related: Volume 3 §H confirms the Q22 six-area
+IA — the nav grows to add Date Planner + Messaging as those features land; that's the
+roadmap, not a conflict. §G divergences — segmented-vs-single OTP field, autosave-as-
+you-type — are tracked as component-pass items.)*
+
 ---
 
 ## A. Pivotal

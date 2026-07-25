@@ -116,6 +116,69 @@ already the pattern (Dialog). Tracked for the component pass.
 
 ---
 
+## Part 2 Sections G–I (received 2026-07-25)
+
+### Section G — Form Controls  🟠 *(two divergences)*
+Control set: text field (label-above, never placeholder-as-label), **writing-focused
+text area** (auto-grows, generous line height, gentle limit only near the cap),
+**OTP input**, dropdown/select (native preferred), switch, checkbox, radio, **date
+picker** (calendar + typed, locale-aware). Validation **inline, kind, specific**
+("This field can't be empty", never "Error!!"), color+icon+message (never colour
+alone), quiet success. States: default/focus/filled/error/disabled/read-only/loading.
+**§7 Autosave:** writing inputs (journal, daily answers) **autosave locally as you
+type** — never lose a half-written reflection. WCAG 2.2 AA, label always
+programmatic. "Do not require the OTP flow to be more than: receive → enter/paste →
+done."
+*Built vs spec:* our `Input`/`Textarea` match (label-above, error wiring, focus ring).
+**Divergences tracked:** (1) **OTP** — Volume 3 wants **segmented single-digit
+boxes**; we ship a **single one-time-code field** (a deliberate autofill/paste/
+screen-reader choice from the approved auth design). Reconcile in the component pass
+or keep-as-is — flag, minor. (2) **Autosave-as-you-type** for Today draft + Write —
+not yet (we save on submit; drafts survive within a session but a tab-close loses an
+unsubmitted draft). **Enhancement to build.** Also: `Textarea` isn't auto-grow yet;
+Switch/Checkbox/Radio/Select/DatePicker aren't all built (add as features need them).
+
+### Section H — Navigation & Information Architecture  🔴 *(scope + naming — Q28)*
+Top-level areas (Document 0 §3.1): **Home/Today · Memory Vault · Journal · Date
+Planner · Messaging · Settings**; **Emotional Wellness surfaces contextually** within
+Home/Today + Journal (not its own destination). Mobile = persistent **bottom bar, ≤5
+destinations**; tablet/desktop = side rail with labels; same set/order cross-platform.
+Secondary nav = tabs/chips within the content area. Back nav never loses unsaved input
+(ties to §G autosave). Wayfinding: titles always visible; active state marked by
+**more than colour** (weight/fill/position). Single global **Search** over local
+data, offline-capable. Fully keyboard/SR operable; landmarks exposed.
+*Built vs spec:*
+- **Scope:** we ship a **four-nav (Today · Story · Write · Settings)**; Volume 3's
+  target is the **six-area** IA. This is the **Q22 roadmap** — the nav grows to add
+  **Date Planner + Messaging** as those features land (each a gated increment). Not a
+  new conflict; it's the embedded-product direction already agreed.
+- **Naming → Q28 (NEW):** Volume 3 / Document 0 call them **"Memory Vault"** and
+  **"Journal"**; the built nav (Volume 2 Q13) uses the warmer **"Story"** and
+  **"Write."** Document 0 §9 demands exact terminology; Volume 2 chose album/journal
+  warmth. **Author's call** — flagged below.
+- Doc-internal tension noted: it lists **6** areas but caps the bottom bar at **5**
+  (Settings likely moves to a header/profile, or overflow) — to resolve when we do
+  the IA-growth increment.
+- **Search** is specced but not yet built.
+
+### Section I — Cards & Content Containers  ✅ *(consistent; gaps to build)*
+Content leads, container recedes; recognisable-at-a-glance by icon+layout (not
+colour); graceful with missing content. Card types: **Memory** (media-forward when a
+photo exists, text-forward when not), **Journal Entry** (excerpt + private/shared
+indicator), **Daily Question** (highest prominence on Today; answered/not state
+without shame), **Date Plan** (upcoming vs past by layout+label), **Timeline** (nested
+milestone→memories, no excessive nesting). Shared anatomy: container · optional media
+· header (title/date) · body (excerpt) · optional footer (Ghost/Tertiary actions).
+States incl. **skeleton loading** + **warm empty prompts** (never "no data").
+Responsive single→multi-column with max readable width. Card-as-target vs per-action
+targets kept unambiguous; media has alt text.
+*Built vs spec:* our `Card` + `EmptyState` + the Story/Today/Write card usage match
+the intent. **Gaps to build:** per-type cards (media-forward Memory card, Daily
+Question prominence), **skeleton loading** placeholders, favourite/edit/delete
+footers. No conflict — extensions.
+
+---
+
 ## GUARDIAN CONFLICT REGISTER
 
 ### Q27 — Brand palette: Volume 3 "Blue + Coral" vs built "Evergreen + Gold"  🔴 OPEN
