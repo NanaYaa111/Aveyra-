@@ -100,3 +100,14 @@ export function AppShell({ children }: { children: ReactNode }) {
     return <BareLayout>{children}</BareLayout>;
   }
 
+  // Everything else requires a signed-in, set-up account.
+  if (status !== 'authenticated' || onboarded === null) return <Resolving />;
+
+  if (!onboarded) {
+    return isOnboardingRoute ? <BareLayout>{children}</BareLayout> : <Resolving />;
+  }
+  // Onboarded: keep them out of the onboarding route.
+  if (isOnboardingRoute) return <Resolving />;
+  return <AppLayout>{children}</AppLayout>;
+}
+
