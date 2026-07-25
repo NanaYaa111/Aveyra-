@@ -1,14 +1,8 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 
-type DailyMock = ReturnType<typeof makeDaily>;
-let current: DailyMock;
-vi.mock('@/lib/daily', () => ({ useDaily: () => current }));
-
-import TodayPage from '@/app/today/page';
-
-function makeDaily(overrides: Partial<DailyMock> = {}) {
-  const base = {
+function baseDaily() {
+  return {
     state: {
       question: { id: 'q-open-01', category: 'discovery', text: 'What made you smile today?', depth: 1 },
       dateKey: '2026-07-25',
@@ -30,7 +24,15 @@ function makeDaily(overrides: Partial<DailyMock> = {}) {
     dev: { enabled: false, simulatePartner: vi.fn(), advanceDay: vi.fn(), reset: vi.fn() },
     partnerName: 'Sam',
   };
-  return { ...base, ...overrides };
+}
+type DailyMock = ReturnType<typeof baseDaily>;
+let current: DailyMock;
+vi.mock('@/lib/daily', () => ({ useDaily: () => current }));
+
+import TodayPage from '@/app/today/page';
+
+function makeDaily(overrides: Partial<DailyMock> = {}): DailyMock {
+  return { ...baseDaily(), ...overrides };
 }
 
 afterEach(cleanup);

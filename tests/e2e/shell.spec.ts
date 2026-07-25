@@ -116,6 +116,11 @@ test.describe('daily question loop (authenticated)', () => {
     await page.getByRole('button', { name: /save this as a memory/i }).click();
     await page.getByRole('button', { name: /^save memory$/i }).click();
     await expect(page.getByText(/saved to memories/i)).toBeVisible();
+
+    // The kept memory now appears in Story.
+    await page.getByRole('link', { name: 'Story' }).click();
+    await expect(page).toHaveURL(/\/story\/?$/);
+    await expect(page.getByText('The way you laughed this morning.')).toBeVisible();
   });
 });
 
