@@ -200,6 +200,19 @@ decrypt, so it cannot protect *shared* content across two devices as-is. Resolut
 - **Copy rule:** never claim end-to-end encryption; say "encrypted at rest, strict
   access, never sold."
 
+### Q27 — Brand palette: Volume 3 "Blue + Coral" vs built "Evergreen + Gold" 🔴 OPEN
+Volume 3 §C (received 2026-07-25) names **Primary Blue** (trust) + **Soft Coral**
+(warmth), green reserved for success. The built/approved **"First Light on the Path"**
+system uses **Evergreen** primary + **Dawn Gold** warmth (ivory bg + slate text +
+semantic warning/error all MATCH Volume 3). Only the **primary hue** and **warmth
+accent** differ. Adopting Volume 3 is a contained **token re-skin** (`globals.css`,
+no component rewrites) needing a fresh contrast pass; keeping First Light needs a
+clearer primary-vs-success tonal split. **Brand decision — author's call; not
+repainted unilaterally.** Recorded in
+[volume-3-part-1-design-system.md](volume-3-part-1-design-system.md). Everything else
+in Volume 3 is adopted (contrast thresholds now; type-scale + button-taxonomy gaps in
+a later token/component pass).
+
 ---
 
 ## A. Pivotal
