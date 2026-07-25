@@ -215,6 +215,13 @@ export class DatabaseService {
     await this.journal('answers', 'put', rec.id, rec.version);
     return rec;
   }
+  async updateAnswer(id: string, patch: Partial<Answer>): Promise<void> {
+    const existing = await this.db.answers.get(id);
+    const version = (existing?.version ?? 0) + 1;
+    const encPatch = await this.encryptFields('answers', { ...patch });
+    await this.db.answers.update(id, { ...encPatch, updated_at: now(), version });
+    await this.journal('answers', 'put', id, version);
+  }
 
   // ---- Memory ------------------------------------------------------------
   async createMemory(fields: CreatableFields<Memory>): Promise<Memory> {

@@ -93,6 +93,32 @@ test.describe('app shell (authenticated)', () => {
   });
 });
 
+test.describe('daily question loop (authenticated)', () => {
+  test.beforeEach(async ({ page }) => {
+    await signIn(page);
+  });
+
+  test('answer → simulate partner → reveal → save as memory', async ({ page }) => {
+    // The daily question is shown; answer it.
+    await page.getByLabel('Your answer').fill('The way you laughed this morning.');
+    await page.getByRole('button', { name: /submit answer/i }).click();
+
+    // Waiting state, still editable.
+    await expect(page.getByText(/waiting for/i)).toBeVisible();
+    await expect(page.getByText(/still change this until reveal/i)).toBeVisible();
+
+    // Dev-simulate the partner, then reveal.
+    await page.getByRole('button', { name: /simulate partner answered/i }).click();
+    await expect(page.getByText(/see you tomorrow/i)).toBeVisible();
+    await expect(page.getByText('The way you laughed this morning.')).toBeVisible();
+
+    // Keep it as a memory (one tap → save).
+    await page.getByRole('button', { name: /save this as a memory/i }).click();
+    await page.getByRole('button', { name: /^save memory$/i }).click();
+    await expect(page.getByText(/saved to memories/i)).toBeVisible();
+  });
+});
+
 test.describe('graceful offline', () => {
   test('the app still opens with the network offline', async ({ page, context }) => {
     await signIn(page);
