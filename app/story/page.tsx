@@ -6,10 +6,7 @@ import { getMemories } from '@/lib/story';
 import { useOnboarding } from '@/lib/relationship/context';
 import type { Memory } from '@/lib/database/types';
 
-/**
- * Story — the timeline of kept memories, newest first. Each saved daily reveal
- * (and, later, added photos/moments) gathers here. Private journals never appear.
- */
+
 export default function StoryPage() {
   const { relationship } = useOnboarding();
   const relId = relationship?.id ?? null;

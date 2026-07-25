@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Card, Input, Logo } from '@/components/ui';
 import { useOnboarding } from '@/lib/relationship/context';
@@ -9,12 +9,7 @@ import type { Invite } from '@/lib/relationship';
 
 type Step = 'name' | 'choose' | 'details' | 'join' | 'invite';
 
-/**
- * First-run setup: name → create-or-join → (details | code) → invite/waiting →
- * into Aveyra. Chrome-less (no four-nav) until finished. Honest about linking:
- * a real cross-device connection completes with the backend, so the invite step
- * says "waiting for your partner" rather than claiming they've joined.
- */
+
 export default function OnboardingPage() {
   const router = useRouter();
   const { createSpace, joinSpace, createInvite, finish, devSimulatePartnerJoined, relationship } =
@@ -107,7 +102,7 @@ export default function OnboardingPage() {
           <Input
             label="Your name"
             value={yourName}
-            onChange={(e) => setYourName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setYourName(e.target.value)}
             placeholder="e.g. Alex"
             autoFocus
             required
@@ -146,14 +141,14 @@ export default function OnboardingPage() {
           <Input
             label="Your partner's name"
             value={partnerName}
-            onChange={(e) => setPartnerName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setPartnerName(e.target.value)}
             placeholder="e.g. Sam"
           />
           <Input
             label="When did your story begin?"
             type="date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)}
             hint="Used to mark anniversaries — never a countdown or a score."
           />
           {error && <p className="text-label text-error text-center">{error}</p>}
@@ -174,7 +169,7 @@ export default function OnboardingPage() {
           <Input
             label="Invite link or code"
             value={joinCode}
-            onChange={(e) => setJoinCode(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setJoinCode(e.target.value)}
             placeholder="Paste link or code"
             autoFocus
             required

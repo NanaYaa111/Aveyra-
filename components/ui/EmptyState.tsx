@@ -9,10 +9,7 @@ export interface EmptyStateProps {
   action?: ReactNode;
 }
 
-/**
- * A designed empty screen — never "No data available." Explains why it's empty
- * and names one small action.
- */
+
 export function EmptyState({ symbol, title, description, action }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center text-center gap-3 py-8 px-4">

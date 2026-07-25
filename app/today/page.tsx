@@ -1,16 +1,10 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { Button, Card, Input, Textarea } from '@/components/ui';
-import { CATEGORY_LABELS } from '@/lib/questions/types';
+import { CATEGORY_LABELS, type CategorySlug } from '@/lib/questions/types';
 import { useDaily } from '@/lib/daily';
 
-/**
- * Today — the daily ritual and heart of Aveyra. One question a day; you answer
- * privately; the answers reveal only once both of you have submitted; you may
- * keep the exchange as a Memory. Editable until reveal. No streaks, no scores,
- * no pace comparison (design-research-today-loop.md; Constitution Part 2 §1.2).
- */
 export default function TodayPage() {
   const d = useDaily();
   const [saveOpen, setSaveOpen] = useState(false);
@@ -39,7 +33,7 @@ export default function TodayPage() {
         <>
           <Card className="flex flex-col gap-2">
             <span className="text-label text-accent-strong">
-              {CATEGORY_LABELS[d.state.question.category]}
+              {CATEGORY_LABELS[d.state.question.category as CategorySlug]}
             </span>
             <p className="text-heading leading-snug">{d.state.question.text}</p>
           </Card>
@@ -57,7 +51,7 @@ export default function TodayPage() {
                 label="Your answer"
                 hideLabel
                 value={d.draft}
-                onChange={(e) => d.setDraft(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => d.setDraft(e.target.value)}
                 placeholder="Take your time — there's no right answer."
                 autoFocus
                 error={d.error ?? undefined}
@@ -115,7 +109,7 @@ export default function TodayPage() {
                   <Input
                     label="Title (optional)"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                     placeholder={d.state.question.text}
                   />
                   <div className="flex gap-2">

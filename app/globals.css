@@ -2,17 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================================================
-   Aveyra — Design Tokens · "First Light on the Path"
-   (docs/brand/aveyra-brand-identity.md is the authority for these values.)
 
-   Journey → Evergreen (actions, trust) · Discovery → Dawn Gold (highlight
-   moments only) · Remembering → Paper (warm ivory surfaces). Every value here
-   is a token; no component ever hardcodes a colour or size (Part 4 §2.3).
-
-   Fonts are system stacks so the app has zero external asset fetches and works
-   fully offline. (Self-hosted Fraunces/Inter are the sanctioned enhancement.)
-   ========================================================================== */
 :root {
   /* Type families */
   --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua',
@@ -60,13 +50,13 @@
 
   --color-text: #1f2521;
   --color-text-soft: #555c55;
-  --color-text-mute: #646b63; /* meets 4.5:1 on --color-bg (WCAG 1.4.3) */
+  --color-text-mute: #646b63; 
   --color-text-on-accent: #ffffff;
 
-  --color-accent: #2e6b5e; /* Evergreen — the journey */
+  --color-accent: #2e6b5e; 
   --color-accent-strong: #245548;
   --color-accent-soft: #e3ede8;
-  --color-gold: #b9822f; /* Dawn Gold — discovery; decorative/large only */
+  --color-gold: #b9822f; 
 
   --color-success: #3f7d54;
   --color-warning: #a8712c;
@@ -79,7 +69,7 @@
   --shadow-lg: 0 14px 40px rgba(31, 42, 36, 0.16);
 }
 
-/* ---- Dark theme: the path at night (evergreen-black, warmed ivory) ---- */
+
 :root[data-theme='dark'] {
   --color-bg: #101815;
   --color-bg-soft: #16201c;
@@ -108,7 +98,7 @@
   --shadow-lg: 0 16px 44px rgba(0, 0, 0, 0.6);
 }
 
-/* Respect OS preference when the user has not chosen a theme explicitly. */
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']):not([data-theme='dark']) {
     --color-bg: #101815;
@@ -135,9 +125,7 @@
   }
 }
 
-/* ============================================================================
-   Base element styles
-   ========================================================================== */
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -192,9 +180,6 @@
   }
 }
 
-/* ============================================================================
-   Accessibility helpers
-   ========================================================================== */
 @layer utilities {
   .sr-only {
     position: absolute;
@@ -221,7 +206,6 @@
     transform: translateY(0);
   }
 
-  /* Safe-area padding for notched / gesture devices (standalone PWA). */
   .pb-safe {
     padding-bottom: calc(env(safe-area-inset-bottom) + var(--space-2));
   }

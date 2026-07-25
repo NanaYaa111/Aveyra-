@@ -1,9 +1,10 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/lib/utils/cn';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   /** Remove default padding (e.g. for full-bleed media). */
   flush?: boolean;
+  children?: ReactNode;
 }
 
 /** A calm surface container. */

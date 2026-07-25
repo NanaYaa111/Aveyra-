@@ -5,11 +5,7 @@ import { DataControls } from '@/components/app/DataControls';
 
 export const metadata: Metadata = { title: 'Settings' };
 
-/**
- * Settings — profile, lock, accessibility, storage, export/import, and Recently
- * Deleted (Constitution Part 5 §7). Sections beyond Appearance are wired up in
- * later milestone steps; Appearance (light/dark) is live now.
- */
+
 export default function SettingsPage() {
   return (
     <section aria-labelledby="settings-heading">

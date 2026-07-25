@@ -22,10 +22,6 @@ function apply(choice: ThemeChoice) {
   }
 }
 
-/**
- * Appearance control: System / Light / Dark. Dark mode is a first-class theme,
- * not an afterthought (Constitution Part 2 §3.4). Choice persists locally.
- */
 export function ThemeToggle() {
   const [choice, setChoice] = useState<ThemeChoice>('system');
 

@@ -16,11 +16,7 @@ export interface ModalProps {
   alert?: boolean;
 }
 
-/**
- * Accessible dialog: portalled, focus-trapped, Escape-to-close, backdrop click
- * to dismiss, scroll-locked, focus restored to the trigger on close
- * (Constitution Part 3 §13).
- */
+
 export function Modal({ open, onClose, title, children, footer, alert }: ModalProps) {
   const [mounted, setMounted] = useState(false);
   const titleId = useId();

@@ -17,11 +17,7 @@ export interface NavigationProps {
   brand?: ReactNode;
 }
 
-/**
- * The fixed four-destination navigation (Constitution Part 2 §4.2). Order and
- * position never change. Renders as a bottom tab bar on mobile and a side rail
- * on larger screens. Active destination is marked with aria-current="page".
- */
+
 export function Navigation({ items, brand }: NavigationProps) {
   const pathname = usePathname();
 

@@ -8,11 +8,7 @@ const DESTINATIONS = [
   { path: '/settings/', heading: 'Settings' },
 ];
 
-/**
- * Complete the passwordless-OTP flow using the local stub, which surfaces the
- * delivered code inline (data-testid="dev-otp"). Leaves the app authenticated and
- * on /today.
- */
+
 async function verifyEmail(page: Page, email = 'e2e@example.com') {
   await page.goto('/sign-in/');
   await page.getByLabel('Email').fill(email);

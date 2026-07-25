@@ -5,12 +5,7 @@ import { Button } from '@/components/ui';
 import { getService } from '@/lib/database';
 import { serializeBackup, parseBackup, downloadBackup, suggestedFilename } from '@/lib/backup';
 
-/**
- * Export / import controls (Constitution Part 3 §4). Export downloads a
- * decrypted JSON backup the user owns; import restores one, re-encrypting on
- * this device. Functional-minimal — visual design is deliberately restrained
- * pending the Settings design pass.
- */
+
 export function DataControls() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<{ text: string; error: boolean } | null>(null);

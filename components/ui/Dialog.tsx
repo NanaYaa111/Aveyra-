@@ -15,13 +15,6 @@ export interface DialogProps {
   destructive?: boolean;
 }
 
-/**
- * A focused confirm/alert dialog built on Modal (role="alertdialog").
- *
- * Note: the Constitution prefers *undo over confirm* for destructive user
- * content (Part 2 §4.4). Reserve this for the rare irreversible action that
- * genuinely warrants a stop (e.g. erasing all local data).
- */
 export function Dialog({
   open,
   onClose,

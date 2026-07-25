@@ -1,14 +1,11 @@
 'use client';
 
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Button, Card, EmptyState, Input, Textarea } from '@/components/ui';
 import { createEntry, getEntries } from '@/lib/journal';
 import type { JournalEntry } from '@/lib/database/types';
 
-/**
- * Write — a private space for your own reflection. Nothing here is shared with
- * your partner or shown anywhere else. Compose at the top; past entries below.
- */
+
 export default function WritePage() {
   const [entries, setEntries] = useState<JournalEntry[] | null>(null);
   const [title, setTitle] = useState('');
@@ -53,13 +50,13 @@ export default function WritePage() {
         <Input
           label="Title (optional)"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
           placeholder="A word or two, if you like"
         />
         <Textarea
           label="Your entry"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
           placeholder="What's on your mind?"
           error={error ?? undefined}
         />

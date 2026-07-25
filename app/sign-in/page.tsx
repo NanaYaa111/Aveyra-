@@ -1,15 +1,11 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Input, Logo } from '@/components/ui';
 import { useAuth } from '@/lib/auth/context';
 
-/**
- * Sign in — step one of passwordless email OTP (Q15). One field, one action. No
- * passwords, no social login. The response never reveals whether an email is
- * registered (enumeration protection), so the copy is identical either way.
- */
+
 export default function SignInPage() {
   const router = useRouter();
   const { requestOtp } = useAuth();
@@ -50,7 +46,7 @@ export default function SignInPage() {
           type="email"
           name="email"
           value={email}
-          onChange={(e) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setEmail(e.target.value);
             if (error) setError(null);
           }}

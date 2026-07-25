@@ -8,10 +8,7 @@ export interface ErrorMessageProps {
   className?: string;
 }
 
-/**
- * Human-friendly error surface. Never exposes stack traces or error codes
- * (Constitution Part 4 §9). Announced to assistive tech.
- */
+
 export function ErrorMessage({ children, urgent, className }: ErrorMessageProps) {
   return (
     <div

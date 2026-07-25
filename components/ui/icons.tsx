@@ -1,9 +1,6 @@
 import type { SVGProps } from 'react';
 
-/**
- * Inline SVG icons (currentColor, no external assets → fully offline).
- * Decorative by default; the nav labels carry the accessible name.
- */
+
 function Base(props: SVGProps<SVGSVGElement>) {
   return (
     <svg

@@ -9,15 +9,6 @@ interface State {
   hasError: boolean;
 }
 
-/**
- * Top-level error boundary. A render error anywhere below shows a calm, honest
- * recovery surface instead of a blank white screen (Constitution Part 4 §9 —
- * never expose stack traces; always offer a way forward). Local data is
- * untouched by a render error, so reloading is safe.
- *
- * Deliberately dependency-free and class-based (the only way to catch render
- * errors in React) and styled with tokens only.
- */
 export class ErrorBoundary extends Component<Props, State> {
   state: State = { hasError: false };
 

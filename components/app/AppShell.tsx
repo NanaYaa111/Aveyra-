@@ -21,9 +21,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];
 
-/** Pre-authentication routes: rendered full-screen, no navigation. */
 const AUTH_ROUTES = ['/sign-in', '/verify'];
-/** Authenticated-but-chrome-less route: first-run setup. */
 const ONBOARDING_ROUTE = '/onboarding';
 
 function SkipLink() {
@@ -34,7 +32,6 @@ function SkipLink() {
   );
 }
 
-/** A calm, centred column for the chrome-less screens (auth / onboarding). */
 function BareLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-dvh grid place-items-center px-4 py-10">
@@ -46,7 +43,6 @@ function BareLayout({ children }: { children: ReactNode }) {
   );
 }
 
-/** The authenticated application shell: four-destination nav + reading column. */
 function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="sm:flex sm:items-stretch min-h-dvh">
@@ -63,7 +59,6 @@ function AppLayout({ children }: { children: ReactNode }) {
   );
 }
 
-/** A minimal, calm placeholder while auth / onboarding state resolves. */
 function Resolving() {
   return (
     <div className="min-h-dvh grid place-items-center px-4" aria-busy="true">
@@ -74,14 +69,6 @@ function Resolving() {
   );
 }
 
-/**
- * The top-level shell. From the auth + onboarding state and the current route it
- * chooses the layout and enforces the guard:
- *  - signed-out visitors are sent to /sign-in;
- *  - signed-in but not-yet-set-up visitors are kept in /onboarding;
- *  - fully set-up visitors never sit on an auth or onboarding screen.
- * A brief "one moment" state covers resolution so nothing flashes.
- */
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -97,12 +84,12 @@ export function AppShell({ children }: { children: ReactNode }) {
       if (!isAuthRoute) router.replace('/sign-in');
       return;
     }
-    // Authenticated:
+
     if (isAuthRoute) {
       router.replace('/today');
       return;
     }
-    if (onboarded === null) return; // still resolving onboarding state
+    if (onboarded === null) return; 
     if (!onboarded && !isOnboardingRoute) router.replace('/onboarding');
     if (onboarded && isOnboardingRoute) router.replace('/today');
   }, [status, onboarded, isAuthRoute, isOnboardingRoute, router]);
@@ -113,13 +100,3 @@ export function AppShell({ children }: { children: ReactNode }) {
     return <BareLayout>{children}</BareLayout>;
   }
 
-  // Everything else requires a signed-in, set-up account.
-  if (status !== 'authenticated' || onboarded === null) return <Resolving />;
-
-  if (!onboarded) {
-    return isOnboardingRoute ? <BareLayout>{children}</BareLayout> : <Resolving />;
-  }
-  // Onboarded: keep them out of the onboarding route.
-  if (isOnboardingRoute) return <Resolving />;
-  return <AppLayout>{children}</AppLayout>;
-}

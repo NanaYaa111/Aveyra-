@@ -1,10 +1,5 @@
 import { cn } from '@/lib/utils/cn';
 
-/**
- * The Aveyra mark — "The Meeting Path": two journeys converging to an apex (an
- * "A"), with the light of discovery held in the space between them. Strokes use
- * currentColor; the light-point uses the gold token. See the brand guide.
- */
 export function AveyraMark({ className }: { className?: string }) {
   return (
     <svg

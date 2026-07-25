@@ -1,18 +1,11 @@
 'use client';
 
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Card, Input } from '@/components/ui';
 import { useAuth } from '@/lib/auth/context';
 
-/**
- * Verify — step two of passwordless email OTP. A single one-time-code field
- * (`autocomplete="one-time-code"`) so browser/OS autofill and paste both work,
- * which is more robust and screen-reader-friendly than split digit boxes.
- * When there is no email backend yet (the local stub), the delivered code is
- * shown inline so sign-in is testable end-to-end; that notice disappears the
- * moment Supabase is wired.
- */
+
 export default function VerifyPage() {
   const router = useRouter();
   const { pending, devCode, verifyOtp, resend, changeEmail } = useAuth();
@@ -92,7 +85,7 @@ export default function VerifyPage() {
           pattern="[0-9]*"
           maxLength={6}
           value={code}
-          onChange={(e) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setCode(e.target.value.replace(/\D/g, '').slice(0, 6));
             if (error) setError(null);
           }}

@@ -6,11 +6,7 @@ export interface LoadingStateProps {
   className?: string;
 }
 
-/**
- * A quiet, accessible busy indicator. Used ONLY for genuinely slow local work
- * — image decoding, export, import — never for operations under 200ms
- * (Constitution Part 2 §4.3).
- */
+
 export function LoadingState({ label, className }: LoadingStateProps) {
   return (
     <div
