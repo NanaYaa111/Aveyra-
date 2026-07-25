@@ -220,6 +220,33 @@ becomes static under reduced-motion. *Built:* we use `duration-fast`/`ease-empha
 tokens and already honour `prefers-reduced-motion` in `globals.css`; content isn't
 animated. **Minor gap:** formalise a named duration-scale token set. Consistent.
 
+### Section P — Content, Voice & Tone  🟠 *(one concrete copy fix)*
+**Voice (constant):** warm-not-sentimental · plain-not-clinical · quiet-not-chatty ·
+**honest-not-reassuring-by-default** (say plainly when something can't be recovered).
+**Tone shifts by context** (routine/empty/error/destructive/milestone/sensitive) but
+the voice doesn't. **Rules:** address the user as "you"; **Aveyra never speaks in the
+first person or says "we"** (it is not a companion/participant). Sentence case
+throughout (incl. buttons/titles); front-load meaning; one idea per sentence. **Ban:**
+system words (sync/record/cache/query), marketing words (amazing/seamless/effortless),
+manufactured urgency (Doc 0 §6.2), and **presumptive emotional language** (never tell
+users how a memory made them feel). **Never interpret/score/evaluate the relationship**;
+no comparison; **never remark on inactivity/absence**. Sensitive moments = fewer words
+(deletion states what happens to whose data + the export path, nothing else; no
+persuasion to stay). Strings externalised, no concatenation, tolerate 30–50% expansion.
+SR copy makes sense without visual context (no "tap the button below").
+*Built vs spec:*
+- ✅ Mostly aligned: our empty states are warm invitations (not "No data"), errors are
+  calm + actionable with no codes/blame, buttons are verb+object, we never remark on
+  inactivity, and copy doesn't score the relationship.
+- 🟠 **Concrete violations to fix (tracked):** the **sign-in** copy ("…and **we'll**
+  send a sign-in code") and **verify** copy ("**We sent** a 6-digit code to…") use the
+  first-person **"we"** that §5.1 forbids. Small copy edit — reword to e.g. "A sign-in
+  code is on its way" / "A 6-digit code was sent to…". *(Held off editing app copy
+  mid-collaboration to avoid clobbering your in-flight changes — will do it in a copy
+  pass on your go-ahead.)*
+- 🟠 **i18n gap:** strings are currently hardcoded, not externalised for translation
+  (Document R work) — expected at this stage.
+
 ---
 
 ## GUARDIAN CONFLICT REGISTER
