@@ -6,10 +6,13 @@
  */
 import { getService, type DatabaseService } from '../database/service';
 import { getSelfUser } from '../identity';
+import { isSupabaseConfigured } from '../supabase/client';
+import { spCreateEntry, spDeleteEntry, spGetEntries } from './supabaseRepo';
 import type { JournalEntry } from '../database/types';
 
-/** This device owner's entries, newest first. */
+/** The owner's entries, newest first (Supabase when configured, else local). */
 export async function getEntries(service: DatabaseService = getService()): Promise<JournalEntry[]> {
+  if (isSupabaseConfigured()) return spGetEntries();
   const all = await service.listLive<JournalEntry>('journalEntries');
   return all.sort((a, b) => b.created_at - a.created_at);
 }
@@ -18,21 +21,29 @@ export async function getEntries(service: DatabaseService = getService()): Promi
 export async function createEntry(
   fields: { title?: string; content: string },
   service: DatabaseService = getService(),
-): Promise<JournalEntry> {
+): Promise<void> {
   const content = fields.content.trim();
   if (!content) throw new Error('Write something before saving.');
+  if (isSupabaseConfigured()) {
+    await spCreateEntry({ title: fields.title, content });
+    return;
+  }
   const self = await getSelfUser();
-  return service.createJournalEntry({
+  await service.createJournalEntry({
     owner_id: self?.id ?? 'self',
     title: fields.title?.trim() ?? '',
     content,
   });
 }
 
-/** Move an entry to Recently Deleted (recoverable in Settings). */
+/** Remove an entry (local → Recently Deleted; server → deleted). */
 export async function deleteEntry(
   id: string,
   service: DatabaseService = getService(),
 ): Promise<void> {
+  if (isSupabaseConfigured()) {
+    await spDeleteEntry(id);
+    return;
+  }
   await service.softDelete('journalEntries', id);
 }

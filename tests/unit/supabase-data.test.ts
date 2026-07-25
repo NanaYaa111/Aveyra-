@@ -22,6 +22,7 @@ function table() {
     update(...args);
     return { eq: () => Promise.resolve({ error: null }) };
   };
+  b.delete = () => ({ eq: () => Promise.resolve({ error: null }) });
   b.then = (resolve: (v: unknown) => unknown) => resolve({ data: selectRows });
   return b;
 }
@@ -33,6 +34,7 @@ vi.mock('@/lib/supabase/client', () => ({
 
 import { spAnswersFor, spSubmitAnswer } from '@/lib/daily/supabaseRepo';
 import { spGetMemories, spCreateMemory } from '@/lib/story/supabaseRepo';
+import { spGetEntries, spCreateEntry } from '@/lib/journal/supabaseRepo';
 
 beforeEach(() => {
   getUser.mockReset().mockResolvedValue({ data: { user: { id: 'me' } } });
@@ -87,5 +89,23 @@ describe('memories repo', () => {
       expect.objectContaining({ relationship_id: 'rel_1', title: 'X', description: 'y' }),
     );
     expect(id).toBe('new_id');
+  });
+});
+
+describe('journal repo (owner-only)', () => {
+  it('lists the owner’s entries', async () => {
+    selectRows = [
+      { id: 'j1', owner_id: 'me', title: 'T', content: 'c', created_at: '2026-01-01T00:00:00Z' },
+    ];
+    const entries = await spGetEntries();
+    expect(entries).toHaveLength(1);
+    expect(entries[0]!.owner_id).toBe('me');
+  });
+
+  it('creates an entry owned by the signed-in user', async () => {
+    await spCreateEntry({ title: ' T ', content: ' hello ' });
+    expect(insert).toHaveBeenCalledWith(
+      expect.objectContaining({ owner_id: 'me', title: 'T', content: 'hello' }),
+    );
   });
 });

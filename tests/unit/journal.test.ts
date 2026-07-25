@@ -32,8 +32,9 @@ describe('journal (Write)', () => {
   });
 
   it('soft-deletes an entry (removed from the live list)', async () => {
-    const entry = await createEntry({ content: 'to remove' }, service);
-    await deleteEntry(entry.id, service);
+    await createEntry({ content: 'to remove' }, service);
+    const [entry] = await getEntries(service);
+    await deleteEntry(entry!.id, service);
     expect(await getEntries(service)).toHaveLength(0);
   });
 
