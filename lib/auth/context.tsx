@@ -16,6 +16,7 @@ import {
   setAuthProvider,
   LocalStubAuthProvider,
 } from './index';
+import { SupabaseAuthProvider } from './supabaseProvider';
 import type { AuthError, AuthResult, AuthSession, OtpChallenge } from './types';
 
 type Status = 'loading' | 'authenticated' | 'unauthenticated';
@@ -63,7 +64,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!configured.current) {
       configured.current = true;
-      if (!isSupabaseConfigured()) {
+      if (isSupabaseConfigured()) {
+        setAuthProvider(new SupabaseAuthProvider());
+      } else {
         setAuthProvider(new LocalStubAuthProvider({ deliver: (_email, code) => setDevCode(code) }));
       }
     }
