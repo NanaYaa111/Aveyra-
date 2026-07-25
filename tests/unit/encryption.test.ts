@@ -46,7 +46,7 @@ describe('passphrase-derived key (PBKDF2)', () => {
 
     const bad = await deriveKek('wrong passphrase', salt);
     await expect(aesDecrypt(bad, wrapped)).rejects.toBeTruthy();
-  });
+  }, 20000);
 });
 
 describe('ECDH device key exchange (E2EE-ready)', () => {

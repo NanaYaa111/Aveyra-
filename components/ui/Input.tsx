@@ -11,7 +11,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const fieldClass =
-  'w-full min-h-[44px] px-3 rounded-md bg-surface text-text placeholder:text-text-mute ' +
+  'w-full min-h-[52px] px-4 rounded-lg bg-surface text-text placeholder:text-text-mute ' +
   'border border-border transition-[border-color,box-shadow] duration-fast ease-emphasis ' +
   'focus:border-accent focus:outline-none focus-visible:outline-none ' +
   'aria-[invalid=true]:border-error';
@@ -49,7 +49,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         {...props}
       />
       {error && (
-        <p id={errorId} className="text-label text-error">
+        <p id={errorId} role="alert" className="text-label text-error">
           {error}
         </p>
       )}

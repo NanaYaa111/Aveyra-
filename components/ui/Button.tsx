@@ -12,7 +12,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 font-medium rounded-pill ' +
+  'inline-flex items-center justify-center gap-2 font-display font-bold rounded-pill ' +
   'transition-[background-color,box-shadow,transform] duration-fast ease-emphasis ' +
   'active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none ' +
   'min-h-[44px]'; // primary touch target (Constitution Part 2 §6)
@@ -25,8 +25,8 @@ const variants: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  md: 'px-5 text-body',
-  sm: 'px-3 min-h-[36px] text-label',
+  md: 'px-6 min-h-[52px] text-body',
+  sm: 'px-4 min-h-[36px] text-label',
 };
 
 /** Accessible button built on a native <button>. */

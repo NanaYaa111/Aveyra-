@@ -5,12 +5,14 @@ let selectRows: Array<Record<string, unknown>> = [];
 let singleRow: Record<string, unknown> | null = null;
 const insert = vi.fn();
 const update = vi.fn();
+const upsert = vi.fn();
 
 function table() {
   const b: Record<string, unknown> = {};
   const chain = () => b;
   b.select = chain;
   b.eq = chain;
+  b.is = chain;
   b.order = chain;
   b.maybeSingle = () => Promise.resolve({ data: singleRow });
   b.single = () => Promise.resolve({ data: singleRow, error: null });
@@ -21,6 +23,10 @@ function table() {
   b.update = (...args: unknown[]) => {
     update(...args);
     return { eq: () => Promise.resolve({ error: null }) };
+  };
+  b.upsert = (...args: unknown[]) => {
+    upsert(...args);
+    return Promise.resolve({ error: null });
   };
   b.delete = () => ({ eq: () => Promise.resolve({ error: null }) });
   b.then = (resolve: (v: unknown) => unknown) => resolve({ data: selectRows });
@@ -34,7 +40,7 @@ vi.mock('@/lib/supabase/client', () => ({
 
 import { spAnswersFor, spSubmitAnswer } from '@/lib/daily/supabaseRepo';
 import { spGetMemories, spCreateMemory } from '@/lib/story/supabaseRepo';
-import { spGetEntries, spCreateEntry } from '@/lib/journal/supabaseRepo';
+import { spGetEntries, spCreateEntry, spDeleteEntry } from '@/lib/journal/supabaseRepo';
 
 beforeEach(() => {
   getUser.mockReset().mockResolvedValue({ data: { user: { id: 'me' } } });
@@ -42,6 +48,7 @@ beforeEach(() => {
   singleRow = null;
   insert.mockClear();
   update.mockClear();
+  upsert.mockClear();
 });
 
 describe('answers repo', () => {
@@ -57,18 +64,18 @@ describe('answers repo', () => {
     expect(partner?.author).toBe('partner_two');
   });
 
-  it('inserts a new answer when none exists', async () => {
-    singleRow = null; // no existing
+  it('upserts on the (relationship_id, question_id, author_id) constraint', async () => {
     await spSubmitAnswer('rel_1', 'q1', 'hello');
-    expect(insert).toHaveBeenCalledWith(
+    expect(upsert).toHaveBeenCalledWith(
       expect.objectContaining({ relationship_id: 'rel_1', question_id: 'q1', author_id: 'me', content: 'hello' }),
+      expect.objectContaining({ onConflict: 'relationship_id,question_id,author_id' }),
     );
   });
 
-  it('updates the existing answer when present', async () => {
-    singleRow = { id: 'a1' };
+  it('re-submitting the same question upserts again rather than inserting a duplicate', async () => {
     await spSubmitAnswer('rel_1', 'q1', 'edited');
-    expect(update).toHaveBeenCalledWith(expect.objectContaining({ content: 'edited' }));
+    expect(upsert).toHaveBeenCalledTimes(1);
+    expect(insert).not.toHaveBeenCalled();
   });
 });
 
@@ -107,5 +114,10 @@ describe('journal repo (owner-only)', () => {
     expect(insert).toHaveBeenCalledWith(
       expect.objectContaining({ owner_id: 'me', title: 'T', content: 'hello' }),
     );
+  });
+
+  it('deletes by soft-delete: sets deleted_at, never hard-removes the row', async () => {
+    await spDeleteEntry('j1');
+    expect(update).toHaveBeenCalledWith(expect.objectContaining({ deleted_at: expect.any(String) }));
   });
 });

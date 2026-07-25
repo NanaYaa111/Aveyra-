@@ -63,7 +63,7 @@ export default function VerifyPage() {
       </div>
 
       {devCode && (
-        <Card className="text-center">
+        <Card tone="lavender" className="text-center">
           <p className="text-label text-text-mute">
             No email backend yet — your code is
           </p>

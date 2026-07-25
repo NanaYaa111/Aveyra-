@@ -38,7 +38,8 @@ export interface LocalStubOptions {
  * provisioned — a faithful, in-memory OTP implementation so the whole app (auth
  * screens, session, route guards) is built and tested against the real
  * {@link AuthProvider} contract today, with the Supabase adapter dropped in
- * behind the same interface (Q25; mirrors M1's `LocalStubTransport`).
+ * behind the same interface (Q25; same provider-swap pattern as the DB layer's
+ * mutation outbox, {@link Outbox}).
  *
  * It honours the Document P/G behavioural contract: 6-digit code, 10-minute
  * validity, 30-day session, enumeration protection (always returns a challenge),

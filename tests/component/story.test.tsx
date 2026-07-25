@@ -42,7 +42,13 @@ describe('Story screen', () => {
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: 'What made you smile today?' })).toBeInTheDocument(),
     );
-    expect(screen.getByText(/February 14, 2026/)).toBeInTheDocument();
+    // The rendered date may use the environment locale (e.g. "14 February 2026"
+    // or "February 14, 2026"). Check the time element's datetime attribute
+    // to assert the correct date is present regardless of locale formatting.
+    const iso = new Date(memories[0].memory_date).toISOString();
+    expect(
+      screen.getByText((_, node) => node?.tagName === 'TIME' && node.getAttribute('datetime') === iso),
+    ).toBeInTheDocument();
     expect(screen.getByText(/You: a dog/)).toBeInTheDocument();
   });
 });

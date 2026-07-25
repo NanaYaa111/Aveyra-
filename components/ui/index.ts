@@ -11,3 +11,4 @@ export { LoadingState, type LoadingStateProps } from './LoadingState';
 export { ErrorMessage, type ErrorMessageProps } from './ErrorMessage';
 export { TodayIcon, StoryIcon, WriteIcon, SettingsIcon } from './icons';
 export { Logo, AveyraMark } from './Logo';
+export { CoupleIllustration, ConnectedIllustration } from './illustrations';

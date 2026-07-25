@@ -1,0 +1,24 @@
+name: Infra and policy checks
+
+on:
+  push:
+    paths:
+      - 'infra/**'
+      - '.github/workflows/infra-check.yml'
+
+jobs:
+  check-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure infra files exist
+        run: |
+          if [ ! -f infra/supabase/policies.sql ]; then
+            echo "infra/supabase/policies.sql missing" >&2
+            exit 1
+          fi
+          echo "infra files present"
+      - name: SQL lint (optional)
+        run: |
+          # Optional: run a SQL linter if installed in CI, otherwise skip.
+          echo "SQL lint step placeholder"

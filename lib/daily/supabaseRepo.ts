@@ -58,31 +58,31 @@ export async function spAnswersFor(
   };
 }
 
-/** Insert or update my answer for a question (RLS ensures it's my own). */
+/**
+ * Insert or update my answer for a question (RLS ensures it's my own).
+ *
+ * A single atomic upsert on the `(relationship_id, question_id, author_id)`
+ * unique constraint — not a select-then-insert/update — so a double-tap or a
+ * retried request after a timeout can't create two rows for the same
+ * person/question (the reveal logic assumes exactly one row per author).
+ */
 export async function spSubmitAnswer(
   relId: string,
   questionId: string,
   content: string,
 ): Promise<void> {
   const me = await uid();
-  const { data: existing } = await client()
+  const { error } = await client()
     .from('answers')
-    .select('id')
-    .eq('relationship_id', relId)
-    .eq('question_id', questionId)
-    .eq('author_id', me)
-    .maybeSingle();
-
-  if (existing?.id) {
-    const { error } = await client()
-      .from('answers')
-      .update({ content, updated_at: new Date().toISOString() })
-      .eq('id', existing.id);
-    if (error) throw new Error(error.message);
-  } else {
-    const { error } = await client()
-      .from('answers')
-      .insert({ relationship_id: relId, question_id: questionId, author_id: me, content });
-    if (error) throw new Error(error.message);
-  }
+    .upsert(
+      {
+        relationship_id: relId,
+        question_id: questionId,
+        author_id: me,
+        content,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'relationship_id,question_id,author_id' },
+    );
+  if (error) throw new Error(error.message);
 }

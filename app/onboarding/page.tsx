@@ -2,10 +2,11 @@
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, Input, Logo } from '@/components/ui';
+import { Button, Card, Input, Logo, CoupleIllustration, ConnectedIllustration } from '@/components/ui';
 import { useOnboarding } from '@/lib/relationship/context';
 import { isSupabaseConfigured } from '@/lib/auth';
 import type { Invite } from '@/lib/relationship';
+import { cn } from '@/lib/utils/cn';
 
 type Step = 'name' | 'choose' | 'details' | 'join' | 'invite';
 
@@ -93,6 +94,7 @@ export default function OnboardingPage() {
             if (yourName.trim()) setStep('choose');
           }}
         >
+          <CoupleIllustration className="h-32 mx-auto" />
           <h1 id="onb-heading" className="text-display text-center">
             Let&apos;s set up your space
           </h1>
@@ -191,7 +193,8 @@ export default function OnboardingPage() {
           </h1>
 
           {invite && !linked && (
-            <Card className="flex flex-col items-center gap-3 text-center">
+            <Card tone="lavender" className="flex flex-col items-center gap-3 text-center">
+              <ConnectedIllustration className="h-20" />
               <p className="text-text-soft text-label">Share this code with your partner:</p>
               <p className="text-display tracking-[0.3em]" data-testid="invite-code">
                 {invite.code}
@@ -209,7 +212,7 @@ export default function OnboardingPage() {
           </p>
 
           {!isSupabaseConfigured() && !linked && (
-            <Card className="text-center">
+            <Card tone="coral" className="text-center">
               <p className="text-label text-text-mute">
                 No backend yet — simulate your partner joining to preview the connected state.
               </p>
@@ -237,9 +240,21 @@ function StepDots({ step }: { step: Step }) {
   const index = step === 'name' ? 0 : step === 'choose' ? 1 : 2;
   const total = 3;
   return (
-    <p className="text-label text-text-mute" aria-label={`Step ${index + 1} of ${total}`}>
-      {Array.from({ length: total }, (_, i) => (i <= index ? '●' : '○')).join(' ')}
-    </p>
+    <div
+      className="flex gap-1.5 w-full max-w-[220px]"
+      role="img"
+      aria-label={`Step ${index + 1} of ${total}`}
+    >
+      {Array.from({ length: total }, (_, i) => (
+        <span
+          key={i}
+          className={cn(
+            'h-1.5 flex-1 rounded-pill transition-colors duration-base ease-emphasis',
+            i <= index ? 'bg-accent' : 'bg-border',
+          )}
+        />
+      ))}
+    </div>
   );
 }
 

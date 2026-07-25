@@ -5,8 +5,8 @@
  * This module defines the boundary the rest of the app is written against; the
  * concrete backend is **Supabase** (GoTrue `signInWithOtp`/`verifyOtp`, Q25),
  * dropped in behind `AuthProvider` when the project is provisioned — no code above
- * this boundary changes when that happens (mirrors how M1 built sync behind
- * `SyncTransport`).
+ * this boundary changes when that happens (the same provider-swap pattern used
+ * throughout the app, e.g. the DB layer's local/Supabase repo split).
  *
  * The contract mirrors Volume 2 Part 4 Documents P & G (retained as the behavioural
  * spec our Supabase integration must satisfy): 6-digit code, 10-minute validity,

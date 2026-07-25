@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Baloo_2, Nunito } from 'next/font/google';
 import './globals.css';
 import { ThemeScript } from '@/components/app/ThemeScript';
 import { AppShell } from '@/components/app/AppShell';
@@ -7,6 +8,20 @@ import { ErrorBoundary } from '@/components/app/ErrorBoundary';
 import { ToastProvider } from '@/components/ui';
 import { AuthProvider } from '@/lib/auth/context';
 import { OnboardingProvider } from '@/lib/relationship/context';
+
+const displayFont = Baloo_2({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-display-family',
+  display: 'swap',
+});
+
+const bodyFont = Nunito({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-body-family',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -37,7 +52,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${displayFont.variable} ${bodyFont.variable}`}>
       <body>
         <ThemeScript />
         <PwaInit />

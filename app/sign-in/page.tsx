@@ -36,7 +36,7 @@ export default function SignInPage() {
         </h1>
         <p className="text-text-soft">
           A private, calm home for the two of you. Enter your email and we&apos;ll send a sign-in
-          code — no password to remember.
+          code.
         </p>
       </div>
 
@@ -64,7 +64,7 @@ export default function SignInPage() {
       </form>
 
       <p className="text-label text-text-mute text-center">
-        By continuing you confirm you&apos;re 18 or older. Your data is private to your relationship —
+        By continuing you confirm you&apos;re 18 or older. Your data is private to your relationship
         encrypted at rest and never sold.
       </p>
     </section>
