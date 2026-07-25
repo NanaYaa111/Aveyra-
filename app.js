@@ -2,12 +2,11 @@
 
 const STORE_KEY = 'journal_entries';
 
-// ── State ──────────────────────────────────────────────────────────────────
 let entries = load();
 let activeId = null;
 let saveTimer = null;
 
-// ── DOM refs ───────────────────────────────────────────────────────────────
+
 const entryList   = document.getElementById('entry-list');
 const emptyState  = document.getElementById('empty-state');
 const editorWrap  = document.getElementById('editor-wrap');
@@ -18,7 +17,7 @@ const newBtn      = document.getElementById('new-btn');
 const deleteBtn   = document.getElementById('delete-btn');
 const searchInput = document.getElementById('search');
 
-// ── Persistence ────────────────────────────────────────────────────────────
+
 function load() {
   try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
   catch { return []; }
@@ -28,7 +27,7 @@ function save() {
   localStorage.setItem(STORE_KEY, JSON.stringify(entries));
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+
 function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
@@ -50,7 +49,7 @@ function fmtShort(ts) {
 
 function byUpdated(a, b) { return b.updatedAt - a.updatedAt; }
 
-// ── Render sidebar list ────────────────────────────────────────────────────
+
 function renderList(filter) {
   const q = (filter || '').trim().toLowerCase();
   const visible = entries
@@ -90,7 +89,6 @@ function renderList(filter) {
   });
 }
 
-// ── Open an entry in the editor ────────────────────────────────────────────
 function openEntry(id) {
   const entry = entries.find(e => e.id === id);
   if (!entry) return;
@@ -114,7 +112,7 @@ function showEmpty() {
   renderList(searchInput.value);
 }
 
-// ── Create new entry ───────────────────────────────────────────────────────
+
 function createEntry() {
   const now = Date.now();
   const entry = { id: uid(), title: '', body: '', createdAt: now, updatedAt: now };
@@ -123,7 +121,7 @@ function createEntry() {
   openEntry(entry.id);
 }
 
-// ── Delete current entry ───────────────────────────────────────────────────
+
 function deleteEntry() {
   if (!activeId) return;
   if (!confirm('Delete this entry?')) return;
@@ -132,7 +130,7 @@ function deleteEntry() {
   showEmpty();
 }
 
-// ── Auto-save on editor input ──────────────────────────────────────────────
+
 function scheduleAutoSave() {
   clearTimeout(saveTimer);
   saveTimer = setTimeout(saveActive, 600);
@@ -150,14 +148,14 @@ function saveActive() {
   renderList(searchInput.value);
 }
 
-// ── Event listeners ────────────────────────────────────────────────────────
+
 newBtn.addEventListener('click', createEntry);
 deleteBtn.addEventListener('click', deleteEntry);
 entryTitle.addEventListener('input', scheduleAutoSave);
 entryBody.addEventListener('input', scheduleAutoSave);
 searchInput.addEventListener('input', () => renderList(searchInput.value));
 
-// Keyboard shortcut: Ctrl/Cmd+N → new entry
+
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
     e.preventDefault();
@@ -165,6 +163,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ── Init ───────────────────────────────────────────────────────────────────
+
 renderList();
 if (entries.length) openEntry(entries.sort(byUpdated)[0].id);
