@@ -35,8 +35,7 @@ export default function SignInPage() {
           Welcome to Aveyra
         </h1>
         <p className="text-text-soft">
-          A private, calm home for the two of you. Enter your email and we&apos;ll send a sign-in
-          code.
+          A private, calm home for the two of you. Enter your email to get a sign-in code.
         </p>
       </div>
 

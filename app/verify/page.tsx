@@ -57,7 +57,7 @@ export default function VerifyPage() {
           Enter your code
         </h1>
         <p className="text-text-soft">
-          We sent a 6-digit code to <span className="text-text font-medium">{pending.email}</span>.
+          A 6-digit code is on its way to <span className="text-text font-medium">{pending.email}</span>.
           It expires in 10 minutes.
         </p>
       </div>
