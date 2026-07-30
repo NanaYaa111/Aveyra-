@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && node scripts/inject-sw-precache.mjs",
-    "start": "next start",
+    "start": "node scripts/serve-static.mjs",
+    "preview": "node scripts/serve-static.mjs",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -46,5 +47,6 @@
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "packageManager": "pnpm@10.33.0"
 }
