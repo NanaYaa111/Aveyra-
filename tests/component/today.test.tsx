@@ -21,6 +21,7 @@ function baseDaily() {
     saveMemory: vi.fn(),
     busy: false,
     error: null as string | null,
+    online: true,
     dev: { enabled: false, simulatePartner: vi.fn(), advanceDay: vi.fn(), reset: vi.fn() },
     partnerName: 'Sam',
   };
@@ -76,6 +77,21 @@ describe('Today screen', () => {
     expect(screen.getByText('Your text this morning')).toBeInTheDocument();
     expect(screen.getByText(/see you tomorrow/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /save this as a memory/i })).toBeInTheDocument();
+  });
+
+  it('online: no connection notice', () => {
+    current = makeDaily();
+    render(<TodayPage />);
+    expect(screen.queryByText(/you're offline/i)).not.toBeInTheDocument();
+  });
+
+  it('offline: shows a calm connection notice without over-promising', () => {
+    current = makeDaily({ online: false });
+    render(<TodayPage />);
+    const notice = screen.getByText(/you're offline/i);
+    expect(notice).toBeInTheDocument();
+    // Honest copy: no false "your answer is safe" claim while a draft is unsaved.
+    expect(notice.textContent).not.toMatch(/safe/i);
   });
 
   it('revealed + saved: shows the saved badge, no save button', () => {

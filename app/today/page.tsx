@@ -23,6 +23,16 @@ export default function TodayPage() {
         )}
       </div>
 
+      {!d.online && (
+        <p
+          className="text-label text-text-soft bg-bg-soft rounded-md px-3 py-2"
+          role="status"
+          aria-live="polite"
+        >
+          You&apos;re offline. New replies will appear once you&apos;re back online.
+        </p>
+      )}
+
       {d.loading && (
         <p className="text-text-mute" role="status">
           One moment…

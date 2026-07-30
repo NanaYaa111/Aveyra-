@@ -1,8 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useOnboarding } from '../relationship/context';
 import { isSupabaseConfigured } from '../auth';
+import { useConnection } from '../net/connection';
 import {
   devAdvanceDay,
   devResetToday,
@@ -10,6 +11,7 @@ import {
   getToday,
   saveAsMemory,
   submitMyAnswer,
+  subscribeToday,
   type DailyState,
 } from './service';
 
@@ -22,6 +24,7 @@ import {
 export function useDaily() {
   const { relationship } = useOnboarding();
   const relId = relationship?.id ?? null;
+  const { online } = useConnection();
 
   const [state, setState] = useState<DailyState | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,6 +46,23 @@ export function useDaily() {
   useEffect(() => {
     void refresh();
   }, [refresh]);
+
+  // Live reveal: when the partner answers on their device, refresh so today's
+  // exchange updates without a manual reload. No-op on the local stub.
+  useEffect(() => {
+    if (!relId) return;
+    const unsubscribe = subscribeToday(relId, () => void refresh());
+    return unsubscribe;
+  }, [relId, refresh]);
+
+  // Coming back online may mean a realtime event was missed while disconnected,
+  // so reconcile — but only on a real offline→online transition, not the initial
+  // mount (the mount fetch above already covers that).
+  const wasOnline = useRef(true);
+  useEffect(() => {
+    if (online && !wasOnline.current) void refresh();
+    wasOnline.current = online;
+  }, [online, refresh]);
 
   const submit = useCallback(async () => {
     if (!state || !relId || busy) return;
@@ -120,6 +140,7 @@ export function useDaily() {
     saveMemory,
     busy,
     error,
+    online,
     dev,
     partnerName: relationship?.partner_name || 'your partner',
   };

@@ -59,6 +59,30 @@ export async function spAnswersFor(
 }
 
 /**
+ * Watch this relationship's answers for changes and call `onChange` whenever a
+ * row is inserted or updated — this is what makes the reveal happen live when
+ * your partner submits on their own device, with no polling and no refresh.
+ *
+ * Filtered to the relationship (RLS already limits it to the two members), so a
+ * partner answering any question wakes the Today screen, which re-reads and
+ * decides whether today's exchange is now complete. Returns an unsubscribe.
+ */
+export function spSubscribeAnswers(relId: string, onChange: () => void): () => void {
+  const c = client();
+  const channel = c
+    .channel(`answers:${relId}`)
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'answers', filter: `relationship_id=eq.${relId}` },
+      () => onChange(),
+    )
+    .subscribe();
+  return () => {
+    void c.removeChannel(channel);
+  };
+}
+
+/**
  * Insert or update my answer for a question (RLS ensures it's my own).
  *
  * A single atomic upsert on the `(relationship_id, question_id, author_id)`

@@ -6,6 +6,22 @@ let singleRow: Record<string, unknown> | null = null;
 const insert = vi.fn();
 const update = vi.fn();
 const upsert = vi.fn();
+const channelOn = vi.fn();
+const channelSubscribe = vi.fn();
+const removeChannel = vi.fn();
+
+function channel() {
+  const ch: Record<string, unknown> = {};
+  ch.on = (...args: unknown[]) => {
+    channelOn(...args);
+    return ch;
+  };
+  ch.subscribe = () => {
+    channelSubscribe();
+    return ch;
+  };
+  return ch;
+}
 
 function table() {
   const b: Record<string, unknown> = {};
@@ -34,11 +50,16 @@ function table() {
 }
 
 vi.mock('@/lib/supabase/client', () => ({
-  getSupabaseClient: () => ({ auth: { getUser }, from: () => table() }),
+  getSupabaseClient: () => ({
+    auth: { getUser },
+    from: () => table(),
+    channel: () => channel(),
+    removeChannel,
+  }),
   isSupabaseConfigured: () => true,
 }));
 
-import { spAnswersFor, spSubmitAnswer } from '@/lib/daily/supabaseRepo';
+import { spAnswersFor, spSubmitAnswer, spSubscribeAnswers } from '@/lib/daily/supabaseRepo';
 import { spGetMemories, spCreateMemory } from '@/lib/story/supabaseRepo';
 import { spGetEntries, spCreateEntry, spDeleteEntry } from '@/lib/journal/supabaseRepo';
 
@@ -49,6 +70,9 @@ beforeEach(() => {
   insert.mockClear();
   update.mockClear();
   upsert.mockClear();
+  channelOn.mockClear();
+  channelSubscribe.mockClear();
+  removeChannel.mockClear();
 });
 
 describe('answers repo', () => {
@@ -76,6 +100,28 @@ describe('answers repo', () => {
     await spSubmitAnswer('rel_1', 'q1', 'edited');
     expect(upsert).toHaveBeenCalledTimes(1);
     expect(insert).not.toHaveBeenCalled();
+  });
+
+  it('subscribes to this relationship’s answer changes and fires onChange, then tears down', () => {
+    const onChange = vi.fn();
+    const unsubscribe = spSubscribeAnswers('rel_1', onChange);
+
+    // Subscribed to postgres changes on answers, scoped to the relationship.
+    expect(channelOn).toHaveBeenCalledWith(
+      'postgres_changes',
+      expect.objectContaining({ table: 'answers', filter: 'relationship_id=eq.rel_1' }),
+      expect.any(Function),
+    );
+    expect(channelSubscribe).toHaveBeenCalledTimes(1);
+
+    // A change event drives the callback (that's what reveals live).
+    const handler = channelOn.mock.calls[0]![2] as (payload: unknown) => void;
+    handler({ eventType: 'INSERT' });
+    expect(onChange).toHaveBeenCalledTimes(1);
+
+    // Unsubscribe removes the channel.
+    unsubscribe();
+    expect(removeChannel).toHaveBeenCalledTimes(1);
   });
 });
 

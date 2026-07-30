@@ -20,7 +20,7 @@ import { getService, type DatabaseService } from '../database/service';
 import { getQuestion } from '../questions/bank';
 import { questionForDate, dateKeyInTimeZone } from '../questions/rotation';
 import { isSupabaseConfigured } from '../supabase/client';
-import { spAnswersFor, spSubmitAnswer } from './supabaseRepo';
+import { spAnswersFor, spSubmitAnswer, spSubscribeAnswers } from './supabaseRepo';
 import { spCreateMemory, spGetMemories } from '../story/supabaseRepo';
 import type { QuestionSeed } from '../questions/types';
 import type { Answer, Memory } from '../database/types';
@@ -98,6 +98,17 @@ export async function getToday(
   const saved =
     mine != null && partner != null && (await isSavedAsMemory(service, question.text, relId));
   return { question, dateKey, myAnswer: mine, partnerAnswer: partner, status: statusOf(mine, partner), saved };
+}
+
+/**
+ * Subscribe to live changes in today's exchange, calling `onChange` when either
+ * partner's answer lands. On Supabase this is a realtime channel; on the local
+ * stub there is no second device, so it's a no-op (dev-simulate drives changes
+ * explicitly). Returns an unsubscribe the caller runs on teardown.
+ */
+export function subscribeToday(relId: string, onChange: () => void): () => void {
+  if (isSupabaseConfigured()) return spSubscribeAnswers(relId, onChange);
+  return () => {};
 }
 
 /**
