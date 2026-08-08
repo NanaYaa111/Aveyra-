@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, type ChangeEvent, type FormEvent } fr
 import { Button, Card, EmptyState, Textarea } from '@/components/ui';
 import { cn } from '@/lib/utils/cn';
 import { useOnboarding } from '@/lib/relationship/context';
+import { NeedsSpace } from '@/components/app/NeedsSpace';
 import {
   NOTE_KIND_LABELS,
   acknowledgeNote,
@@ -66,36 +67,9 @@ export default function NotesPage() {
         </p>
       </div>
 
-      {writing === null ? (
-        <ul className="flex flex-col gap-2">
-          {NOTE_KINDS.map((kind) => {
-            const k = NOTE_KIND_LABELS[kind];
-            return (
-              <li key={kind}>
-                <button
-                  type="button"
-                  onClick={() => setWriting(kind)}
-                  disabled={!relId}
-                  className={cn(
-                    'w-full text-left rounded-lg border border-border bg-surface',
-                    'px-4 py-3 min-h-[44px] flex items-start gap-3',
-                    'hover:bg-bg-soft transition-colors duration-fast ease-emphasis',
-                    'disabled:opacity-50 disabled:pointer-events-none',
-                  )}
-                >
-                  <span aria-hidden className="text-xl leading-none mt-0.5">
-                    {k.emoji}
-                  </span>
-                  <span className="flex flex-col">
-                    <span className="font-medium">{k.title}</span>
-                    <span className="text-label text-text-soft">{k.prompt}</span>
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
+      <NeedsSpace what="Notes" />
+
+      {relId && writing !== null ? (
         <form onSubmit={save} className="flex flex-col gap-3">
           <Card className="flex flex-col gap-1">
             <p className="font-medium">
@@ -130,7 +104,36 @@ export default function NotesPage() {
             </Button>
           </div>
         </form>
-      )}
+      ) : relId ? (
+        <ul className="flex flex-col gap-2">
+          {NOTE_KINDS.map((kind) => {
+            const k = NOTE_KIND_LABELS[kind];
+            return (
+              <li key={kind}>
+                <button
+                  type="button"
+                  onClick={() => setWriting(kind)}
+                  disabled={!relId}
+                  className={cn(
+                    'w-full text-left rounded-lg border border-border bg-surface',
+                    'px-4 py-3 min-h-[44px] flex items-start gap-3',
+                    'hover:bg-bg-soft transition-colors duration-fast ease-emphasis',
+                    'disabled:opacity-50 disabled:pointer-events-none',
+                  )}
+                >
+                  <span aria-hidden className="text-xl leading-none mt-0.5">
+                    {k.emoji}
+                  </span>
+                  <span className="flex flex-col">
+                    <span className="font-medium">{k.title}</span>
+                    <span className="text-label text-text-soft">{k.prompt}</span>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
 
       {notes !== null && notes.length === 0 && (
         <EmptyState

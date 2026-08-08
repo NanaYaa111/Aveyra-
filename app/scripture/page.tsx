@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, type ChangeEvent, type FormEvent } fr
 import { Button, Card, Textarea } from '@/components/ui';
 import { cn } from '@/lib/utils/cn';
 import { useOnboarding } from '@/lib/relationship/context';
+import { NeedsSpace } from '@/components/app/NeedsSpace';
 import {
   TRANSLATION_NAMES,
   getTranslation,
@@ -80,6 +81,8 @@ export default function ScripturePage() {
           stirred.
         </p>
       </div>
+
+      <NeedsSpace what="The daily verse" />
 
       {error && (
         <p className="text-error text-label" role="alert">
