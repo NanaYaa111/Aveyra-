@@ -35,7 +35,12 @@ export async function sendMessage(
     await spSendMessage(relId, trimmed);
     return;
   }
-  await service.createMessage({ relationship_id: relId, author: ME, content: trimmed });
+  await service.createMessage({
+    relationship_id: relId,
+    author: ME,
+    content: trimmed,
+    kind: 'message',
+  });
 }
 
 /**

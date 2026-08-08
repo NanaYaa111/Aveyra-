@@ -100,11 +100,32 @@ export interface DatePlan extends BaseRecord {
   planned_for: number | null;
 }
 
+/**
+ * The fixed vocabulary of pings — for missing someone without having words.
+ * Deliberately closed and small: choosing from six warm things is easier than
+ * facing an empty box, which is the entire point. Every one is obligation-free
+ * by construction; none asks a question, so none can go unanswered.
+ */
+export const PINGS = [
+  'thinking-of-you',
+  'miss-you',
+  'hope-today-is-kind',
+  'saw-something-you-would-like',
+  'no-need-to-reply',
+  'goodnight',
+] as const;
+export type PingKind = (typeof PINGS)[number];
+
+/** A thread entry: either something written, or a one-tap ping. */
+export type MessageKind = 'message' | 'ping';
+
 /** One message in the couple's private thread. */
 export interface Message extends BaseRecord {
   relationship_id: string;
   author: Author;
   content: string;
+  /** 'ping' rows carry a {@link PingKind} in `content`, not free text. */
+  kind: MessageKind;
 }
 
 /**

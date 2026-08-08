@@ -76,14 +76,14 @@ describe('presence — the whole notification surface', () => {
     let { lines } = await getPresence(REL, daily('answering'), NAME, service);
     expect(lines.join(' ')).not.toMatch(/message/i);
 
-    await service.createMessage({ relationship_id: REL, author: 'partner_two', content: 'hi back' });
+    await service.createMessage({ relationship_id: REL, author: 'partner_two', content: 'hi back', kind: 'message' });
     ({ lines } = await getPresence(REL, daily('answering'), NAME, service));
     expect(lines).toContain("There's a message from Sam.");
   });
 
   it('never carries a count — that something is waiting is the whole message', async () => {
     for (let i = 0; i < 4; i++) {
-      await service.createMessage({ relationship_id: REL, author: 'partner_two', content: `m${i}` });
+      await service.createMessage({ relationship_id: REL, author: 'partner_two', content: `m${i}`, kind: 'message' });
     }
     const { lines } = await getPresence(REL, daily('answering'), NAME, service);
     const text = lines.join(' ');
@@ -93,7 +93,7 @@ describe('presence — the whole notification surface', () => {
 
   it('never uses pressuring or content-revealing copy (Section J)', async () => {
     await partnerCheckedIn();
-    await service.createMessage({ relationship_id: REL, author: 'partner_two', content: 'secret' });
+    await service.createMessage({ relationship_id: REL, author: 'partner_two', content: 'secret', kind: 'message' });
     const text = (await getPresence(REL, daily('revealed'), NAME, service)).lines.join(' ');
 
     expect(text).not.toMatch(/waiting for you|is waiting|you missed|don't forget|still haven't/i);

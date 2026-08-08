@@ -5,7 +5,7 @@
  * live on both devices.
  */
 import { getSupabaseClient } from '../supabase/client';
-import type { Message } from '../database/types';
+import type { Message, MessageKind } from '../database/types';
 
 function client() {
   const c = getSupabaseClient();
@@ -26,6 +26,7 @@ function toMessage(row: Record<string, unknown>, me: string): Message {
     relationship_id: row.relationship_id as string,
     author: row.author_id === me ? 'partner_one' : 'partner_two',
     content: (row.content as string) ?? '',
+    kind: ((row.kind as MessageKind) ?? 'message') as MessageKind,
     created_at: created,
     updated_at: created,
     deleted_at: null,
