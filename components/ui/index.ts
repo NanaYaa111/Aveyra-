@@ -17,6 +17,7 @@ export {
   MessagesIcon,
   CheckInIcon,
   ScriptureIcon,
+  NotesIcon,
   VaultIcon,
   SettingsIcon,
 } from './icons';

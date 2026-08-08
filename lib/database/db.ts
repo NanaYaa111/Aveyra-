@@ -10,6 +10,8 @@ import type {
   DatePlan,
   Message,
   CheckIn,
+  DailyScripture,
+  Note,
   ExportRecord,
   AppSettings,
 } from './types';
@@ -40,6 +42,8 @@ export class AveyraDB extends Dexie {
   datePlans!: EntityTable<DatePlan, 'id'>;
   messages!: EntityTable<Message, 'id'>;
   checkIns!: EntityTable<CheckIn, 'id'>;
+  dailyScriptures!: EntityTable<DailyScripture, 'id'>;
+  notes!: EntityTable<Note, 'id'>;
   exportRecords!: EntityTable<ExportRecord, 'id'>;
   settings!: EntityTable<AppSettings, 'id'>;
   /**
@@ -86,6 +90,11 @@ export class AveyraDB extends Dexie {
     // v3: the end-to-end encrypted vault.
     this.version(3).stores({
       vaultItems: 'id, relationship_id, created_at',
+    });
+    // v4: the daily scripture ritual and labelled notes.
+    this.version(4).stores({
+      dailyScriptures: 'id, relationship_id, date_key',
+      notes: 'id, relationship_id, kind, created_at',
     });
   }
 }

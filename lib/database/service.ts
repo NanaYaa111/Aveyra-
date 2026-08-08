@@ -16,6 +16,8 @@ import {
   type DatePlan,
   type Message,
   type CheckIn,
+  type DailyScripture,
+  type Note,
   type BackupData,
   type ThemeChoice,
 } from './types';
@@ -34,6 +36,10 @@ const ENCRYPTED_FIELDS: Record<SoftDeletableTable, readonly string[]> = {
   messages: ['content'],
   // `mood` stays plaintext: a six-value enum used for display, not prose.
   checkIns: ['note'],
+  // `reference` stays plaintext — it's a citation, not private prose.
+  dailyScriptures: ['text', 'chooser_note', 'response'],
+  // `kind` stays plaintext so notes can be listed by kind without decrypting.
+  notes: ['content'],
 };
 
 /** Stable id + time helpers. */
@@ -187,6 +193,8 @@ export class DatabaseService {
       'datePlans',
       'messages',
       'checkIns',
+      'dailyScriptures',
+      'notes',
     ];
     const out: DeletedItem[] = [];
     for (const t of tables) {
@@ -296,6 +304,36 @@ export class DatabaseService {
   }
   async deleteImage(ref: string): Promise<void> {
     await this.db.images.delete(ref);
+  }
+
+  // ---- Daily scripture ---------------------------------------------------
+  async createDailyScripture(fields: CreatableFields<DailyScripture>): Promise<DailyScripture> {
+    const rec = stamp<DailyScripture>(fields);
+    await this.db.dailyScriptures.add(await this.encryptFields('dailyScriptures', rec));
+    await this.journal('dailyScriptures', 'put', rec.id, rec.version);
+    return rec;
+  }
+  async updateDailyScripture(id: string, patch: Partial<DailyScripture>): Promise<void> {
+    const existing = await this.db.dailyScriptures.get(id);
+    const version = (existing?.version ?? 0) + 1;
+    const encPatch = await this.encryptFields('dailyScriptures', { ...patch });
+    await this.db.dailyScriptures.update(id, { ...encPatch, updated_at: now(), version });
+    await this.journal('dailyScriptures', 'put', id, version);
+  }
+
+  // ---- Notes -------------------------------------------------------------
+  async createNote(fields: CreatableFields<Note>): Promise<Note> {
+    const rec = stamp<Note>(fields);
+    await this.db.notes.add(await this.encryptFields('notes', rec));
+    await this.journal('notes', 'put', rec.id, rec.version);
+    return rec;
+  }
+  async updateNote(id: string, patch: Partial<Note>): Promise<void> {
+    const existing = await this.db.notes.get(id);
+    const version = (existing?.version ?? 0) + 1;
+    const encPatch = await this.encryptFields('notes', { ...patch });
+    await this.db.notes.update(id, { ...encPatch, updated_at: now(), version });
+    await this.journal('notes', 'put', id, version);
   }
 
   // ---- Vault (end-to-end encrypted) --------------------------------------
@@ -424,6 +462,8 @@ export class DatabaseService {
       'datePlans',
       'messages',
       'checkIns',
+      'dailyScriptures',
+      'notes',
     ];
 
     // Phase 1 (outside the transaction): validate + encrypt. Web Crypto awaits
@@ -517,6 +557,10 @@ function labelFor(table: SoftDeletableTable, r: BaseRecord): string {
       return 'Message';
     case 'checkIns':
       return 'Check-in';
+    case 'dailyScriptures':
+      return (r as DailyScripture).reference || 'Scripture';
+    case 'notes':
+      return 'Note';
   }
 }
 

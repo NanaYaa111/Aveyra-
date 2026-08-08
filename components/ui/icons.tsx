@@ -73,6 +73,15 @@ export const ScriptureIcon = (p: SVGProps<SVGSVGElement>) => (
   </Base>
 );
 
+// A folded note.
+export const NotesIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Base {...p}>
+    <path d="M4 4h16v11l-5 5H4Z" />
+    <path d="M20 15h-5v5" />
+    <path d="M8 9h8M8 12.5h5" />
+  </Base>
+);
+
 // A key — the vault.
 export const VaultIcon = (p: SVGProps<SVGSVGElement>) => (
   <Base {...p}>

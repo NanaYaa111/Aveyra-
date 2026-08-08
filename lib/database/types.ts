@@ -135,6 +135,48 @@ export interface Message extends BaseRecord {
 export const MOODS = ['calm', 'happy', 'grateful', 'tired', 'stressed', 'sad'] as const;
 export type Mood = (typeof MOODS)[number];
 
+/**
+ * The daily scripture ritual. Whoever arrives first chooses the verse; the
+ * other reads it and adds their reflection. One row per day per relationship —
+ * the verse is chosen once, and the second person answers it rather than
+ * posting a competing one.
+ */
+export interface DailyScripture extends BaseRecord {
+  relationship_id: string;
+  /** Local YYYY-MM-DD key. */
+  date_key: string;
+  /** Who chose the verse. */
+  chooser: Author;
+  /** Reference, e.g. "Psalm 143:8". */
+  reference: string;
+  /** The verse text as it was shown when chosen. */
+  text: string;
+  /** What the chooser wanted to say about it. Optional. */
+  chooser_note: string;
+  /** The second person's reflection, added when they arrive. */
+  response: string;
+  /** When the response landed; null until then. */
+  responded_at: number | null;
+}
+
+/** The kind of note — the register is stated up front, before it's opened. */
+export const NOTE_KINDS = ['weighing', 'lovely', 'idea'] as const;
+export type NoteKind = (typeof NOTE_KINDS)[number];
+
+/**
+ * A note between the two of you, labelled by what kind of thing it is. The
+ * label exists so nobody has to open "we need to talk" cold, and so a hard
+ * thing and a happy thing don't arrive looking identical.
+ */
+export interface Note extends BaseRecord {
+  relationship_id: string;
+  author: Author;
+  kind: NoteKind;
+  content: string;
+  /** Marked read by the recipient — never shown to the sender as a receipt. */
+  acknowledged_at: number | null;
+}
+
 /** A daily emotional check-in, shared with the partner as soon as it's made. */
 export interface CheckIn extends BaseRecord {
   relationship_id: string;
@@ -172,7 +214,9 @@ export type SoftDeletableTable =
   | 'journalEntries'
   | 'datePlans'
   | 'messages'
-  | 'checkIns';
+  | 'checkIns'
+  | 'dailyScriptures'
+  | 'notes';
 
 /** A unified Recently Deleted row, derived from `deleted_at`. */
 export interface DeletedItem {
