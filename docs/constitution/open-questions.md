@@ -200,18 +200,26 @@ decrypt, so it cannot protect *shared* content across two devices as-is. Resolut
 - **Copy rule:** never claim end-to-end encryption; say "encrypted at rest, strict
   access, never sold."
 
-### Q27 — Brand palette: Volume 3 "Blue + Coral" vs built "Evergreen + Gold" 🔴 OPEN
-Volume 3 §C (received 2026-07-25) names **Primary Blue** (trust) + **Soft Coral**
-(warmth), green reserved for success. The built/approved **"First Light on the Path"**
-system uses **Evergreen** primary + **Dawn Gold** warmth (ivory bg + slate text +
-semantic warning/error all MATCH Volume 3). Only the **primary hue** and **warmth
-accent** differ. Adopting Volume 3 is a contained **token re-skin** (`globals.css`,
-no component rewrites) needing a fresh contrast pass; keeping First Light needs a
-clearer primary-vs-success tonal split. **Brand decision — author's call; not
-repainted unilaterally.** Recorded in
-[volume-3-part-1-design-system.md](volume-3-part-1-design-system.md). Everything else
-in Volume 3 is adopted (contrast thresholds now; type-scale + button-taxonomy gaps in
-a later token/component pass).
+### Q27 — Brand palette 🟢 RESOLVED (2026-08-03) → Rose-gold & Plum on Blush
+Superseding **both** earlier options (Volume 3's "Blue + Coral" and the built
+"Evergreen + Gold"), the author supplied a finished Aveyra logo — a serif **A**
+cradling a rose-gold heart, botanical sprig, and the tagline *"The journey of
+discovering, remembering, and growing together"* — in a **romantic rose-gold +
+deep-plum-on-blush** palette, and directed it be **adopted as the brand**.
+
+Implemented as a contained token re-skin (no component rewrites):
+- **Light:** blush paper `#faf1ee`, deep-plum text `#2c1f29`, **berry-rose accent
+  `#a83f5b`** / strong `#8c2f49`, rose-bronze `#b06a3f`.
+- **Dark:** plum-black `#1a1016`, lifted rose accent `#e59ab0`.
+- Logo mark (`components/ui/Logo.tsx`) and app icons/favicon re-drawn to the
+  A-with-heart; `manifest`/`theme-color` updated.
+
+**Contrast:** re-verified against WCAG 2.2 AA (4.5:1 text / 3:1 non-text) with a
+luminance checker — all text, link, button, and focus pairs pass in both themes
+(`text-mute` darkened to `#6f5761` to clear 4.5:1 on `bg-soft`). Subtle decorative
+borders remain low-contrast **by design**, as in the prior system (not 1.4.11 UI
+targets; the focus ring and filled controls carry interactive contrast). Recorded
+in [volume-3-part-1-design-system.md](volume-3-part-1-design-system.md).
 
 ### Q28 — Nav naming: built "Story/Write" vs Volume 3 "Memory Vault/Journal" 🟠 OPEN
 Volume 3 §H + Document 0 §3.1/§9 name the areas **"Memory Vault"** and **"Journal"**

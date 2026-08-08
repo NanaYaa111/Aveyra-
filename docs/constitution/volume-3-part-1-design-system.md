@@ -1,10 +1,19 @@
 # Volume 3 — Design System & UX Specification (recorded)
 
-**Received:** 2026-07-25 · **Status:** recorded; one material reconciliation OPEN
-(brand palette — see Q27). Covers **Part 1 Sections A–E** (Design Philosophy, Brand
-Identity, Colour, Typography, Spacing & Layout) + the **Accessibility Contrast
+**Received:** 2026-07-25 · **Status:** recorded; brand palette **RESOLVED
+2026-08-03** (see below + Q27). Covers **Part 1 Sections A–E** (Design Philosophy,
+Brand Identity, Colour, Typography, Spacing & Layout) + the **Accessibility Contrast
 Standard**, and **Part 2 Section F** (Buttons). Volume 3 defines *how Aveyra should
 feel*; it must preserve every Volume 1–2 decision and the permanent prohibitions.
+
+> **🟢 Palette resolved (Q27, 2026-08-03).** The §C "Blue + Coral" proposal and the
+> built "Evergreen + Dawn Gold" system are **both superseded** by the author's
+> finished logo: a serif **A** cradling a rose-gold heart, in **rose-gold + deep
+> plum on blush**. Adopted as the brand and implemented as a token re-skin — light
+> blush `#faf1ee` / plum text `#2c1f29` / berry-rose accent `#a83f5b`; dark plum-black
+> `#1a1016` / rose accent `#e59ab0`. Contrast re-verified to WCAG 2.2 AA in both
+> themes. The philosophy, warmth, and calm §C called for are unchanged — only the hue
+> family moved. See open-questions Q27 for the full record.
 
 > Guardian summary: **Volume 3 overwhelmingly affirms what M1 already built** — calm,
 > content-first, reflection-over-engagement, no dark patterns, WCAG 2.2 AA, warm

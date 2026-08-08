@@ -1,16 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Aveyra">
   <defs>
     <linearGradient id="field" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0" stop-color="#2E6B5E"/>
-      <stop offset="1" stop-color="#14241F"/>
+      <stop offset="0" stop-color="#A83F5B"/>
+      <stop offset="1" stop-color="#5E2338"/>
+    </linearGradient>
+    <linearGradient id="heart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F7C9C0"/>
+      <stop offset="1" stop-color="#E0A48A"/>
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="116" fill="url(#field)"/>
   <!-- The Meeting Path: two journeys converge at a single apex (the "A"). -->
-  <g stroke="#F7F5EF" stroke-width="34" stroke-linecap="round" fill="none">
+  <g stroke="#FAF1EE" stroke-width="34" stroke-linecap="round" fill="none">
     <path d="M136 396 L256 138"/>
     <path d="M376 396 L256 138"/>
   </g>
-  <!-- The light of discovery, held in the space the two paths make. -->
-  <circle cx="256" cy="318" r="34" fill="#D9A45F"/>
+  <!-- A heart, cradled in the space the two paths make. -->
+  <path d="M256 356 C 208 314 199 285 228 269 C 245 260 256 275 256 275 C 256 275 267 260 284 269 C 313 285 304 314 256 356 Z" fill="url(#heart)"/>
 </svg>
