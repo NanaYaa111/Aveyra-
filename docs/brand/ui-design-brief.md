@@ -72,10 +72,25 @@ re-check contrast if you do.
 | Warm secondary | `#b06a3f` rose-bronze | `#dda67e` |
 | Error | `#b23a4e` | `#e5899a` |
 
-Type: **Baloo 2** for headings (warm, rounded), **Nunito** for body. Sizes
-are `label 13px · body 16px · heading 22px · display clamp(1.6rem, 4.5vw,
+### Type
+
+**Fraunces** for headings — a soft, characterful serif carrying the logo's
+refinement without the roundness a display sans was giving it. Its `SOFT` axis
+rounds the terminals slightly and `WONK` allows its alternate shapes; both sit
+low, so it reads warm rather than novelty. Set headings at **600**, not 700 — a
+serif carries weight differently and 700 reads heavier than the design wants.
+
+**Nunito Sans** for body and for control labels. Buttons deliberately use the
+body face, not the display serif: a serif at button size reads formal, and
+controls should feel plain to press.
+
+Sizes are `label 13px · body 16px · heading 22px · display clamp(1.6rem, 4.5vw,
 2.4rem)`. Spacing is a 4px scale. Corners are generous: `8 / 14 / 20 / 28px`
 and a pill for round things.
+
+Both faces are downloaded at build time and served from the app's own domain —
+no call to Google Fonts at runtime, which is what keeps the app reachable
+everywhere. Any replacement has to be self-hostable the same way.
 
 ### Layout
 

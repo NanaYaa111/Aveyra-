@@ -4,11 +4,12 @@
 
 
 :root {
-  /* Type families — self-hosted via next/font (build-time, no runtime CDN call). */
-  --font-display: var(--font-display-family), 'Baloo 2', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, sans-serif;
-  --font-body: var(--font-body-family), 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Type families — self-hosted via next/font (build-time, no runtime CDN call).
+     Fraunces (warm serif) for headings, Nunito Sans for reading. Fallbacks match
+     each family's class so a swap mid-load doesn't reflow the page. */
+  --font-display: var(--font-display-family), 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: var(--font-body-family), 'Nunito Sans', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   /* Type scale */
   --text-label: 0.8125rem;
@@ -156,7 +157,9 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 700;
+    /* 600 rather than 700: a serif carries weight differently from the rounded
+       sans this replaced, and 700 Fraunces reads heavier than the design wants. */
+    font-weight: 600;
     line-height: 1.2;
   }
 

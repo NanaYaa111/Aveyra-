@@ -11,8 +11,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
+// Labels sit in the body face, not the display serif: a serif at button size
+// reads heavy and slightly formal, and controls should feel plain to press.
 const base =
-  'inline-flex items-center justify-center gap-2 font-display font-bold rounded-pill ' +
+  'inline-flex items-center justify-center gap-2 font-body font-semibold rounded-pill ' +
   'transition-[background-color,box-shadow,transform] duration-fast ease-emphasis ' +
   'active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none ' +
   'min-h-[44px]'; // primary touch target (Constitution Part 2 §6)
