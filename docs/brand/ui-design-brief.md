@@ -4,8 +4,10 @@ Everything needed to design Aveyra's screens and hand the result back. Part 1 is
 a prompt for any design tool. Part 2 is the reference detail — real tokens, real
 screens, real states.
 
-*Updated after the feature round: Notes, the scripture ritual, view-once media,
-and daily suggestions are new.*
+*Updated after the feature round (Notes, the scripture ritual, view-once media,
+daily suggestions) and after a real bug: see **The four states every screen
+needs** — two screens shipped rendering nothing at all before setup was
+finished.*
 
 ---
 
@@ -49,7 +51,9 @@ and daily suggestions are new.*
 > mascot copy. Where something has a limit, say the limit plainly.
 >
 > **Deliver:** light and dark for every screen, mobile (375px) and desktop
-> (1280px), plus any component states you changed.
+> (1280px), plus any component states you changed. For each screen, design its
+> **resolving, not-set-up, empty and error** states too — not just the state
+> where everything is populated.
 
 ---
 
@@ -155,15 +159,37 @@ None of them is a question, so none can go unanswered.
 
 ---
 
+## The four states every screen needs
+
+This is the part most designs skip, and it shipped a real bug: Notes and
+Scripture rendered their heading and then *nothing*, because there was no
+relationship yet. A blank screen with no explanation reads as broken software,
+not as unfinished setup. **Design all four, for every screen.**
+
+1. **Resolving** — we don't know yet. "One moment…" and nothing else. Must not
+   look like state 2.
+2. **No space yet** — resolved, and there is genuinely no relationship. Say so
+   plainly and offer the way out:
+   > **Your space isn't set up yet**
+   > Notes needs the two of you. Once your space exists and your partner has
+   > joined, this page comes to life.
+   > `[ Finish setting up ]`
+   Controls that can't work are **hidden, not greyed**. A disabled button with
+   no explanation is worse than no button.
+3. **Empty** — set up, but nothing in it yet. Warm, with a way in: *"Your story
+   starts here."* · *"It's quiet in here. Say something small."*
+4. **Error** — plain and blameless: what happened, what to try. Never scold,
+   never show a stack trace.
+
+States 1 and 2 are the ones that look identical if you're not careful. Keep them
+visibly distinct.
+
 ## Components
 
 Button (primary / secondary / quiet / danger, three sizes), Input, Textarea,
-Card, Modal, Dialog, Toast, Navigation, EmptyState, LoadingState, ErrorMessage.
-All bespoke — no component library. Flag any new pattern; it has to be built.
-
-Every list needs empty, loading and error states. Loading says "One moment…".
-Errors are plain and blameless — what happened, what to try. Never scold, never
-show a stack trace.
+Card, Modal, Dialog, Toast, Navigation, EmptyState, LoadingState, ErrorMessage,
+NeedsSpace. All bespoke — no component library. Flag any new pattern; it has to
+be built.
 
 ---
 
