@@ -34,9 +34,14 @@
   --radius-pill: 999px;
 
   /* Motion */
+  /* One easing curve for entrances and state changes; motion speed scales with
+     the size of the thing moving — small UI fast, larger surfaces slower. */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --dur-fast: 150ms;
-  --dur-base: 240ms;
+  --dur-fast: 150ms; /* hover, focus, small state changes */
+  --dur-base: 240ms; /* panels, cards, anything with area */
+  /* Ambient loops keep a symmetric ease — an entry curve reads wrong repeating. */
+  --dur-ambient: 3.2s;
+  --ease-ambient: ease-in-out;
 
   /* Layout */
   --app-max-width: 40rem;

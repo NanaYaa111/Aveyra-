@@ -75,3 +75,25 @@ data, and every table is scoped to the two members of a relationship.
 ```bash
 pnpm build && pnpm start     # serves out/ at http://localhost:3000
 ```
+
+## Before you ship
+
+The app is meant to open on a mid-range phone on a slow connection, so check it
+the way those users will experience it — not the way it feels on a dev machine.
+
+- **Run Lighthouse on mobile**, not desktop. Desktop scores hide exactly the
+  problems that matter here.
+- **Watch two Core Web Vitals**: LCP under 2.5s, and CLS as close to zero as
+  possible. Layout that jumps while loading is the most common regression.
+- **Test on real hardware** — an older iPhone SE or a mid-range Android. An
+  emulator on a fast laptop is not the same thing.
+- **Throttle the network** to 3G in devtools and reload cold, then reload again
+  to confirm the service worker is serving the shell.
+- **Animate `transform` and `opacity` only.** Animating `top`, `left`, `width`
+  or `height` forces a layout recalculation every frame and is where scroll
+  jank comes from.
+- **Keep the bundle honest.** The whole app is ~2MB today. A single 3D or
+  animation library can double that; weigh anything new against the person on
+  the slowest connection, not the fastest.
+- **Re-check both themes and reduced motion.** `prefers-reduced-motion` is
+  honoured globally — verify new animation inherits that rather than opting out.

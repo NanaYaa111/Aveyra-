@@ -16,7 +16,7 @@ export function CoupleIllustration(props: SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 200 160" fill="none" role="img" aria-hidden {...props}>
       <style>{`
         .aveyra-figure-a, .aveyra-figure-b {
-          animation: aveyra-bob 3.2s ease-in-out infinite;
+          animation: aveyra-bob var(--dur-ambient) var(--ease-ambient) infinite;
           transform-origin: 50% 100%;
         }
         .aveyra-figure-b { animation-delay: 0.5s; }
@@ -44,7 +44,7 @@ export function ConnectedIllustration(props: SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 200 160" fill="none" role="img" aria-hidden {...props}>
       <style>{`
         .aveyra-figure-a, .aveyra-figure-b {
-          animation: aveyra-bob 3.2s ease-in-out infinite;
+          animation: aveyra-bob var(--dur-ambient) var(--ease-ambient) infinite;
           transform-origin: 50% 100%;
         }
         .aveyra-figure-b { animation-delay: 0.5s; }
