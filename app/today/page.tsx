@@ -33,6 +33,18 @@ export default function TodayPage() {
         </p>
       )}
 
+      {/* What's here since you last looked. Stated once, plainly — no badge, no
+          count, nothing to dismiss (Constitution Section J). */}
+      {d.presence.lines.length > 0 && (
+        <div className="flex flex-col gap-0.5" role="status" aria-live="polite">
+          {d.presence.lines.map((line) => (
+            <p key={line} className="text-text-soft">
+              {line}
+            </p>
+          ))}
+        </div>
+      )}
+
       {d.loading && (
         <p className="text-text-mute" role="status">
           One moment…

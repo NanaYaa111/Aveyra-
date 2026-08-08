@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useOnboarding } from '../relationship/context';
 import { isSupabaseConfigured } from '../auth';
 import { useConnection } from '../net/connection';
+import { getPresence, type Presence } from '../presence';
 import {
   devAdvanceDay,
   devResetToday,
@@ -32,6 +33,9 @@ export function useDaily() {
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [presence, setPresence] = useState<Presence>({ lines: [] });
+
+  const partnerName = relationship?.partner_name || 'your partner';
 
   const refresh = useCallback(async () => {
     if (!relId) {
@@ -41,7 +45,9 @@ export function useDaily() {
     const next = await getToday(relId);
     setState(next);
     setLoading(false);
-  }, [relId]);
+    // Read once on arrival; there is no unread state to keep in step.
+    setPresence(await getPresence(relId, next, partnerName));
+  }, [relId, partnerName]);
 
   useEffect(() => {
     void refresh();
@@ -141,7 +147,8 @@ export function useDaily() {
     busy,
     error,
     online,
+    presence,
     dev,
-    partnerName: relationship?.partner_name || 'your partner',
+    partnerName,
   };
 }

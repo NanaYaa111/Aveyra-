@@ -22,6 +22,7 @@ function baseDaily() {
     busy: false,
     error: null as string | null,
     online: true,
+    presence: { lines: [] as string[] },
     dev: { enabled: false, simulatePartner: vi.fn(), advanceDay: vi.fn(), reset: vi.fn() },
     partnerName: 'Sam',
   };
@@ -92,6 +93,20 @@ describe('Today screen', () => {
     expect(notice).toBeInTheDocument();
     // Honest copy: no false "your answer is safe" claim while a draft is unsaved.
     expect(notice.textContent).not.toMatch(/safe/i);
+  });
+
+  it('shows the arrival lines plainly, with nothing to dismiss', () => {
+    current = makeDaily({ presence: { lines: ['Sam checked in today.'] } });
+    render(<TodayPage />);
+    expect(screen.getByText('Sam checked in today.')).toBeInTheDocument();
+    // No badge, no counter, no dismiss control — it is a sentence, not a widget.
+    expect(screen.queryByRole('button', { name: /dismiss|close|mark as read/i })).not.toBeInTheDocument();
+  });
+
+  it('shows nothing when there is nothing waiting', () => {
+    current = makeDaily();
+    render(<TodayPage />);
+    expect(screen.queryByText(/checked in|answered today|message from/i)).not.toBeInTheDocument();
   });
 
   it('revealed + saved: shows the saved badge, no save button', () => {
