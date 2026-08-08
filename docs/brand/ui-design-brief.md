@@ -1,9 +1,11 @@
 # Aveyra — UI design brief
 
-Everything you need to design Aveyra's screens yourself and hand the result
-back. Part 1 is a prompt you can paste into any design tool. Part 2 is the
-reference detail — real tokens, real screens, real states — so what you design
-maps cleanly onto what's already built.
+Everything needed to design Aveyra's screens and hand the result back. Part 1 is
+a prompt for any design tool. Part 2 is the reference detail — real tokens, real
+screens, real states.
+
+*Updated after the feature round: Notes, the scripture ritual, view-once media,
+and daily suggestions are new.*
 
 ---
 
@@ -17,152 +19,156 @@ maps cleanly onto what's already built.
 >
 > **Feeling:** intimate, quiet, a little romantic. Like a well-made paper
 > notebook, not a dashboard. The interface should recede so the words between
-> two people are the loudest thing on screen.
+> two people are the loudest thing on screen. The person it was built for asked
+> for one thing above all: **peace of mind.** Nothing in the design should
+> create a new thing to worry about.
 >
 > **Brand:** rose-gold and deep plum on warm blush. The logo is a serif "A"
-> cradling a rose-gold heart, with a botanical sprig; the tagline is "The
-> journey of discovering, remembering, and growing together."
+> cradling a rose-gold heart, with a botanical sprig.
+>
+> *"The journey of discovering, remembering, and growing together."*
 >
 > **Hard rules — the design is wrong if it breaks these:**
-> - No gamification of any kind. No streaks, badges, points, levels, progress
->   bars, percentages, leaderboards or "you're on a roll!" Nothing that turns a
->   relationship into a score.
-> - No engagement pressure. No red notification dots, no urgency, no "don't
->   break your streak", no read receipts, no typing indicators, no "last seen".
-> - No social features. There is no feed, no public profile, no third person.
->   Exactly two people, forever.
+> - No gamification. No streaks, badges, points, levels, progress bars,
+>   percentages or leaderboards. Nothing that turns a relationship into a score.
+> - No engagement pressure. No red notification dots, no counts, no urgency, no
+>   read receipts, no typing indicators, no "last seen".
+> - No social features. No feed, no public profile, no third person. Exactly two
+>   people, forever.
 > - No dark patterns. Nothing that nags, guilts, or makes leaving hard.
-> - Accessible: WCAG 2.2 AA. Body text at 4.5:1 contrast, large text and
->   interactive shapes at 3:1, touch targets at least 44×44px, a visible focus
->   ring on everything reachable by keyboard, and it must work in light and
->   dark themes.
+> - No surveillance. Nothing that analyses, scores, or reports on a partner.
+>
+> **Must be true:**
+> - Accessible to WCAG 2.2 AA: 4.5:1 body text, 3:1 large text and interactive
+>   shapes, 44×44px touch targets, visible keyboard focus, working light and dark.
 > - Content first. Generous whitespace, one clear action per screen, short
 >   sentences.
 >
-> **Voice:** plain, warm, second-person. Speak to the user as "you" and to
-> their partner by name. Never say "we" — the app doesn't refer to itself as a
-> company. No exclamation marks, no cutesy mascot copy.
+> **Voice:** plain, warm, second person. "You", and the partner by name. Never
+> "we" — the app doesn't refer to itself as a company. No exclamation marks, no
+> mascot copy. Where something has a limit, say the limit plainly.
 >
-> **Screens to design:** listed in Part 2 below, with the states each one needs.
->
-> Deliver: light and dark for each screen, mobile (375px) and desktop (1280px),
-> plus any component states you changed.
+> **Deliver:** light and dark for every screen, mobile (375px) and desktop
+> (1280px), plus any component states you changed.
 
 ---
 
 ## Part 2 — Reference
 
-### The palette in use
-
-These are the live tokens. Keep the roles; change the values if you want, but
-re-check contrast if you do.
+### Palette
 
 | Role | Light | Dark |
 | --- | --- | --- |
-| Page background | `#faf1ee` blush | `#1a1016` plum-black |
-| Soft background (wells, quiet rows) | `#f2e3de` | `#21151d` |
+| Page ground | `#faf1ee` blush | `#1a1016` plum-black |
+| Soft well | `#f2e3de` | `#21151d` |
 | Card surface | `#fffbfa` | `#271923` |
-| Border (subtle, decorative) | `#e8d3cc` | `#43303b` |
+| Border (decorative) | `#e8d3cc` | `#43303b` |
 | Body text | `#2c1f29` deep plum | `#f0e6ec` |
 | Secondary text | `#6a5560` | `#cbb6c0` |
 | Muted text | `#6f5761` | `#a690a0` |
-| Accent (buttons, links, active nav) | `#a83f5b` berry-rose | `#e59ab0` |
-| Accent strong (hover, emphasis) | `#8c2f49` | `#f0b3c4` |
-| Accent soft (tints, selected) | `#f6e2e6` | rose at 14% |
-| Warm secondary | `#b06a3f` rose-bronze | `#dda67e` |
+| Accent | `#a83f5b` berry-rose | `#e59ab0` |
+| Accent strong | `#8c2f49` | `#f0b3c4` |
+| Accent tint | `#f6e2e6` | rose at 14% |
+| Rose-bronze | `#b06a3f` | `#dda67e` |
 | Error | `#b23a4e` | `#e5899a` |
 
 ### Type
 
 **Fraunces** for headings — a soft, characterful serif carrying the logo's
-refinement without the roundness a display sans was giving it. Its `SOFT` axis
-rounds the terminals slightly and `WONK` allows its alternate shapes; both sit
-low, so it reads warm rather than novelty. Set headings at **600**, not 700 — a
-serif carries weight differently and 700 reads heavier than the design wants.
+refinement. Set at **600**, not 700; a serif carries weight differently.
+**Nunito Sans** for body *and for button labels* — a serif at button size reads
+formal, and controls should feel plain to press.
 
-**Nunito Sans** for body and for control labels. Buttons deliberately use the
-body face, not the display serif: a serif at button size reads formal, and
-controls should feel plain to press.
-
-Sizes are `label 13px · body 16px · heading 22px · display clamp(1.6rem, 4.5vw,
-2.4rem)`. Spacing is a 4px scale. Corners are generous: `8 / 14 / 20 / 28px`
-and a pill for round things.
+Scale: `label 13 · body 16 · heading 22 · display clamp(1.6rem, 4.5vw, 2.4rem)`.
+Spacing on a 4px scale. Corners `8 / 14 / 20 / 28px`, plus a pill.
 
 Both faces are downloaded at build time and served from the app's own domain —
-no call to Google Fonts at runtime, which is what keeps the app reachable
-everywhere. Any replacement has to be self-hostable the same way.
+no runtime call to any font host, which is what keeps the app reachable
+everywhere. Any replacement must be self-hostable the same way.
 
 ### Layout
 
-- **Mobile** — fixed bottom navigation bar, content scrolls above it.
-- **Desktop** — 240px left rail with the logo at the top; content column caps
-  at 40rem so lines stay readable.
-- Seven destinations: **Today · Check-in · Messages · Dates · Story · Write ·
-  Settings.** On mobile the bar is icon-only (labels remain for screen
-  readers); the desktop rail always shows labels.
+- **Mobile** — fixed bottom bar. Past seven destinations it scrolls
+  horizontally with fixed-width targets rather than dividing the width, so
+  nothing shrinks below 44px and nothing hides behind an overflow menu.
+- **Desktop** — 240px left rail with the logo; content column caps at 40rem.
+- **Ten destinations**: Today · Check-in · Messages · Dates · Notes ·
+  Scripture · Story · Vault · Write · Settings.
 
-### Screens and the states each needs
+---
 
-**Today** — the hero. One question a day.
-- *Answering*: the question on a card, a textarea, "Submit answer".
-- *Waiting*: your answer shown back, "Waiting for [name]", still editable
-  until they answer.
-- *Revealed*: both answers side by side, then an optional one-tap "Save this
-  as a memory".
-- *Offline*: a calm inline notice, never an error page.
+## Screens and their states
 
-**Check-in** — how you're arriving today.
-- Six feeling words with an emoji each: Calm 🌿, Happy 🌞, Grateful 🕊️,
-  Tired 🌙, Stretched 🌧️, Low 🌫️. Plus an optional one-line note.
-- After submitting: your card, their card, or "[name] hasn't checked in yet
-  today". Editable all day. No history graph, no trend, no average — this is
-  weather, not a metric.
+**Today** — the hero.
+- *Answering* → question on a card, textarea. *Waiting* → your answer shown
+  back, still editable. *Revealed* → both answers, then optional save-as-memory.
+- An **arrival line** at the top when something happened: "Sam answered today's
+  question." Plain sentences, no badge, no count, nothing to dismiss.
+- A **daily suggestion** at the bottom: one small thing to try. No done button —
+  it is an invitation, and nothing records whether it was taken.
+- *Offline* → a calm inline notice.
 
-**Messages** — the two of you, nothing else.
-- Alternating bubbles (yours accent-filled and right-aligned, theirs soft and
-  left-aligned), timestamps, a composer pinned at the bottom.
-- Empty: "It's quiet in here. Say something small. Small things count."
+**Check-in** — how you're arriving today. Six feeling words with emoji: Calm 🌿,
+Happy 🌞, Grateful 🕊️, Tired 🌙, Stretched 🌧️, Low 🌫️, plus an optional line.
+Editable all day. No graph, no trend, no average — weather, not a metric.
 
-**Dates** — a shared list.
-- Three groups: **Coming up** (dated, soonest first), **Ideas** (no date yet),
-  **Done together**.
-- A row can get a day ("Pick a day"), be marked "We did this", or be removed.
+**Scripture** — a two-part daily ritual, not a verse handed to both.
+- *Open* → whoever arrives first chooses. A verse is suggested so it's never a
+  blank page, and can be swapped for any other. Optional note on why this one.
+- *Waiting* → "Waiting to hear what Sam makes of it."
+- *To respond* → the other reads it and writes what it stirred.
+- *Complete* → both voices together.
+- Translation (KJV or WEB) is **personal** — same verse, each reads their own.
 
-**Story** — the archive that compounds.
-- Reverse-chronological memories: date, title, optional photo, description.
-- Can also add a memory directly, with an optional photo.
-- Empty: "Your story starts here."
+**Notes** — three labelled channels, so nothing arrives as a surprise.
+- 🌧️ *Something's weighing on me* — "Say it plainly. It doesn't have to be tidy."
+- 🌞 *Something lovely*
+- 🌿 *Something to try*
+- The reader can mark a note read; **the sender is never shown a receipt**. A
+  read receipt on a hard note turns silence into an accusation.
+- Nothing is ever counted.
 
-**Write** — a private journal, owner-only. Never shared, never in Story.
+**Messages** — the two of you. Alternating bubbles, timestamps, composer pinned
+low. Plus **pings**: one tap from six warm phrasings for when words are hard.
+None of them is a question, so none can go unanswered.
 
-**Settings** — theme (system/light/dark), export and import your data, the
-relationship, sign out.
+**Dates** — Coming up (soonest first) · Ideas · Done together.
 
-**Sign-in / Verify** — email address, then a six-digit code. Passwordless; no
-social login, no passwords anywhere.
+**Story** — memories newest first: date, title, optional photo, description.
 
-**Onboarding** — your name → create a space or join with an invite → a few
-details → an invite link to send your partner.
+**Vault** — end-to-end encrypted photos and video.
+- Two send modes: **Keep it here** or **Show once**.
+- A view-once item from the other person is **never auto-opened** — it waits
+  behind "Tap to view once", because rendering it on mount would spend it just
+  by scrolling past. After viewing: "Gone now — this was the one look."
+- The screen states its limits plainly: the server can't read these; it can't
+  stop a screenshot; if both devices are lost it's unrecoverable; deletion is
+  permanent. Video up to 60 seconds.
 
-### Components that exist
+**Write** — a private journal. Owner-only, never shared, never in Story.
 
-Button (primary / secondary / quiet, three sizes), Input, Textarea, Card,
-Modal, Dialog, Toast, Navigation, EmptyState, LoadingState, ErrorMessage. All
-bespoke — no component library. If you introduce a new pattern, say so, since
-it has to be built from scratch.
+**Sign-in / Verify** — email, then a six-digit code. No passwords, no social login.
 
-### Empty, loading and error states
+**Onboarding** — name → create or join → details → invite link.
 
-Every list needs all three, and they should feel like the rest of the app: a
-soft symbol, a short warm line, and a way forward. Loading says "One moment…".
-Errors are plain and blameless — say what happened and what to try, never
-scold, never show a stack trace.
+**Settings** — theme, export/import, the relationship, sign out.
+
+---
+
+## Components
+
+Button (primary / secondary / quiet / danger, three sizes), Input, Textarea,
+Card, Modal, Dialog, Toast, Navigation, EmptyState, LoadingState, ErrorMessage.
+All bespoke — no component library. Flag any new pattern; it has to be built.
+
+Every list needs empty, loading and error states. Loading says "One moment…".
+Errors are plain and blameless — what happened, what to try. Never scold, never
+show a stack trace.
 
 ---
 
 ## Sending it back
 
-Whatever's easiest — Figma link, exported PNGs, or a written spec. Most useful
-per screen: light + dark, mobile + desktop, and a note on anything new that
-isn't in the component list above. If you change palette values, mention it and
-I'll re-run the contrast check before it ships.
+Figma link, exported PNGs, or a written spec. Per screen: light and dark, mobile
+and desktop, and a note on anything not in the component list. Change palette
+values and the contrast gets re-checked against WCAG 2.2 AA before it ships.
