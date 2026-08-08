@@ -34,9 +34,47 @@ export interface VaultItem {
   created_at: number;
   /** Who added it, so the UI can say "you" or their name. */
   mine: boolean;
+  /** Disappears from Aveyra once the other person has opened it. */
+  viewOnce: boolean;
+  /** Video rather than photo — the UI plays it instead of showing it. */
+  isVideo: boolean;
 }
 
-const MAX_BYTES = 12 * 1024 * 1024; // 12MB, before encryption
+/** Photos. Small enough that encrypting in memory is comfortable on a phone. */
+const MAX_PHOTO_BYTES = 12 * 1024 * 1024;
+
+/**
+ * Video. Encryption is single-shot, so the plaintext and the ciphertext are
+ * both in memory at once — the ceiling is about what a mid-range phone can hold,
+ * not about storage.
+ */
+const MAX_VIDEO_BYTES = 60 * 1024 * 1024;
+export const MAX_VIDEO_SECONDS = 60;
+
+/**
+ * Read a video's duration without decoding the whole file. Resolves to null if
+ * the browser can't tell us, in which case the size limit is the only guard —
+ * refusing a video we simply couldn't measure would be worse.
+ */
+export function videoDuration(file: File | Blob): Promise<number | null> {
+  return new Promise((resolve) => {
+    if (typeof document === 'undefined') return resolve(null);
+    const url = URL.createObjectURL(file);
+    const video = document.createElement('video');
+    const done = (value: number | null) => {
+      try {
+        URL.revokeObjectURL(url);
+      } catch {
+        /* nothing to release */
+      }
+      resolve(value);
+    };
+    video.preload = 'metadata';
+    video.onloadedmetadata = () => done(Number.isFinite(video.duration) ? video.duration : null);
+    video.onerror = () => done(null);
+    video.src = url;
+  });
+}
 
 /** Everything in the vault, newest first. Metadata only; bytes load on demand. */
 export async function listVault(
@@ -47,7 +85,13 @@ export async function listVault(
   if (isSupabaseConfigured()) return spListVault(relId);
 
   const rows = await service.listVaultLocal(relId);
-  return rows.map((r) => ({ id: r.id, created_at: r.created_at, mine: true }));
+  return rows.map((r) => ({
+    id: r.id,
+    created_at: r.created_at,
+    mine: true,
+    viewOnce: r.view_once === true,
+    isVideo: r.is_video === true,
+  }));
 }
 
 /**
@@ -57,27 +101,44 @@ export async function listVault(
 export async function addToVault(
   relId: string,
   file: File | Blob,
+  opts: { viewOnce?: boolean } = {},
   service: DatabaseService = getService(),
 ): Promise<void> {
-  if (file.size > MAX_BYTES) {
-    throw new Error('That photo is larger than 12MB. Try a smaller one.');
+  const isVideo = (file.type || '').startsWith('video/');
+  const isImage = (file.type || '').startsWith('image/');
+  if (file.type && !isVideo && !isImage) {
+    throw new Error('The vault holds photos and video.');
   }
-  if (file.type && !file.type.startsWith('image/')) {
-    throw new Error('The vault holds photos.');
+
+  if (isVideo) {
+    if (file.size > MAX_VIDEO_BYTES) {
+      throw new Error('That video is too large. Keep it under about a minute.');
+    }
+    const seconds = await videoDuration(file);
+    if (seconds !== null && seconds > MAX_VIDEO_SECONDS + 1) {
+      throw new Error(`Videos can be up to ${MAX_VIDEO_SECONDS} seconds.`);
+    }
+  } else if (file.size > MAX_PHOTO_BYTES) {
+    throw new Error('That photo is larger than 12MB. Try a smaller one.');
   }
 
   const key = await getVaultKey(relId);
   const envelope = await aesEncrypt(key, await file.arrayBuffer());
 
   // The envelope's iv and ciphertext are what get stored — the mime type rides
-  // along so the image can be rebuilt, and nothing else is recorded.
+  // along so the file can be rebuilt, and nothing else is recorded.
   const payload = JSON.stringify({ ...envelope, mime: file.type });
+  const viewOnce = opts.viewOnce === true;
 
   if (isSupabaseConfigured()) {
-    await spUploadVaultItem(relId, new Blob([payload], { type: 'application/octet-stream' }));
+    await spUploadVaultItem(
+      relId,
+      new Blob([payload], { type: 'application/octet-stream' }),
+      { viewOnce, isVideo },
+    );
     return;
   }
-  await service.addVaultLocal(relId, payload);
+  await service.addVaultLocal(relId, payload, { viewOnce, isVideo });
 }
 
 /**
@@ -93,11 +154,35 @@ export async function openVaultItem(
   const payload = isSupabaseConfigured()
     ? await spFetchVaultBytes(id)
     : await service.getVaultLocal(id);
-  if (!payload) throw new Error('That photo is no longer here.');
+  if (!payload) throw new Error('That one is no longer here.');
 
   const { mime, ...envelope } = JSON.parse(payload) as Envelope & { mime: string };
   const plain = await aesDecrypt(key, envelope);
   return URL.createObjectURL(new Blob([plain], { type: mime || 'image/jpeg' }));
+}
+
+/**
+ * Open a view-once item and destroy it.
+ *
+ * The delete runs **after** the bytes are successfully decrypted, so a failure
+ * to open never silently burns the one viewing — but once it has opened it is
+ * gone, whether or not you look away. Only the recipient consumes it; the
+ * sender can check their own without spending it.
+ *
+ * What this genuinely does: removes it from Aveyra and from the server, for
+ * good. What it cannot do: stop a screenshot, or a second phone pointed at the
+ * screen. The UI says exactly that rather than implying otherwise.
+ */
+export async function consumeViewOnce(
+  relId: string,
+  item: VaultItem,
+  service: DatabaseService = getService(),
+): Promise<string> {
+  const url = await openVaultItem(relId, item.id, service);
+  if (item.viewOnce && !item.mine) {
+    await removeFromVault(item.id, service);
+  }
+  return url;
 }
 
 /** Remove for good — the row and the stored object, with no recovery path. */

@@ -158,6 +158,15 @@ export default function TodayPage() {
             </div>
           )}
 
+          {d.suggestion && (
+            <div className="mt-1 flex flex-col gap-1">
+              <p className="text-label text-text-mute uppercase tracking-wide">
+                Something small to try
+              </p>
+              <p className="text-text-soft">{d.suggestion.text}</p>
+            </div>
+          )}
+
           {d.dev.enabled && <DevBar d={d} />}
         </>
       )}

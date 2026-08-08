@@ -43,9 +43,24 @@ const cache = new Map<string, CryptoKey>();
  */
 export async function publishPublicKey(keys: KeyManager = getKeyManager()): Promise<void> {
   if (!isSupabaseConfigured()) return; // nothing to publish to
-  const vault = await keys.getVault();
-  if (!vault) throw new Error('This device has no key material yet.');
+  const vault = await ensureKeyMaterial(keys);
   await spPublishPublicKey(vault.device_public);
+}
+
+/**
+ * Get this device's key material, creating it if this is the first thing the
+ * user has done. Opening the Vault before writing anything else is a perfectly
+ * normal first action, and it shouldn't fail because no other feature happened
+ * to initialise the keystore first. `initialise` is idempotent.
+ */
+async function ensureKeyMaterial(keys: KeyManager) {
+  let vault = await keys.getVault();
+  if (!vault) {
+    await keys.initialise();
+    vault = await keys.getVault();
+  }
+  if (!vault) throw new Error('This device could not set up its keys.');
+  return vault;
 }
 
 /**
@@ -63,8 +78,7 @@ export async function getVaultKey(
   const cached = cache.get(relationshipId);
   if (cached) return cached;
 
-  const vault = await keys.getVault();
-  if (!vault) throw new Error('This device has no key material yet.');
+  const vault = await ensureKeyMaterial(keys);
 
   const partnerPublicB64 = isSupabaseConfigured()
     ? await spGetPartnerPublicKey(relationshipId)

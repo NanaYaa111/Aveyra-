@@ -36,11 +36,17 @@ export async function spListVault(relId: string): Promise<VaultItem[]> {
     id: r.id as string,
     created_at: r.created_at ? Date.parse(r.created_at as string) : Date.now(),
     mine: r.author_id === me,
+    viewOnce: r.view_once === true,
+    isVideo: r.is_video === true,
   }));
 }
 
 /** Upload the encrypted blob, then record it. Path is prefixed by relationship. */
-export async function spUploadVaultItem(relId: string, encrypted: Blob): Promise<void> {
+export async function spUploadVaultItem(
+  relId: string,
+  encrypted: Blob,
+  flags: { viewOnce: boolean; isVideo: boolean },
+): Promise<void> {
   const me = await uid();
   const path = `${relId}/${crypto.randomUUID()}.bin`;
 
@@ -51,7 +57,13 @@ export async function spUploadVaultItem(relId: string, encrypted: Blob): Promise
 
   const { error } = await client()
     .from('vault_items')
-    .insert({ relationship_id: relId, author_id: me, object_path: path });
+    .insert({
+      relationship_id: relId,
+      author_id: me,
+      object_path: path,
+      view_once: flags.viewOnce,
+      is_video: flags.isVideo,
+    });
   if (error) {
     // Don't leave an orphaned object behind if the row fails to write.
     await client().storage.from(VAULT_BUCKET).remove([path]);

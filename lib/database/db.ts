@@ -112,6 +112,9 @@ export interface VaultRow {
   relationship_id: string;
   payload: string;
   created_at: number;
+  /** Destroyed once the other person opens it. */
+  view_once?: boolean;
+  is_video?: boolean;
 }
 
 let instance: AveyraDB | null = null;

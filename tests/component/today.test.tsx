@@ -1,16 +1,42 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
+// Type-only import: erased at runtime, so it is unaffected by the mock below.
+// Typing the mock against the real hook means typecheck fails the moment
+// useDaily grows a field this mock doesn't have — which had silently produced
+// three separate uncovered-feature bugs before it was pinned down like this.
+import type { useDaily } from '@/lib/daily';
+import type { Answer } from '@/lib/database/types';
 
-function baseDaily() {
+/** A full Answer — the mock is typed against the real hook, so shortcuts fail. */
+function answer(content: string, author: Answer['author'] = 'partner_one'): Answer {
   return {
-    state: {
-      question: { id: 'q-open-01', category: 'discovery', text: 'What made you smile today?', depth: 1 },
-      dateKey: '2026-07-25',
-      myAnswer: null as null | { content: string },
-      partnerAnswer: null as null | { content: string },
-      status: 'answering' as 'answering' | 'waiting' | 'revealed',
-      saved: false,
-    },
+    id: crypto.randomUUID(),
+    question_id: 'q-open-01',
+    author,
+    content,
+    created_at: 0,
+    updated_at: 0,
+    deleted_at: null,
+    schema_version: 1,
+    version: 1,
+  };
+}
+
+/** Today's state, non-null so tests can spread it without narrowing first. */
+function baseState(): NonNullable<ReturnType<typeof useDaily>['state']> {
+  return {
+    question: { id: 'q-open-01', category: 'discovery', text: 'What made you smile today?', depth: 1 },
+    dateKey: '2026-07-25',
+    myAnswer: null as Answer | null,
+    partnerAnswer: null as Answer | null,
+    status: 'answering',
+    saved: false,
+  };
+}
+
+function baseDaily(): ReturnType<typeof useDaily> {
+  return {
+    state: baseState(),
     loading: false,
     draft: '',
     setDraft: vi.fn(),
@@ -23,6 +49,7 @@ function baseDaily() {
     error: null as string | null,
     online: true,
     presence: { lines: [] as string[] },
+    suggestion: { id: 's-01', text: 'Tell them one small thing they did this week.' },
     dev: { enabled: false, simulatePartner: vi.fn(), advanceDay: vi.fn(), reset: vi.fn() },
     partnerName: 'Sam',
   };
@@ -52,8 +79,8 @@ describe('Today screen', () => {
   it('waiting: shows my answer, the waiting status, and an edit affordance', () => {
     current = makeDaily({
       state: {
-        ...makeDaily().state,
-        myAnswer: { content: 'A dog on the bus' },
+        ...baseState(),
+        myAnswer: answer('A dog on the bus'),
         status: 'waiting',
       },
     });
@@ -67,9 +94,9 @@ describe('Today screen', () => {
   it('revealed: shows both answers and offers save-as-memory', () => {
     current = makeDaily({
       state: {
-        ...makeDaily().state,
-        myAnswer: { content: 'A dog on the bus' },
-        partnerAnswer: { content: 'Your text this morning' },
+        ...baseState(),
+        myAnswer: answer('A dog on the bus'),
+        partnerAnswer: answer('Your text this morning', 'partner_two'),
         status: 'revealed',
       },
     });
@@ -109,12 +136,22 @@ describe('Today screen', () => {
     expect(screen.queryByText(/checked in|answered today|message from/i)).not.toBeInTheDocument();
   });
 
+  it('offers the daily suggestion with nothing to mark done', () => {
+    current = makeDaily();
+    render(<TodayPage />);
+    expect(screen.getByText(/tell them one small thing/i)).toBeInTheDocument();
+    // An invitation, not a task: no completion control anywhere near it.
+    expect(
+      screen.queryByRole('button', { name: /done|complete|did it|mark/i }),
+    ).not.toBeInTheDocument();
+  });
+
   it('revealed + saved: shows the saved badge, no save button', () => {
     current = makeDaily({
       state: {
-        ...makeDaily().state,
-        myAnswer: { content: 'x' },
-        partnerAnswer: { content: 'y' },
+        ...baseState(),
+        myAnswer: answer('x'),
+        partnerAnswer: answer('y', 'partner_two'),
         status: 'revealed',
         saved: true,
       },

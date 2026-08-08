@@ -343,8 +343,19 @@ export class DatabaseService {
    * weaker device-local key would add nothing and imply protection it doesn't
    * give. Hard delete only; these rows never enter Recently Deleted.
    */
-  async addVaultLocal(relationshipId: string, payload: string): Promise<void> {
-    await this.db.vaultItems.add({ id: newId(), relationship_id: relationshipId, payload, created_at: now() });
+  async addVaultLocal(
+    relationshipId: string,
+    payload: string,
+    flags: { viewOnce?: boolean; isVideo?: boolean } = {},
+  ): Promise<void> {
+    await this.db.vaultItems.add({
+      id: newId(),
+      relationship_id: relationshipId,
+      payload,
+      created_at: now(),
+      view_once: flags.viewOnce === true,
+      is_video: flags.isVideo === true,
+    });
   }
   async listVaultLocal(relationshipId: string) {
     const rows = await this.db.vaultItems.where('relationship_id').equals(relationshipId).toArray();

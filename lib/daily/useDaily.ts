@@ -5,6 +5,7 @@ import { useOnboarding } from '../relationship/context';
 import { isSupabaseConfigured } from '../auth';
 import { useConnection } from '../net/connection';
 import { getPresence, type Presence } from '../presence';
+import { suggestionForDate, type Suggestion } from '../suggestions';
 import {
   devAdvanceDay,
   devResetToday,
@@ -148,6 +149,8 @@ export function useDaily() {
     error,
     online,
     presence,
+    // An invitation, not an instruction: nothing records whether it was taken.
+    suggestion: relId ? suggestionForDate(relId) : (null as Suggestion | null),
     dev,
     partnerName,
   };

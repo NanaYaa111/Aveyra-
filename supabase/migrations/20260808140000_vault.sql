@@ -59,3 +59,10 @@ create policy vault_objects_delete on storage.objects
     bucket_id = 'vault'
     and public.is_member(((storage.foldername(name))[1])::uuid)
   );
+
+-- View-once media, and video. A view-once item is destroyed the moment the
+-- *other* person opens it (the sender can check their own without spending it).
+-- The delete happens client-side after a successful decrypt, so a failure to
+-- open never silently burns the one viewing.
+alter table public.vault_items add column if not exists view_once boolean not null default false;
+alter table public.vault_items add column if not exists is_video boolean not null default false;
