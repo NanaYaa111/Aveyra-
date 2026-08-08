@@ -65,6 +65,23 @@ export const CheckInIcon = (p: SVGProps<SVGSVGElement>) => (
   </Base>
 );
 
+// An open book.
+export const ScriptureIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Base {...p}>
+    <path d="M12 6.5C10.5 5.2 8.6 4.5 6 4.5H3v13h3c2.6 0 4.5.7 6 2 1.5-1.3 3.4-2 6-2h3v-13h-3c-2.6 0-4.5.7-6 2Z" />
+    <path d="M12 6.5v12" />
+  </Base>
+);
+
+// A key — the vault.
+export const VaultIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Base {...p}>
+    <rect x="3" y="10" width="18" height="11" rx="2" />
+    <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+    <circle cx="12" cy="15.5" r="1.4" />
+  </Base>
+);
+
 export const SettingsIcon = (p: SVGProps<SVGSVGElement>) => (
   <Base {...p}>
     <circle cx="12" cy="12" r="3" />

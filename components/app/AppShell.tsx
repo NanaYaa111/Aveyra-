@@ -11,6 +11,8 @@ import {
   DatesIcon,
   MessagesIcon,
   CheckInIcon,
+  ScriptureIcon,
+  VaultIcon,
   SettingsIcon,
   type NavItem,
 } from '@/components/ui';
@@ -24,7 +26,9 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/checkin', label: 'Check-in', icon: <CheckInIcon /> },
   { href: '/messages', label: 'Messages', icon: <MessagesIcon /> },
   { href: '/dates', label: 'Dates', icon: <DatesIcon /> },
+  { href: '/scripture', label: 'Scripture', icon: <ScriptureIcon /> },
   { href: '/story', label: 'Story', icon: <StoryIcon /> },
+  { href: '/vault', label: 'Vault', icon: <VaultIcon /> },
   { href: '/write', label: 'Write', icon: <WriteIcon /> },
   { href: '/settings', label: 'Settings', icon: <SettingsIcon /> },
 ];

@@ -1,5 +1,6 @@
 import type { SupabaseClient, Session } from '@supabase/supabase-js';
 import { getSupabaseClient } from '../supabase/client';
+import { isEmailAllowed } from './allowlist';
 import type {
   AuthError,
   AuthProvider,
@@ -31,6 +32,20 @@ export class SupabaseAuthProvider implements AuthProvider {
 
   async requestOtp(email: string): Promise<AuthResult<OtpChallenge>> {
     const normalized = email.trim().toLowerCase();
+
+    // Private beta: refuse unlisted addresses before a code is ever sent. The
+    // wording stays deliberately vague — confirming which addresses are on the
+    // list would be the same enumeration leak the OTP flow is careful to avoid.
+    if (!isEmailAllowed(normalized)) {
+      return {
+        ok: false,
+        error: {
+          code: 'invalid_email',
+          message: 'Aveyra isn’t open to new accounts yet.',
+        },
+      };
+    }
+
     try {
       const { error } = await this.client().auth.signInWithOtp({
         email: normalized,

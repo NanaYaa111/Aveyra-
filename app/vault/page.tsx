@@ -22,8 +22,12 @@ export default function VaultPage() {
 
   useEffect(() => {
     // Publishing our public key is what lets the other device complete the key
-    // agreement. Safe to repeat; public keys are not secret.
-    void publishPublicKey().catch(() => {});
+    // agreement. Safe to repeat; public keys are not secret. A failure here is
+    // worth surfacing rather than swallowing: silently unpublished, the partner
+    // can never derive the key and the vault just appears broken to them.
+    publishPublicKey().catch(() => {
+      setError('Couldn’t set this device up for sharing. Reload and try again.');
+    });
     void refresh();
   }, [refresh]);
 

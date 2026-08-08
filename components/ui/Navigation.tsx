@@ -43,14 +43,28 @@ export function Navigation({ items, brand }: NavigationProps) {
       <ul
         className={cn(
           'flex items-stretch',
-          'justify-around',
-          'sm:flex-col sm:justify-start sm:gap-1 sm:p-3 sm:pt-6',
+          // Beyond ~7 destinations, dividing the width evenly pushes each target
+          // under the 44px minimum on a normal phone (375px ÷ 9 ≈ 41px). So the
+          // bar scrolls horizontally instead and every target keeps its size —
+          // nothing is hidden behind an overflow menu, it just slides.
+          compact
+            ? 'justify-start overflow-x-auto max-sm:snap-x'
+            : 'justify-around',
+          'sm:flex-col sm:justify-start sm:gap-1 sm:p-3 sm:pt-6 sm:overflow-visible',
         )}
       >
         {items.map((item) => {
           const active = isActive(item.href);
           return (
-            <li key={item.href} className="flex-1 sm:flex-none">
+            <li
+              key={item.href}
+              className={cn(
+                'sm:flex-none',
+                // Scrolling bar: fixed-width targets rather than shares of the
+                // screen, so they never shrink below the minimum.
+                compact ? 'flex-none min-w-[56px] max-sm:snap-start' : 'flex-1',
+              )}
+            >
               <Link
                 href={item.href}
                 aria-current={active ? 'page' : undefined}

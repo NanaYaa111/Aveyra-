@@ -16,6 +16,8 @@ export {
   DatesIcon,
   MessagesIcon,
   CheckInIcon,
+  ScriptureIcon,
+  VaultIcon,
   SettingsIcon,
 } from './icons';
 export { Logo, AveyraMark } from './Logo';
