@@ -125,3 +125,40 @@ export function deriveSharedKey(
     ['encrypt', 'decrypt'],
   );
 }
+
+/**
+ * Derive a *purpose-specific* shared key: ECDH to a raw secret, then HKDF with a
+ * label to stretch it into a key that belongs to one use and one relationship
+ * only.
+ *
+ * Raw ECDH output is the X coordinate of a point, not a uniformly random key,
+ * and using it directly for every purpose would mean one compromised key is
+ * every key. HKDF fixes both: it conditions the secret, and the `purpose` label
+ * plus the relationship id give domain separation, so the vault key cannot be
+ * reused anywhere else even though both sides derive it from the same ECDH.
+ */
+export async function derivePurposeKey(
+  privateKey: CryptoKey,
+  partnerPublicKey: CryptoKey,
+  relationshipId: string,
+  purpose: string,
+): Promise<CryptoKey> {
+  const bits = await subtle().deriveBits(
+    { name: 'ECDH', public: partnerPublicKey },
+    privateKey,
+    256,
+  );
+  const material = await subtle().importKey('raw', bits, 'HKDF', false, ['deriveKey']);
+  return subtle().deriveKey(
+    {
+      name: 'HKDF',
+      hash: 'SHA-256',
+      salt: new TextEncoder().encode(relationshipId),
+      info: new TextEncoder().encode(purpose),
+    },
+    material,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['encrypt', 'decrypt'],
+  );
+}

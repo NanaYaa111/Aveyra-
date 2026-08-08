@@ -48,6 +48,13 @@ export class AveyraDB extends Dexie {
    * implementation. Kept out of the JSON tables and out of v1 backups.
    */
   images!: EntityTable<StoredImage, 'id'>;
+  /**
+   * Vault items: end-to-end encrypted photo payloads. `payload` is already
+   * ciphertext when it arrives here — the field encryption applied to other
+   * tables would be a second, weaker wrapper, so it is deliberately not used.
+   * Hard-deleted, never soft-deleted.
+   */
+  vaultItems!: EntityTable<VaultRow, 'id'>;
   /** Key material (CryptoKey objects / wrapped keys). Never plaintext bytes. */
   keyvault!: EntityTable<KeyVaultRecord, 'id'>;
   /** Local mutation outbox — journalled changes awaiting a future sync (M2). */
@@ -76,6 +83,10 @@ export class AveyraDB extends Dexie {
       messages: 'id, relationship_id, created_at',
       checkIns: 'id, relationship_id, date_key, created_at',
     });
+    // v3: the end-to-end encrypted vault.
+    this.version(3).stores({
+      vaultItems: 'id, relationship_id, created_at',
+    });
   }
 }
 
@@ -84,6 +95,14 @@ export interface StoredImage {
   id: string;
   data: ArrayBuffer;
   mime: string;
+}
+
+/** Row shape of the `vaultItems` store. `payload` is ciphertext. */
+export interface VaultRow {
+  id: string;
+  relationship_id: string;
+  payload: string;
+  created_at: number;
 }
 
 let instance: AveyraDB | null = null;

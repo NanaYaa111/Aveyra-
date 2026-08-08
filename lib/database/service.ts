@@ -298,6 +298,27 @@ export class DatabaseService {
     await this.db.images.delete(ref);
   }
 
+  // ---- Vault (end-to-end encrypted) --------------------------------------
+  /**
+   * Vault payloads arrive already encrypted with the shared E2EE key, so they
+   * bypass this service's field encryption entirely — wrapping ciphertext in a
+   * weaker device-local key would add nothing and imply protection it doesn't
+   * give. Hard delete only; these rows never enter Recently Deleted.
+   */
+  async addVaultLocal(relationshipId: string, payload: string): Promise<void> {
+    await this.db.vaultItems.add({ id: newId(), relationship_id: relationshipId, payload, created_at: now() });
+  }
+  async listVaultLocal(relationshipId: string) {
+    const rows = await this.db.vaultItems.where('relationship_id').equals(relationshipId).toArray();
+    return rows.sort((a, b) => b.created_at - a.created_at);
+  }
+  async getVaultLocal(id: string): Promise<string | null> {
+    return (await this.db.vaultItems.get(id))?.payload ?? null;
+  }
+  async deleteVaultLocal(id: string): Promise<void> {
+    await this.db.vaultItems.delete(id);
+  }
+
   // ---- Journal -----------------------------------------------------------
   async createJournalEntry(fields: CreatableFields<JournalEntry>): Promise<JournalEntry> {
     const rec = stamp<JournalEntry>(fields);
