@@ -32,10 +32,14 @@ async function main() {
     return;
   }
 
+  // Match however the site is deployed: '' at a domain root, '/justforfun' on a
+  // project sub-path. Trailing slashes are trimmed so we never emit '//_next'.
+  const base = (process.env.NEXT_PUBLIC_BASE_PATH ?? '').replace(/\/+$/, '');
+
   const files = await walk(STATIC_DIR);
   const urls = files
     .filter((f) => f.endsWith('.js') || f.endsWith('.css'))
-    .map((f) => '/' + f.slice(OUT.length + 1).split(/[\\/]/).join('/'));
+    .map((f) => base + '/' + f.slice(OUT.length + 1).split(/[\\/]/).join('/'));
 
   let sw = await readFile(SW, 'utf8');
   if (!sw.includes(MARKER)) {

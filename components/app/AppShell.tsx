@@ -8,14 +8,22 @@ import {
   TodayIcon,
   StoryIcon,
   WriteIcon,
+  DatesIcon,
+  MessagesIcon,
+  CheckInIcon,
   SettingsIcon,
   type NavItem,
 } from '@/components/ui';
 import { useAuth } from '@/lib/auth/context';
 import { useOnboarding } from '@/lib/relationship/context';
 
+// The six embedded areas (Q22; Volume 3 §H) + Settings. Q28: the warm labels
+// Story/Write stay (docs record the canonical feature names behind them).
 const NAV_ITEMS: NavItem[] = [
   { href: '/today', label: 'Today', icon: <TodayIcon /> },
+  { href: '/checkin', label: 'Check-in', icon: <CheckInIcon /> },
+  { href: '/messages', label: 'Messages', icon: <MessagesIcon /> },
+  { href: '/dates', label: 'Dates', icon: <DatesIcon /> },
   { href: '/story', label: 'Story', icon: <StoryIcon /> },
   { href: '/write', label: 'Write', icon: <WriteIcon /> },
   { href: '/settings', label: 'Settings', icon: <SettingsIcon /> },

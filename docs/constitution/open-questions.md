@@ -221,7 +221,18 @@ borders remain low-contrast **by design**, as in the prior system (not 1.4.11 UI
 targets; the focus ring and filled controls carry interactive contrast). Recorded
 in [volume-3-part-1-design-system.md](volume-3-part-1-design-system.md).
 
-### Q28 — Nav naming: built "Story/Write" vs Volume 3 "Memory Vault/Journal" 🟠 OPEN
+### Q28 — Nav naming 🟢 RESOLVED (2026-08-08) → keep Story / Write
+Resolved in favour of option (a): the warm, shipped labels **Story** and **Write**
+stay in the UI; **Memory Vault** and **Journal** remain the canonical feature names
+in the constitution and in code comments. Rationale: Volume 3's own philosophy
+favours warmth, the author's logo tagline ("discovering, remembering, and growing
+together") sets the same register, and the labels are already built, tested and
+lived-in. The nav has since grown to the full six-area IA (Q22): **Today ·
+Check-in · Messages · Dates · Story · Write**, plus Settings.
+
+*Historic framing follows.*
+
+### Q28 (original) — built "Story/Write" vs Volume 3 "Memory Vault/Journal"
 Volume 3 §H + Document 0 §3.1/§9 name the areas **"Memory Vault"** and **"Journal"**
 (and demand exact terminology to avoid drift). The built four-nav (Volume 2 Q13) uses
 the warmer **"Story"** and **"Write."** Same features, different labels. Options:

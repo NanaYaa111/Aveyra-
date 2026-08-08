@@ -7,20 +7,28 @@
  * without a manual CACHE bump. Hashed static assets are cache-first (they are
  * immutable). Bump CACHE to force an immediate full refresh.
  */
-const CACHE = 'aveyra-v2';
+const CACHE = 'aveyra-v3';
+
+// Resolve every shell URL against the worker's own scope, so the app works at
+// the domain root AND under a sub-path (e.g. GitHub Pages project sites) with
+// the same file. Scope ends in '/', e.g. '/' or '/justforfun/'.
+const BASE = new URL(self.registration.scope).pathname;
 const SHELL = [
-  '/',
-  '/sign-in/',
-  '/verify/',
-  '/onboarding/',
-  '/today/',
-  '/story/',
-  '/write/',
-  '/settings/',
-  '/manifest.webmanifest',
-  '/icons/icon.svg',
-  '/icons/maskable.svg',
-];
+  '',
+  'sign-in/',
+  'verify/',
+  'onboarding/',
+  'today/',
+  'checkin/',
+  'messages/',
+  'dates/',
+  'story/',
+  'write/',
+  'settings/',
+  'manifest.webmanifest',
+  'icons/icon.svg',
+  'icons/maskable.svg',
+].map((p) => BASE + p);
 
 // Hashed build assets (JS/CSS under /_next/static). This list is injected at
 // build time by scripts/inject-sw-precache.mjs so a genuinely cold, offline
@@ -90,7 +98,7 @@ self.addEventListener('fetch', (event) => {
           return cached;
         }
         return fromNetwork
-          .then((response) => response || caches.match('/'))
+          .then((response) => response || caches.match(BASE))
           .then((response) => response || offlineResponse());
       }),
     );

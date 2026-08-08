@@ -13,6 +13,9 @@ import {
   type Answer,
   type Memory,
   type JournalEntry,
+  type DatePlan,
+  type Message,
+  type CheckIn,
   type BackupData,
   type ThemeChoice,
 } from './types';
@@ -27,6 +30,10 @@ const ENCRYPTED_FIELDS: Record<SoftDeletableTable, readonly string[]> = {
   answers: ['content'],
   memories: ['title', 'description'],
   journalEntries: ['title', 'content'],
+  datePlans: ['title', 'notes'],
+  messages: ['content'],
+  // `mood` stays plaintext: a six-value enum used for display, not prose.
+  checkIns: ['note'],
 };
 
 /** Stable id + time helpers. */
@@ -172,7 +179,15 @@ export class DatabaseService {
 
   /** Recently Deleted, unified across tables and sorted newest-first. */
   async recentlyDeleted(): Promise<DeletedItem[]> {
-    const tables: SoftDeletableTable[] = ['relationships', 'answers', 'memories', 'journalEntries'];
+    const tables: SoftDeletableTable[] = [
+      'relationships',
+      'answers',
+      'memories',
+      'journalEntries',
+      'datePlans',
+      'messages',
+      'checkIns',
+    ];
     const out: DeletedItem[] = [];
     for (const t of tables) {
       const rows = (await this.db[t].toArray()) as unknown as BaseRecord[];
@@ -229,6 +244,58 @@ export class DatabaseService {
     await this.db.memories.add(await this.encryptFields('memories', rec));
     await this.journal('memories', 'put', rec.id, rec.version);
     return rec;
+  }
+
+  // ---- Date plans --------------------------------------------------------
+  async createDatePlan(fields: CreatableFields<DatePlan>): Promise<DatePlan> {
+    const rec = stamp<DatePlan>(fields);
+    await this.db.datePlans.add(await this.encryptFields('datePlans', rec));
+    await this.journal('datePlans', 'put', rec.id, rec.version);
+    return rec;
+  }
+  async updateDatePlan(id: string, patch: Partial<DatePlan>): Promise<void> {
+    const existing = await this.db.datePlans.get(id);
+    const version = (existing?.version ?? 0) + 1;
+    const encPatch = await this.encryptFields('datePlans', { ...patch });
+    await this.db.datePlans.update(id, { ...encPatch, updated_at: now(), version });
+    await this.journal('datePlans', 'put', id, version);
+  }
+
+  // ---- Messages ----------------------------------------------------------
+  async createMessage(fields: CreatableFields<Message>): Promise<Message> {
+    const rec = stamp<Message>(fields);
+    await this.db.messages.add(await this.encryptFields('messages', rec));
+    await this.journal('messages', 'put', rec.id, rec.version);
+    return rec;
+  }
+
+  // ---- Check-ins ---------------------------------------------------------
+  async createCheckIn(fields: CreatableFields<CheckIn>): Promise<CheckIn> {
+    const rec = stamp<CheckIn>(fields);
+    await this.db.checkIns.add(await this.encryptFields('checkIns', rec));
+    await this.journal('checkIns', 'put', rec.id, rec.version);
+    return rec;
+  }
+  async updateCheckIn(id: string, patch: Partial<CheckIn>): Promise<void> {
+    const existing = await this.db.checkIns.get(id);
+    const version = (existing?.version ?? 0) + 1;
+    const encPatch = await this.encryptFields('checkIns', { ...patch });
+    await this.db.checkIns.update(id, { ...encPatch, updated_at: now(), version });
+    await this.journal('checkIns', 'put', id, version);
+  }
+
+  // ---- Images (memory photos) --------------------------------------------
+  /** Store image bytes; returns the ref to keep in `Memory.image_ref`. */
+  async putImage(data: ArrayBuffer, mime: string): Promise<string> {
+    const id = newId();
+    await this.db.images.put({ id, data, mime });
+    return id;
+  }
+  async getImage(ref: string): Promise<{ data: ArrayBuffer; mime: string } | undefined> {
+    return this.db.images.get(ref);
+  }
+  async deleteImage(ref: string): Promise<void> {
+    await this.db.images.delete(ref);
   }
 
   // ---- Journal -----------------------------------------------------------
@@ -288,17 +355,24 @@ export class DatabaseService {
       const rows = (await this.table(name).toArray()) as unknown as T[];
       return Promise.all(rows.map((r) => this.decryptFields(name, r)));
     };
-    const [relationships, answers, memories, journalEntries] = await Promise.all([
-      all<Relationship>('relationships'),
-      all<Answer>('answers'),
-      all<Memory>('memories'),
-      all<JournalEntry>('journalEntries'),
-    ]);
+    const [relationships, answers, memories, journalEntries, datePlans, messages, checkIns] =
+      await Promise.all([
+        all<Relationship>('relationships'),
+        all<Answer>('answers'),
+        all<Memory>('memories'),
+        all<JournalEntry>('journalEntries'),
+        all<DatePlan>('datePlans'),
+        all<Message>('messages'),
+        all<CheckIn>('checkIns'),
+      ]);
     return {
       relationships,
       answers,
       memories,
       journalEntries,
+      datePlans,
+      messages,
+      checkIns,
       settings: (await this.db.settings.get('app')) ?? null,
     };
   }
@@ -321,7 +395,15 @@ export class DatabaseService {
    */
   async importSnapshot(data: BackupData): Promise<{ imported: number }> {
     await this.ready();
-    const tables: SoftDeletableTable[] = ['relationships', 'answers', 'memories', 'journalEntries'];
+    const tables: SoftDeletableTable[] = [
+      'relationships',
+      'answers',
+      'memories',
+      'journalEntries',
+      'datePlans',
+      'messages',
+      'checkIns',
+    ];
 
     // Phase 1 (outside the transaction): validate + encrypt. Web Crypto awaits
     // are not Dexie operations and would prematurely commit a Dexie transaction,
@@ -347,6 +429,9 @@ export class DatabaseService {
         this.db.answers,
         this.db.memories,
         this.db.journalEntries,
+        this.db.datePlans,
+        this.db.messages,
+        this.db.checkIns,
         this.db.outbox,
         this.db.settings,
       ],
@@ -405,6 +490,12 @@ function labelFor(table: SoftDeletableTable, r: BaseRecord): string {
       return 'Answer';
     case 'relationships':
       return (r as Relationship).partner_name || 'Relationship';
+    case 'datePlans':
+      return (r as DatePlan).title || 'Date plan';
+    case 'messages':
+      return 'Message';
+    case 'checkIns':
+      return 'Check-in';
   }
 }
 

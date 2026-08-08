@@ -3,7 +3,14 @@ import { render, screen, cleanup, waitFor } from '@testing-library/react';
 import type { Memory } from '@/lib/database/types';
 
 let memories: Memory[];
-vi.mock('@/lib/story', () => ({ getMemories: () => Promise.resolve(memories) }));
+const createMemory = vi.fn(() => Promise.resolve());
+// Mock the whole module surface the page uses — a partial mock would leave
+// `createMemory`/`photoUrl` undefined and only fail once a test touches them.
+vi.mock('@/lib/story', () => ({
+  getMemories: () => Promise.resolve(memories),
+  createMemory: (...args: unknown[]) => createMemory(...(args as [])),
+  photoUrl: (ref: string | null) => Promise.resolve(ref ? `blob:${ref}` : null),
+}));
 vi.mock('@/lib/relationship/context', () => ({ useOnboarding: () => ({ relationship: { id: 'r1' } }) }));
 
 import StoryPage from '@/app/story/page';
@@ -49,5 +56,19 @@ describe('Story screen', () => {
       screen.getByText((_, node) => node?.tagName === 'TIME' && node.getAttribute('datetime') === iso),
     ).toBeInTheDocument();
     expect(screen.getByText(/You: a dog/)).toBeInTheDocument();
+  });
+
+  it('shows a memory photo when one is attached, described for screen readers', async () => {
+    memories = [memory({ title: 'The picnic', image_ref: 'ref_1' })];
+    render(<StoryPage />);
+    const img = await screen.findByRole('img', { name: /photo — the picnic/i });
+    expect(img).toHaveAttribute('src', 'blob:ref_1');
+  });
+
+  it('renders no image element for a memory without a photo', async () => {
+    memories = [memory({ title: 'No photo here', image_ref: null })];
+    render(<StoryPage />);
+    await screen.findByRole('heading', { name: 'No photo here' });
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
   });
 });

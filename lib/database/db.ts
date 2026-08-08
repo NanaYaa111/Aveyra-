@@ -7,6 +7,9 @@ import type {
   RevealSession,
   Memory,
   JournalEntry,
+  DatePlan,
+  Message,
+  CheckIn,
   ExportRecord,
   AppSettings,
 } from './types';
@@ -34,10 +37,17 @@ export class AveyraDB extends Dexie {
   revealSessions!: EntityTable<RevealSession, 'id'>;
   memories!: EntityTable<Memory, 'id'>;
   journalEntries!: EntityTable<JournalEntry, 'id'>;
+  datePlans!: EntityTable<DatePlan, 'id'>;
+  messages!: EntityTable<Message, 'id'>;
+  checkIns!: EntityTable<CheckIn, 'id'>;
   exportRecords!: EntityTable<ExportRecord, 'id'>;
   settings!: EntityTable<AppSettings, 'id'>;
-  /** Encrypted image blobs, keyed by ref. Kept out of the JSON tables. */
-  images!: EntityTable<{ id: string; blob: Blob }, 'id'>;
+  /**
+   * Image bytes, keyed by ref (Memory.image_ref). Stored as ArrayBuffer + mime
+   * rather than Blob so structured clone works across every IndexedDB
+   * implementation. Kept out of the JSON tables and out of v1 backups.
+   */
+  images!: EntityTable<StoredImage, 'id'>;
   /** Key material (CryptoKey objects / wrapped keys). Never plaintext bytes. */
   keyvault!: EntityTable<KeyVaultRecord, 'id'>;
   /** Local mutation outbox — journalled changes awaiting a future sync (M2). */
@@ -59,7 +69,21 @@ export class AveyraDB extends Dexie {
       keyvault: 'id',
       outbox: 'id, timestamp, synced',
     });
+    // v2 (full app): shared date plans, the private message thread, and daily
+    // emotional check-ins. Additive only — v1 stores carry over untouched.
+    this.version(2).stores({
+      datePlans: 'id, relationship_id, status, planned_for',
+      messages: 'id, relationship_id, created_at',
+      checkIns: 'id, relationship_id, date_key, created_at',
+    });
   }
+}
+
+/** Row shape of the `images` store. */
+export interface StoredImage {
+  id: string;
+  data: ArrayBuffer;
+  mime: string;
 }
 
 let instance: AveyraDB | null = null;

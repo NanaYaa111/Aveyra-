@@ -88,6 +88,42 @@ export interface JournalEntry extends BaseRecord {
   content: string;
 }
 
+export type DatePlanStatus = 'idea' | 'planned' | 'done';
+
+/** A shared date idea/plan. Both partners see and edit the same list. */
+export interface DatePlan extends BaseRecord {
+  relationship_id: string;
+  title: string;
+  notes: string;
+  status: DatePlanStatus;
+  /** Epoch ms of when it's planned for; null while it's still just an idea. */
+  planned_for: number | null;
+}
+
+/** One message in the couple's private thread. */
+export interface Message extends BaseRecord {
+  relationship_id: string;
+  author: Author;
+  content: string;
+}
+
+/**
+ * Feeling words for the daily check-in. A small, plain-spoken set — a weather
+ * report, never a score (no numbers, no streaks, no trends; Q23).
+ */
+export const MOODS = ['calm', 'happy', 'grateful', 'tired', 'stressed', 'sad'] as const;
+export type Mood = (typeof MOODS)[number];
+
+/** A daily emotional check-in, shared with the partner as soon as it's made. */
+export interface CheckIn extends BaseRecord {
+  relationship_id: string;
+  author: Author;
+  /** Local YYYY-MM-DD key — one check-in per person per day (editable all day). */
+  date_key: string;
+  mood: Mood;
+  note: string;
+}
+
 /** Log of exports performed (for the user's own reference). */
 export interface ExportRecord {
   id: string;
@@ -108,7 +144,14 @@ export interface AppSettings {
 }
 
 /** Names of tables that hold soft-deletable user content. */
-export type SoftDeletableTable = 'relationships' | 'answers' | 'memories' | 'journalEntries';
+export type SoftDeletableTable =
+  | 'relationships'
+  | 'answers'
+  | 'memories'
+  | 'journalEntries'
+  | 'datePlans'
+  | 'messages'
+  | 'checkIns';
 
 /** A unified Recently Deleted row, derived from `deleted_at`. */
 export interface DeletedItem {
@@ -129,5 +172,9 @@ export interface BackupData {
   answers: Answer[];
   memories: Memory[];
   journalEntries: JournalEntry[];
+  /** Absent in pre-full-app backups; import tolerates the omission. */
+  datePlans?: DatePlan[];
+  messages?: Message[];
+  checkIns?: CheckIn[];
   settings: AppSettings | null;
 }

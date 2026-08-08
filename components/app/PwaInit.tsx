@@ -9,7 +9,11 @@ export function PwaInit() {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       if (process.env.NODE_ENV === 'production') {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+        // Register under the deployed base path (empty at the domain root, e.g.
+        // '/justforfun' on a project site) so the worker's scope covers the app
+        // wherever it is hosted.
+        const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+        navigator.serviceWorker.register(`${base}/sw.js`, { scope: `${base}/` }).catch(() => {});
       } else {
         // Dev: a cached worker can serve stale HTML/chunks across restarts and
         // look like a broken app. Clear any prior registration + caches instead

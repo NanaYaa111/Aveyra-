@@ -23,6 +23,11 @@ export function Navigation({ items, brand }: NavigationProps) {
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
+  // With more than five destinations the mobile bottom bar goes icon-first:
+  // labels stay for screen readers (sr-only) and the desktop rail always shows
+  // them. Touch targets keep their 44px minimum either way.
+  const compact = items.length > 5;
+
   return (
     <nav
       aria-label="Primary"
@@ -59,7 +64,9 @@ export function Navigation({ items, brand }: NavigationProps) {
                 )}
               >
                 <span className={cn(active && 'text-accent-strong')}>{item.icon}</span>
-                <span className="font-medium">{item.label}</span>
+                <span className={cn('font-medium', compact && 'max-sm:sr-only')}>
+                  {item.label}
+                </span>
               </Link>
             </li>
           );

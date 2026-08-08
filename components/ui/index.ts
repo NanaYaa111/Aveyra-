@@ -9,6 +9,14 @@ export { Navigation, type NavItem } from './Navigation';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
 export { LoadingState, type LoadingStateProps } from './LoadingState';
 export { ErrorMessage, type ErrorMessageProps } from './ErrorMessage';
-export { TodayIcon, StoryIcon, WriteIcon, SettingsIcon } from './icons';
+export {
+  TodayIcon,
+  StoryIcon,
+  WriteIcon,
+  DatesIcon,
+  MessagesIcon,
+  CheckInIcon,
+  SettingsIcon,
+} from './icons';
 export { Logo, AveyraMark } from './Logo';
 export { CoupleIllustration, ConnectedIllustration } from './illustrations';
