@@ -96,10 +96,10 @@ export function Btn({
 
 // ─── Card Component ────────────────────────────────────────────────────────────
 
-export function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function Card({ children, className = '', style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
     <div className={`rounded-2xl p-5 ${className}`}
-      style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-edge)' }}>
+      style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-edge)', ...style }}>
       {children}
     </div>
   )
@@ -133,7 +133,7 @@ export function LoadingState() {
             }} />
         ))}
       </div>
-      <div style={{ fontSize: 15, color: 'var(--color-muted)', marginTop: 4 }}>One moment…</div>
+      <div role="status" style={{ fontSize: 15, color: 'var(--color-muted)', marginTop: 4 }}>One moment…</div>
     </div>
   )
 }

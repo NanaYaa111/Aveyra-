@@ -1,7 +1,8 @@
 'use client';
 
 import { Btn, Card, ICheck, EmptyState, LoadingState } from './primitives';
-import { useCheckins } from '@/lib/checkins';
+import { useCheckins } from '@/lib/checkins/useCheckins';
+import type { Mood } from '@/lib/database/types';
 
 const FEELINGS = [
   { id: 'calm',      label: 'Calm',      emoji: '🌿' },
@@ -14,13 +15,13 @@ const FEELINGS = [
 
 export function CheckinScreenAdapter() {
   const c = useCheckins();
-  const { state, loading, draft, setDraft, busy, error, partnerName } = c;
+  const { mine, partner, loading, mood, setMood, note, setNote, busy, error, partnerName, submit } = c;
 
   if (loading) {
     return <LoadingState />;
   }
 
-  if (!state) {
+  if (!mine && !partner) {
     return (
       <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
         <EmptyState
@@ -31,9 +32,6 @@ export function CheckinScreenAdapter() {
       </div>
     );
   }
-
-  const myFeeling = state.myFeeling;
-  const partnerFeeling = state.partnerFeeling;
 
   return (
     <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
@@ -56,11 +54,11 @@ export function CheckinScreenAdapter() {
         </div>
         <div className="grid grid-cols-3 gap-2 mb-4">
           {FEELINGS.map(f => {
-            const active = myFeeling === f.id;
+            const active = mood === f.id;
             return (
               <button
                 key={f.id}
-                onClick={() => void c.setFeeling(active ? null : f.id)}
+                onClick={() => setMood(active ? null : f.id as Mood)}
                 className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all"
                 style={{
                   backgroundColor: active ? 'var(--color-tint)' : 'var(--color-well)',
@@ -80,8 +78,8 @@ export function CheckinScreenAdapter() {
         </div>
         <input
           type="text"
-          value={draft}
-          onChange={e => setDraft(e.target.value)}
+          value={note}
+          onChange={e => setNote(e.target.value)}
           placeholder={"Anything you'd like to add? (optional)"}
           className="w-full rounded-xl px-4 py-2.5 text-sm"
           style={{
@@ -94,10 +92,10 @@ export function CheckinScreenAdapter() {
           onFocus={e => { e.target.style.borderColor = 'var(--color-accent)' }}
           onBlur={e => { e.target.style.borderColor = 'var(--color-edge)' }}
         />
-        {myFeeling && (
+        {mood && (
           <div className="mt-4 flex justify-end">
-            {!state.submitted ? (
-              <Btn onClick={() => void c.submit()} disabled={busy}>
+            {!mine ? (
+              <Btn onClick={() => void submit()} disabled={busy}>
                 {busy ? 'Sharing…' : 'Share with ' + partnerName}
               </Btn>
             ) : (
@@ -115,9 +113,9 @@ export function CheckinScreenAdapter() {
         <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-bronze)', marginBottom: 16 }}>
           {partnerName}
         </div>
-        {partnerFeeling ? (
+        {partner ? (
           <div className="flex items-center gap-4">
-            {FEELINGS.filter(f => f.id === partnerFeeling).map(f => (
+            {FEELINGS.filter(f => f.id === partner.mood).map(f => (
               <div key={f.id} className="flex items-center gap-3 p-3 rounded-xl"
                 style={{ backgroundColor: 'var(--color-well)' }}>
                 <span style={{ fontSize: 28 }}>{f.emoji}</span>
