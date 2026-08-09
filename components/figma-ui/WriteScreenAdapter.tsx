@@ -77,7 +77,7 @@ export function WriteScreenAdapter() {
       {loading ? null : entries && entries.length === 0 ? (
         <EmptyState
           icon="✍️"
-          title="Nothing written yet"
+          title="Nothing here yet"
           body="Your private thoughts and reflections start here."
         />
       ) : (

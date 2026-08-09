@@ -2,11 +2,44 @@
 
 import { Btn, Card, ICheck, ITrash, LoadingState, EmptyState } from './primitives';
 import { useDates } from '@/lib/dates/useDates';
+import { useOnboarding } from '@/lib/relationship/context';
 import type { DatePlan } from '@/lib/database/types';
+import Link from 'next/link';
 
 export function DatesScreenAdapter() {
+  const { relationship, onboarded } = useOnboarding();
   const d = useDates();
   const { plans, grouped, loading, title, setTitle, when, setWhen, addPlan, completePlan, deletePlan, busy, error } = d;
+
+  if (!relationship) {
+    if (onboarded === null) {
+      return <LoadingState />;
+    }
+    return (
+      <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
+        <div className="mb-8">
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15 }}>
+            Dates
+          </div>
+        </div>
+        <Card className="mb-6">
+          <div className="flex flex-col gap-3">
+            <div>
+              <p style={{ fontWeight: 600, marginBottom: 8, color: 'var(--color-ink)' }}>{"Your space isn't set up yet"}</p>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--color-muted)' }}>
+                Dates needs the two of you. Once your space exists and your partner has joined, this page comes to life.
+              </p>
+            </div>
+            <div>
+              <Link href="/onboarding">
+                <Btn variant="quiet">Finish setting up</Btn>
+              </Link>
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   if (loading) {
     return <LoadingState />;
