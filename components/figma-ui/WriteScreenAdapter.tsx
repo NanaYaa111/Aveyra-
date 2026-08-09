@@ -44,9 +44,9 @@ export function WriteScreenAdapter() {
   return (
     <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
       <div className="mb-8">
-        <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15 }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15 }}>
           Write
-        </div>
+        </h1>
         <div style={{ fontSize: 15, color: 'var(--color-muted)', marginTop: 4 }}>Private reflections for only you.</div>
       </div>
 

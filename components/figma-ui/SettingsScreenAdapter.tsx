@@ -1,6 +1,7 @@
 'use client';
 
 import { Btn, Card, ILogOut } from './primitives';
+import { ThemeToggle } from '@/components/app/ThemeToggle';
 import { useAuth } from '@/lib/auth/context';
 
 export function SettingsScreenAdapter() {
@@ -9,10 +10,19 @@ export function SettingsScreenAdapter() {
   return (
     <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
       <div className="mb-8">
-        <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15 }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15 }}>
           Settings
-        </div>
+        </h1>
       </div>
+
+      <Card className="mb-6">
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-bronze)', marginBottom: 12 }}>
+            Appearance
+          </div>
+          <ThemeToggle />
+        </div>
+      </Card>
 
       <Card className="mb-6">
         <div style={{ marginBottom: 16 }}>

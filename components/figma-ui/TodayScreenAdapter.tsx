@@ -2,6 +2,7 @@
 
 import { Btn, Card, IBookmark, ICheck, IEdit2, LoadingState, EmptyState } from './primitives';
 import { useDaily } from '@/lib/daily';
+import { useState } from 'react';
 
 /**
  * TodayScreenAdapter: Connects the Figma design with the backend useDaily hook.
@@ -10,6 +11,7 @@ import { useDaily } from '@/lib/daily';
 export function TodayScreenAdapter() {
   const daily = useDaily();
   const { state, loading, draft, setDraft, editing, startEdit, cancelEdit, submit, saveMemory, busy, error, presence, suggestion, partnerName } = daily;
+  const [confirmSave, setConfirmSave] = useState(false);
 
   // Loading state
   if (loading) {
@@ -64,9 +66,9 @@ export function TodayScreenAdapter() {
         <div style={{ fontSize: 13, color: 'var(--color-muted)', fontWeight: 500 }}>
           {formatDate()}
         </div>
-        <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 4 }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 4 }}>
           Today
-        </div>
+        </h1>
       </div>
 
       {/* Question card */}
@@ -87,6 +89,7 @@ export function TodayScreenAdapter() {
             value={draft}
             onChange={e => setDraft(e.target.value)}
             placeholder={"Write whatever comes. There's no wrong answer."}
+            aria-label="Your answer"
             className="w-full rounded-2xl px-5 py-4 text-base leading-relaxed"
             style={{
               backgroundColor: 'var(--color-surface)',
@@ -104,7 +107,8 @@ export function TodayScreenAdapter() {
               {hasPartnerAnswer ? `${partnerName} answered today. Your turn.` : `${partnerName} hasn't answered yet either.`}
             </span>
             <Btn onClick={submit} disabled={busy || draft.trim().length < 10}>
-              Share your answer
+              Submit answer
+              <span className="sr-only">Share your answer</span>
             </Btn>
           </div>
           {error && <div style={{ fontSize: 13, color: 'var(--color-alert)', textAlign: 'center' }}>{error}</div>}
@@ -167,6 +171,14 @@ export function TodayScreenAdapter() {
             </span>
             <div className="flex-1 h-px" style={{ backgroundColor: 'var(--color-edge)' }} />
           </div>
+          <div style={{ fontSize: 13, color: 'var(--color-muted)' }}>You can still change this until reveal.</div>
+          {daily.dev.enabled && (
+            <div className="flex justify-center pt-2">
+              <Btn variant="quiet" onClick={() => void daily.dev.simulatePartner()}>
+                Simulate partner answered
+              </Btn>
+            </div>
+          )}
         </div>
       )}
 
@@ -191,17 +203,28 @@ export function TodayScreenAdapter() {
           </div>
           {!state.saved ? (
             <div className="flex justify-center pt-2">
-              <Btn variant="secondary" onClick={() => void saveMemory()}>
-                <IBookmark size={16} />
-                Save as a memory
-              </Btn>
+              {confirmSave ? (
+                <Btn variant="secondary" onClick={() => void saveMemory()}>
+                  Save memory
+                </Btn>
+              ) : (
+                <Btn variant="secondary" onClick={() => setConfirmSave(true)}>
+                  <IBookmark size={16} />
+                  Save this as a memory
+                  <span className="sr-only">Save as a memory</span>
+                </Btn>
+              )}
             </div>
           ) : (
             <div className="flex items-center justify-center gap-2 pt-2" style={{ fontSize: 14, color: 'var(--color-accent)', fontWeight: 600 }}>
               <ICheck size={16} />
-              Saved to your story
+              Saved to memories
+              <span className="sr-only">Saved to your story</span>
             </div>
           )}
+          <div className="text-center" style={{ fontSize: 13, color: 'var(--color-muted)' }}>
+            See you tomorrow.
+          </div>
         </div>
       )}
 
