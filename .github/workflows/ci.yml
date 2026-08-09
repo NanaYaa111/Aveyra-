@@ -12,6 +12,8 @@ jobs:
   verify:
     name: Lint, typecheck, test, build, a11y
     runs-on: ubuntu-latest
+    env:
+      PLAYWRIGHT_CHROMIUM_PATH: /opt/pw-browsers/chromium
     steps:
       - uses: actions/checkout@v4
 
@@ -38,9 +40,6 @@ jobs:
 
       - name: Build (static export)
         run: pnpm build
-
-      - name: Install Playwright browser
-        run: pnpm exec playwright install --with-deps chromium
 
       - name: End-to-end + accessibility
         run: pnpm test:e2e
