@@ -122,7 +122,7 @@ const SEED_MEMORIES: Memory[] = [
 
 // ─── Screen: Story ────────────────────────────────────────────────────────────
 
-export default function StoryScreen() {
+export function StoryScreenAdapter() {
   const [memories, setMemories] = useState<Memory[]>(SEED_MEMORIES)
   const [adding, setAdding] = useState(false)
   const [newTitle, setNewTitle] = useState('')

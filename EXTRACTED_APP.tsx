@@ -112,19 +112,19 @@ function DesktopNav({ screen, onNav }: { screen: Screen; onNav: (s: Screen) => v
       </div>
       {/* Navigation */}
       <nav className="flex flex-col gap-0.5 px-3 flex-1 overflow-y-auto">
-        <NavBtn item={CORE_NAV[0]} active={screen === 'today' || EMBEDDED_NAV.some(e => e.id === screen)} onNav={onNav} />
+        <NavBtn item={CORE_NAV[0]!} active={screen === 'today' || EMBEDDED_NAV.some(e => e.id === screen)} onNav={onNav} />
         {/* Embedded features indented under Today */}
         {EMBEDDED_NAV.map(item => (
           <NavBtn key={item.id} item={item} active={screen === item.id} onNav={onNav} indent />
         ))}
         <div className="my-1" style={{ height: 1, backgroundColor: 'var(--color-edge)', marginLeft: 12, marginRight: 12 }} />
-        <NavBtn item={CORE_NAV[1]} active={screen === 'story'} onNav={onNav} />
-        <NavBtn item={CORE_NAV[2]} active={screen === 'write'} onNav={onNav} />
+        <NavBtn item={CORE_NAV[1]!} active={screen === 'story'} onNav={onNav} />
+        <NavBtn item={CORE_NAV[2]!} active={screen === 'write'} onNav={onNav} />
       </nav>
       {/* Partner + settings */}
       <div className="px-3 pb-4 flex flex-col gap-1">
         <div className="my-1" style={{ height: 1, backgroundColor: 'var(--color-edge)', marginLeft: 12, marginRight: 12 }} />
-        <NavBtn item={CORE_NAV[3]} active={screen === 'settings'} onNav={onNav} />
+        <NavBtn item={CORE_NAV[3]!} active={screen === 'settings'} onNav={onNav} />
         <div className="flex items-center gap-2.5 px-3 py-2">
           <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
             style={{ backgroundColor: 'var(--color-tint)', color: 'var(--color-accent)' }}>J</div>

@@ -57,7 +57,7 @@ const SEED_DATES: DateItem[] = [
 
 // ─── Screen: Dates ────────────────────────────────────────────────────────────
 
-export default function DatesScreen() {
+export function DatesScreenAdapter() {
   const [dates, setDates] = useState<DateItem[]>(SEED_DATES)
   const [newIdea, setNewIdea] = useState('')
 

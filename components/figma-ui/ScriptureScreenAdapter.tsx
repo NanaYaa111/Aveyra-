@@ -4,18 +4,6 @@ import { useState } from 'react'
 
 // ─── Icon Component ───────────────────────────────────────────────────────────
 
-type IcoProps = { size?: number; style?: React.CSSProperties; className?: string }
-
-function Ico({ path, size = 20, fill, style, className }: IcoProps & { path: React.ReactNode; fill?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill ?? 'none'}
-      stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"
-      style={style} className={className}>
-      {path}
-    </svg>
-  )
-}
-
 // ─── Primitives ───────────────────────────────────────────────────────────────
 
 function Btn({
@@ -89,7 +77,7 @@ const SUGGESTED_VERSE = {
 
 // ─── Screen: Scripture ────────────────────────────────────────────────────────
 
-export default function ScriptureScreen() {
+export function ScriptureScreenAdapter() {
   const [state, setState] = useState<ScriptureState>('open')
   const [myNote, setMyNote] = useState('')
   const [response, setResponse] = useState('')
@@ -128,7 +116,7 @@ export default function ScriptureScreen() {
               Suggested · {SUGGESTED_VERSE.ref}
             </div>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
-              "{SUGGESTED_VERSE.text}"
+              &quot;{SUGGESTED_VERSE.text}&quot;
             </div>
             <button className="mt-3 text-sm" style={{ color: 'var(--color-muted)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', textDecorationStyle: 'dotted', fontFamily: 'var(--font-sans)' }}>
               Use a different verse instead
@@ -157,7 +145,7 @@ export default function ScriptureScreen() {
               {SUGGESTED_VERSE.ref}
             </div>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
-              "{SUGGESTED_VERSE.text}"
+              &quot;{SUGGESTED_VERSE.text}&quot;
             </div>
             {myNote && (
               <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--color-edge)', fontSize: 14, color: 'var(--color-muted)', fontStyle: 'italic' }}>
@@ -167,7 +155,7 @@ export default function ScriptureScreen() {
           </Card>
           <div className="flex items-center gap-3 py-4">
             <div className="flex-1 h-px" style={{ backgroundColor: 'var(--color-edge)' }} />
-            <span style={{ fontSize: 14, color: 'var(--color-muted)', fontStyle: 'italic' }}>Open — Jordan's response will appear here</span>
+            <span style={{ fontSize: 14, color: 'var(--color-muted)', fontStyle: 'italic' }}>Open — Jordan&apos;s response will appear here</span>
             <div className="flex-1 h-px" style={{ backgroundColor: 'var(--color-edge)' }} />
           </div>
         </div>
@@ -175,19 +163,19 @@ export default function ScriptureScreen() {
 
       {state === 'respond' && (
         <div className="flex flex-col gap-4">
-          <div style={{ fontSize: 14, color: 'var(--color-muted)' }}>Jordan chose today's verse.</div>
+          <div style={{ fontSize: 14, color: 'var(--color-muted)' }}>Jordan chose today&apos;s verse.</div>
           <Card>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-bronze)', marginBottom: 10 }}>
               {SUGGESTED_VERSE.ref}
             </div>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
-              "{SUGGESTED_VERSE.text}"
+              &quot;{SUGGESTED_VERSE.text}&quot;
             </div>
           </Card>
           <div>
             <div style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 8 }}>What did it stir?</div>
             <textarea rows={4} value={response} onChange={e => setResponse(e.target.value)}
-              placeholder="Write whatever it brought up. There's no right answer."
+              placeholder="Write whatever it brought up. There&apos;s no right answer."
               className="w-full rounded-xl px-4 py-3"
               style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-edge)', color: 'var(--color-ink)', fontSize: 15, outline: 'none' }}
               onFocus={e => { e.target.style.borderColor = 'var(--color-accent)' }}
@@ -207,7 +195,7 @@ export default function ScriptureScreen() {
               {SUGGESTED_VERSE.ref}
             </div>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
-              "{SUGGESTED_VERSE.text}"
+              &quot;{SUGGESTED_VERSE.text}&quot;
             </div>
           </Card>
           <div className="grid md:grid-cols-2 gap-4">
@@ -218,7 +206,7 @@ export default function ScriptureScreen() {
               </div>
             </div>
             <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-well)', border: '1px solid var(--color-edge)' }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-bronze)', marginBottom: 8 }}>Jordan's response</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-bronze)', marginBottom: 8 }}>Jordan&apos;s response</div>
               <div style={{ fontSize: 15, color: 'var(--color-ink)', lineHeight: 1.65 }}>
                 {response || "It made me think of the first time we drove somewhere without a plan. Just going."}
               </div>

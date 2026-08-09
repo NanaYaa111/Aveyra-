@@ -95,14 +95,13 @@ const FEELINGS = [
 
 // ─── Screen: Check-in ─────────────────────────────────────────────────────────
 
-export default function CheckInScreen() {
+export function CheckInScreenAdapter() {
   const [mine, setMine] = useState<string | null>(null)
   const [note, setNote] = useState('')
-  const [jordanFeeling, setJordanFeeling] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
-  // Simulate Jordan's check-in being visible
-  const jordanCheckedIn = jordanFeeling !== null
+  // Simulate Jordan's check-in being visible (always false for demo)
+  const jordanCheckedIn = false
 
   return (
     <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
@@ -179,7 +178,7 @@ export default function CheckInScreen() {
         </div>
         {jordanCheckedIn ? (
           <div className="flex items-center gap-4">
-            {FEELINGS.filter(f => f.id === jordanFeeling).map(f => (
+            {FEELINGS.filter(f => f.id === 'loved').map(f => (
               <div key={f.id} className="flex items-center gap-3 p-3 rounded-xl"
                 style={{ backgroundColor: 'var(--color-well)' }}>
                 <span style={{ fontSize: 28 }}>{f.emoji}</span>
@@ -190,7 +189,7 @@ export default function CheckInScreen() {
         ) : (
           <div>
             <div style={{ fontSize: 14, color: 'var(--color-muted)', fontStyle: 'italic' }}>
-              Jordan's check-in hasn't come through yet.
+              Jordan&apos;s check-in hasn&apos;t come through yet.
             </div>
           </div>
         )}

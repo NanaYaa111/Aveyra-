@@ -91,19 +91,11 @@ function Card({ children, className = '' }: { children: React.ReactNode; classNa
   )
 }
 
-function SectionHeader({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: 10 }}>
-      {children}
-    </div>
-  )
-}
-
 // ─── Screen: Today ────────────────────────────────────────────────────────────
 
 type TodayState = 'answering' | 'waiting' | 'revealed'
 
-const TODAY_QUESTION = "What's one thing from today you'd want to remember?"
+const TODAY_QUESTION = "What&apos;s one thing from today you&apos;d want to remember?"
 const JORDAN_ANSWER = "The light through the kitchen window at 7 am. It hit the coffee mug just right and for a second everything felt very still and very good."
 const EMBEDDED_NAV = [
   { id: 'checkin', label: 'Check-in', Icon: ICheckin },
@@ -118,7 +110,7 @@ interface TodayScreenProps {
   onNav?: (s: string) => void
 }
 
-export default function TodayScreen({ onNav }: TodayScreenProps) {
+export function TodayScreenAdapter({ onNav }: TodayScreenProps) {
   const [todayState, setTodayState] = useState<TodayState>('answering')
   const [answer, setAnswer] = useState('')
   const [saved, setSaved] = useState(false)
@@ -131,7 +123,7 @@ export default function TodayScreen({ onNav }: TodayScreenProps) {
       {/* Arrival line */}
       <div className="mb-5 px-4 py-3 rounded-xl text-sm"
         style={{ backgroundColor: 'var(--color-well)', color: 'var(--color-muted)', borderLeft: '2px solid var(--color-bronze)' }}>
-        Jordan answered today's question.
+        Jordan answered today&apos;s question.
       </div>
       {/* Date */}
       <div className="mb-8">
@@ -158,7 +150,7 @@ export default function TodayScreen({ onNav }: TodayScreenProps) {
             rows={6}
             value={answer}
             onChange={e => setAnswer(e.target.value)}
-            placeholder="Write whatever comes. There's no wrong answer."
+            placeholder="Write whatever comes. There&apos;s no wrong answer."
             className="w-full rounded-2xl px-5 py-4 text-base leading-relaxed"
             style={{
               backgroundColor: 'var(--color-surface)',
@@ -271,7 +263,7 @@ export default function TodayScreen({ onNav }: TodayScreenProps) {
           Something to try
         </div>
         <div style={{ fontSize: 15, color: 'var(--color-muted)', lineHeight: 1.7, fontStyle: 'italic' }}>
-          Write something by hand and leave it somewhere Jordan will find it. It doesn't have to say much.
+          Write something by hand and leave it somewhere Jordan will find it. It doesn&apos;t have to say much.
         </div>
       </div>
     </div>

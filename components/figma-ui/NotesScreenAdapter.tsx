@@ -4,17 +4,6 @@ import { useState } from 'react'
 
 // ─── Icon Component ───────────────────────────────────────────────────────────
 
-type IcoProps = { size?: number; style?: React.CSSProperties; className?: string }
-
-function Ico({ path, size = 20, fill, style, className }: IcoProps & { path: React.ReactNode; fill?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill ?? 'none'}
-      stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"
-      style={style} className={className}>
-      {path}
-    </svg>
-  )
-}
 
 // ─── Primitives ───────────────────────────────────────────────────────────────
 
@@ -96,7 +85,7 @@ type NoteChannel = 'weighing' | 'lovely' | 'try'
 type Note = { id: number; from: 'me' | 'jordan'; text: string; date: string; read?: boolean; channel: NoteChannel }
 
 const CHANNELS: { id: NoteChannel; emoji: string; label: string; hint: string }[] = [
-  { id: 'weighing', emoji: '🌧️', label: "Something's weighing on me", hint: "Say it plainly. It doesn't have to be tidy." },
+  { id: 'weighing', emoji: '🌧️', label: "Something&apos;s weighing on me", hint: "Say it plainly. It doesn&apos;t have to be tidy." },
   { id: 'lovely',   emoji: '🌞', label: 'Something lovely',           hint: 'Share what caught you.' },
   { id: 'try',      emoji: '🌿', label: 'Something to try',           hint: 'An idea for the two of you.' },
 ]
@@ -109,7 +98,7 @@ const SEED_NOTES: Note[] = [
 
 // ─── Screen: Notes ────────────────────────────────────────────────────────────
 
-export default function NotesScreen() {
+export function NotesScreenAdapter() {
   const [active, setActive] = useState<NoteChannel>('weighing')
   const [draft, setDraft] = useState('')
   const [notes, setNotes] = useState<Note[]>(SEED_NOTES)

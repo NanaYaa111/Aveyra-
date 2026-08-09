@@ -98,7 +98,7 @@ const SEED_ENTRIES: Entry[] = [
 
 // ─── Screen: Write ────────────────────────────────────────────────────────────
 
-export default function WriteScreen() {
+export function WriteScreenAdapter() {
   const [entries, setEntries] = useState<Entry[]>(SEED_ENTRIES)
   const [active, setActive] = useState<Entry | null>(null)
   const [body, setBody] = useState('')
@@ -158,7 +158,7 @@ export default function WriteScreen() {
             rows={14}
             value={body}
             onChange={e => setBody(e.target.value)}
-            placeholder="Write whatever's on your mind. This is yours."
+            placeholder="Write whatever&apos;s on your mind. This is yours."
             className="w-full rounded-2xl px-5 py-4 leading-relaxed"
             style={{
               backgroundColor: 'var(--color-surface)',

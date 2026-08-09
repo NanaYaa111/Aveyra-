@@ -10,16 +10,16 @@ export { EmptyState, type EmptyStateProps } from './EmptyState';
 export { LoadingState, type LoadingStateProps } from './LoadingState';
 export { ErrorMessage, type ErrorMessageProps } from './ErrorMessage';
 export {
-  TodayIcon,
-  StoryIcon,
-  WriteIcon,
-  DatesIcon,
-  MessagesIcon,
-  CheckInIcon,
-  ScriptureIcon,
-  NotesIcon,
-  VaultIcon,
-  SettingsIcon,
-} from './icons';
+  IToday as TodayIcon,
+  IStory as StoryIcon,
+  IWrite as WriteIcon,
+  IDates as DatesIcon,
+  IMessages as MessagesIcon,
+  ICheckin as CheckInIcon,
+  IScripture as ScriptureIcon,
+  INotes as NotesIcon,
+  IVault as VaultIcon,
+  ISettings as SettingsIcon,
+} from './Icons';
 export { Logo, AveyraMark } from './Logo';
 export { CoupleIllustration, ConnectedIllustration } from './illustrations';

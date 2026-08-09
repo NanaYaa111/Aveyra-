@@ -1,7 +1,7 @@
 'use client';
 
-import { CheckinScreenAdapter } from '@/components/figma-ui/CheckinScreenAdapter';
+import { CheckInScreenAdapter } from '@/components/figma-ui/CheckInScreenAdapter';
 
 export default function CheckInPage() {
-  return <CheckinScreenAdapter />;
+  return <CheckInScreenAdapter />;
 }

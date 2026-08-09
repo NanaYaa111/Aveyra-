@@ -37,7 +37,7 @@ const SEED_MESSAGES: Message[] = [
   { id: 1, from: 'jordan', text: 'Good morning ☀️', time: '8:47 am' },
   { id: 2, from: 'me',     text: 'Morning. Coffee is already made.', time: '8:52 am' },
   { id: 3, from: 'jordan', text: 'You always do that. I love you.', time: '8:53 am' },
-  { id: 4, from: 'me',     text: "How's your day looking?", time: '9:15 am' },
+  { id: 4, from: 'me',     text: "How&apos;s your day looking?", time: '9:15 am' },
   { id: 5, from: 'jordan', text: 'Meetings until 2, then free. Walk later?', time: '9:16 am' },
   { id: 6, from: 'me',     text: 'Yes. The park route.', time: '9:17 am' },
   { id: 7, from: 'jordan', text: 'The long one?', time: '9:18 am' },
@@ -58,7 +58,7 @@ function EmptyState({ icon, title, body }: { icon: React.ReactNode; title: strin
   )
 }
 
-export default function MessagesScreen() {
+export function MessagesScreenAdapter() {
   const [messages, setMessages] = useState<Message[]>(SEED_MESSAGES)
   const [draft, setDraft] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -94,7 +94,7 @@ export default function MessagesScreen() {
       {/* Thread */}
       <div className="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-3">
         {messages.length === 0 ? (
-          <EmptyState icon="💬" title="It's quiet in here."
+          <EmptyState icon="💬" title="It&apos;s quiet in here."
             body="Say something small. Small things count." />
         ) : (
           messages.map(msg => (

@@ -8,16 +8,16 @@ type Screen = 'today' | 'checkin' | 'messages' | 'dates' | 'notes' | 'scripture'
 interface AveyraAppShellProps {
   children?: React.ReactNode;
   screens: {
-    today: React.ComponentType<any>;
-    checkin: React.ComponentType<any>;
-    messages: React.ComponentType<any>;
-    dates: React.ComponentType<any>;
-    notes: React.ComponentType<any>;
-    scripture: React.ComponentType<any>;
-    story: React.ComponentType<any>;
-    vault: React.ComponentType<any>;
-    write: React.ComponentType<any>;
-    settings: React.ComponentType<any>;
+    today: React.ComponentType<Record<string, never>>;
+    checkin: React.ComponentType<Record<string, never>>;
+    messages: React.ComponentType<Record<string, never>>;
+    dates: React.ComponentType<Record<string, never>>;
+    notes: React.ComponentType<Record<string, never>>;
+    scripture: React.ComponentType<Record<string, never>>;
+    story: React.ComponentType<Record<string, never>>;
+    vault: React.ComponentType<Record<string, never>>;
+    write: React.ComponentType<Record<string, never>>;
+    settings: React.ComponentType<Record<string, never>>;
   };
 }
 

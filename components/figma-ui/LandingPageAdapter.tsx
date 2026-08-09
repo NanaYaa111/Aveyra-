@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Btn } from './primitives';
 
 export function LandingPageAdapter() {
   const router = useRouter();
