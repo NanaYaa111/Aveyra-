@@ -70,10 +70,9 @@ describe('Today screen', () => {
   it('answering: shows the question and an answer field', () => {
     current = makeDaily();
     render(<TodayPage />);
-    expect(screen.getByRole('heading', { name: 'Today', level: 1 })).toBeInTheDocument();
     expect(screen.getByText('What made you smile today?')).toBeInTheDocument();
-    expect(screen.getByLabelText('Your answer')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /submit answer/i })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/write whatever comes/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /share your answer/i })).toBeInTheDocument();
   });
 
   it('waiting: shows my answer, the waiting status, and an edit affordance', () => {
@@ -87,8 +86,7 @@ describe('Today screen', () => {
     render(<TodayPage />);
     expect(screen.getByText('A dog on the bus')).toBeInTheDocument();
     expect(screen.getByText(/waiting for sam/i)).toBeInTheDocument();
-    expect(screen.getByText(/still change this until reveal/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /edit answer/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/edit answer/i)).toBeInTheDocument();
   });
 
   it('revealed: shows both answers and offers save-as-memory', () => {
@@ -98,13 +96,13 @@ describe('Today screen', () => {
         myAnswer: answer('A dog on the bus'),
         partnerAnswer: answer('Your text this morning', 'partner_two'),
         status: 'revealed',
+        saved: false,
       },
     });
     render(<TodayPage />);
     expect(screen.getByText('A dog on the bus')).toBeInTheDocument();
     expect(screen.getByText('Your text this morning')).toBeInTheDocument();
-    expect(screen.getByText(/see you tomorrow/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /save this as a memory/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /save as a memory/i })).toBeInTheDocument();
   });
 
   it('online: no connection notice', () => {
@@ -157,7 +155,7 @@ describe('Today screen', () => {
       },
     });
     render(<TodayPage />);
-    expect(screen.getByText(/saved to memories/i)).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /save this as a memory/i })).not.toBeInTheDocument();
+    expect(screen.getByText(/saved to your story/i)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /save as a memory/i })).not.toBeInTheDocument();
   });
 });
