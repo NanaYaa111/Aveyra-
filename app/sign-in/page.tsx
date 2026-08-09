@@ -32,7 +32,7 @@ export default function SignInPage() {
       <div className="flex flex-col items-center gap-3 text-center">
         <Logo />
         <h1 id="signin-heading" className="text-display">
-          Welcome to Aveyra
+          Welcome to Aveyra Flow
         </h1>
         <p className="text-text-soft">
           A private, calm home for the two of you. Enter your email to get a sign-in code.

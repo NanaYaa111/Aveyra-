@@ -15,7 +15,7 @@ async function setUp(page: Page) {
   await page.getByRole('button', { name: /^continue$/i }).click();
   await page.getByRole('button', { name: /start our space/i }).click();
   await page.getByRole('button', { name: /create our space/i }).click();
-  await page.getByRole('button', { name: /continue to aveyra/i }).click();
+  await page.getByRole('button', { name: /continue to aveyra flow/i }).click();
   await expect(page).toHaveURL(/\/today\/?$/);
 }
 

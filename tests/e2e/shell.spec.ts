@@ -28,7 +28,7 @@ async function signIn(page: Page, email = 'e2e@example.com') {
   await page.getByRole('button', { name: /start our space/i }).click();
   await page.getByRole('button', { name: /create our space/i }).click();
   await expect(page.getByTestId('invite-code')).toBeVisible();
-  await page.getByRole('button', { name: /continue to aveyra/i }).click();
+  await page.getByRole('button', { name: /continue to aveyra flow/i }).click();
   await expect(page).toHaveURL(/\/today\/?$/);
 }
 
@@ -36,7 +36,7 @@ test.describe('authentication', () => {
   test('a signed-out visitor to a protected route is sent to sign-in', async ({ page }) => {
     await page.goto('/today/');
     await expect(page).toHaveURL(/\/sign-in\/?$/);
-    await expect(page.getByRole('heading', { name: 'Welcome to Aveyra', level: 1 })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Welcome to Aveyra Flow', level: 1 })).toBeVisible();
   });
 
   test('a new account is taken to onboarding after verifying', async ({ page }) => {
@@ -146,7 +146,7 @@ test.describe('graceful offline', () => {
 test.describe('accessibility (WCAG 2.2 AA)', () => {
   test('no serious/critical axe violations on the sign-in screen', async ({ page }) => {
     await page.goto('/sign-in/');
-    await expect(page.getByRole('heading', { name: 'Welcome to Aveyra', level: 1 })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Welcome to Aveyra Flow', level: 1 })).toBeVisible();
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();

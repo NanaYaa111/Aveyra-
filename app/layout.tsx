@@ -31,17 +31,17 @@ const bodyFont = Nunito_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Aveyra',
-    template: '%s · Aveyra',
+    default: 'Aveyra Flow',
+    template: '%s · Aveyra Flow',
   },
   description:
     'A private, calm home for your relationship — meaningful conversations and the memories you keep together.',
-  applicationName: 'Aveyra',
+  applicationName: 'Aveyra Flow',
   manifest: '/manifest.webmanifest',
   icons: { icon: '/favicon.svg' },
   appleWebApp: {
     capable: true,
-    title: 'Aveyra',
+    title: 'Aveyra Flow',
     statusBarStyle: 'default',
   },
 };

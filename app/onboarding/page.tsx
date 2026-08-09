@@ -99,7 +99,7 @@ export default function OnboardingPage() {
             Let&apos;s set up your space
           </h1>
           <p className="text-text-soft text-center">
-            Aveyra is a private home for the two of you. First — what should we call you?
+            Aveyra Flow is a private home for the two of you. First — what should we call you?
           </p>
           <Input
             label="Your name"
@@ -228,7 +228,7 @@ export default function OnboardingPage() {
           )}
 
           <Button fullWidth onClick={handleFinish} disabled={busy}>
-            {busy ? 'Taking you in…' : 'Continue to Aveyra'}
+            {busy ? 'Taking you in…' : 'Continue to Aveyra Flow'}
           </Button>
         </div>
       )}

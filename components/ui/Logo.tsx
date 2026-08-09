@@ -7,7 +7,7 @@ export function AveyraMark({ className }: { className?: string }) {
       className={cn('h-7 w-7', className)}
       fill="none"
       role="img"
-      aria-label="Aveyra"
+      aria-label="Aveyra Flow"
     >
       <defs>
         <linearGradient id="aveyra-heart" x1="0" y1="0" x2="1" y2="1">
@@ -35,7 +35,7 @@ export function Logo({ className }: { className?: string }) {
   return (
     <div className={cn('flex items-center gap-2 text-accent', className)}>
       <AveyraMark />
-      <span className="font-display text-heading tracking-[0.01em] text-text">Aveyra</span>
+      <span className="font-display text-heading tracking-[0.01em] text-text">Aveyra Flow</span>
     </div>
   );
 }

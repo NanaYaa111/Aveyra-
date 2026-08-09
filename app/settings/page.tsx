@@ -17,7 +17,7 @@ export default function SettingsPage() {
       <div className="flex flex-col gap-4">
         <Card>
           <h2 className="text-heading mb-1">Appearance</h2>
-          <p className="text-text-soft mb-4">Choose how Aveyra looks. Dark mode is fully supported.</p>
+          <p className="text-text-soft mb-4">Choose how Aveyra Flow looks. Dark mode is fully supported.</p>
           <ThemeToggle />
         </Card>
 

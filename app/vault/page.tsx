@@ -74,14 +74,14 @@ export default function VaultPage() {
       <Card className="flex flex-col gap-2 bg-bg-soft">
         <p className="text-label font-medium">What this does and doesn&apos;t protect</p>
         <ul className="text-label text-text-soft flex flex-col gap-1 list-disc pl-4">
-          <li>The server stores these as scrambled bytes. Nobody running Aveyra can open them.</li>
+          <li>The server stores these as scrambled bytes. Nobody running Aveyra Flow can open them.</li>
           <li>It can&apos;t stop a screenshot, or anyone holding an unlocked phone.</li>
           <li>
             If you both lose every device, these are gone for good — no one holds a spare key.
           </li>
           <li>Deleting here is permanent. There&apos;s no Recently Deleted for the vault.</li>
           <li>
-            &ldquo;Show once&rdquo; really does delete it from Aveyra after one view — but nothing
+            &ldquo;Show once&rdquo; really does delete it from Aveyra Flow after one view — but nothing
             can stop a screenshot. Videos up to {MAX_VIDEO_SECONDS} seconds.
           </li>
         </ul>
