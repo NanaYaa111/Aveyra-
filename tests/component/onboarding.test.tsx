@@ -19,61 +19,74 @@ const actions = {
 };
 vi.mock('@/lib/relationship/context', () => ({ useOnboarding: () => actions }));
 
-import OnboardingPage from '@/app/onboarding/page';
+import { OnboardingNameAdapter } from '@/components/figma-ui/OnboardingNameAdapter';
+import { OnboardingChoiceAdapter } from '@/components/figma-ui/OnboardingChoiceAdapter';
+import { OnboardingDetailsAdapter } from '@/components/figma-ui/OnboardingDetailsAdapter';
+import { OnboardingJoinAdapter } from '@/components/figma-ui/OnboardingJoinAdapter';
 
 beforeEach(() => {
   Object.values(actions).forEach((v) => typeof v === 'function' && (v as ReturnType<typeof vi.fn>).mockClear?.());
+  router.push.mockClear();
   router.replace.mockClear();
+  sessionStorage.clear();
 });
 afterEach(cleanup);
 
-describe('onboarding wizard — create path', () => {
-  it('walks name → choose → details → invite → into Aveyra', async () => {
+describe('onboarding adapters', () => {
+  it('name adapter stores and navigates', async () => {
     const user = userEvent.setup();
-    render(<OnboardingPage />);
+    render(<OnboardingNameAdapter />);
 
-    // Step 1: name
     await user.type(screen.getByLabelText('Your name'), 'Alex');
     await user.click(screen.getByRole('button', { name: /continue/i }));
 
-    // Step 2: choose → start
+    expect(sessionStorage.getItem('onboarding_name')).toBe('Alex');
+    expect(router.push).toHaveBeenCalledWith('/onboarding/choice');
+  });
+
+  it('choice adapter routes to details on start', async () => {
+    const user = userEvent.setup();
+    render(<OnboardingChoiceAdapter />);
+
     await user.click(screen.getByRole('button', { name: /start our space/i }));
 
-    // Step 3: details → create
+    expect(sessionStorage.getItem('onboarding_mode')).toBe('create');
+    expect(router.push).toHaveBeenCalledWith('/onboarding/details');
+  });
+
+  it('choice adapter routes to join on join', async () => {
+    const user = userEvent.setup();
+    render(<OnboardingChoiceAdapter />);
+
+    await user.click(screen.getByRole('button', { name: /join my partner/i }));
+
+    expect(sessionStorage.getItem('onboarding_mode')).toBe('join');
+    expect(router.push).toHaveBeenCalledWith('/onboarding/join');
+  });
+
+  it('details adapter stores partner info and navigates', async () => {
+    const user = userEvent.setup();
+    sessionStorage.setItem('onboarding_name', 'Alex');
+    render(<OnboardingDetailsAdapter />);
+
     await user.type(screen.getByLabelText(/partner's name/i), 'Sam');
     await user.click(screen.getByRole('button', { name: /create our space/i }));
 
-    await waitFor(() =>
-      expect(actions.createSpace).toHaveBeenCalledWith(
-        expect.objectContaining({ yourName: 'Alex', partnerName: 'Sam' }),
-      ),
-    );
-
-    // Step 4: invite shows the code
-    expect(await screen.findByTestId('invite-code')).toHaveTextContent('ABCD2345');
-
-    // Into the app
-    await user.click(screen.getByRole('button', { name: /continue to aveyra/i }));
-    await waitFor(() => expect(actions.finish).toHaveBeenCalled());
-    expect(router.replace).toHaveBeenCalledWith('/today');
+    expect(sessionStorage.getItem('onboarding_partner_name')).toBe('Sam');
+    await waitFor(() => expect(router.push).toHaveBeenCalledWith('/onboarding/invite'));
   });
-});
 
-describe('onboarding wizard — join path', () => {
-  it('joins with a code and reaches the invite/waiting step', async () => {
+  it('join adapter stores invite code and navigates', async () => {
     const user = userEvent.setup();
-    render(<OnboardingPage />);
+    sessionStorage.setItem('onboarding_name', 'Sam');
+    render(<OnboardingJoinAdapter />);
 
-    await user.type(screen.getByLabelText('Your name'), 'Sam');
-    await user.click(screen.getByRole('button', { name: /continue/i }));
-    await user.click(screen.getByRole('button', { name: /join my partner/i }));
+    await user.type(screen.getByLabelText(/invite/i), 'enc-token');
+    await user.click(screen.getByRole('button', { name: /connect/i }));
 
-    await user.type(screen.getByLabelText(/invite link or code/i), 'enc-token');
-    await user.click(screen.getByRole('button', { name: /^continue$/i }));
-
-    await waitFor(() =>
-      expect(actions.joinSpace).toHaveBeenCalledWith({ yourName: 'Sam', encoded: 'enc-token' }),
-    );
-    expect(await screen.findByRole('button', { name: /continue to aveyra/i })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(sessionStorage.getItem('onboarding_invite_code')).toBe('enc-token');
+      expect(router.push).toHaveBeenCalledWith('/onboarding/invite');
+    });
   });
 });
