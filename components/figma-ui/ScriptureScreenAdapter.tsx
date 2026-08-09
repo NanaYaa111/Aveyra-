@@ -1,211 +1,231 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { Btn, Card, LoadingState } from './primitives';
-import { useScripture } from '@/lib/scripture/useScripture';
-import { useOnboarding } from '@/lib/relationship/context';
-import { textOf, TRANSLATION_NAMES, type Translation } from '@/lib/scripture';
+import { useState } from 'react'
 
-export function ScriptureScreenAdapter() {
-  const { relationship, onboarded } = useOnboarding();
-  const s = useScripture();
-  const { translation, ritual, loading, verses, chooseTranslation, chooseVerse, respond, busy, error, partnerName } = s;
-  const [picking, setPicking] = useState(false);
-  const [chosen, setChosen] = useState(s.ritual?.suggestion);
-  const [note, setNote] = useState('');
-  const [response, setResponse] = useState('');
+// ─── Icon Component ───────────────────────────────────────────────────────────
 
-  if (!relationship) {
-    if (onboarded === null) {
-      return <LoadingState />;
-    }
-    return (
-      <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
-        <div className="mb-8">
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15 }}>
-            Scripture
-          </h1>
-        </div>
-        <Card className="mb-6">
-          <div className="flex flex-col gap-3">
-            <div>
-              <p style={{ fontWeight: 600, marginBottom: 8, color: 'var(--color-ink)' }}>{"Your space isn't set up yet"}</p>
-              <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--color-muted)' }}>
-                {`Scripture needs the two of you. Once your space exists and your partner has joined, this page comes to life.`}
-              </p>
-            </div>
-            <div>
-              <Link href="/onboarding">
-                <Btn variant="quiet">Finish setting up</Btn>
-              </Link>
-            </div>
-          </div>
-        </Card>
-      </div>
-    );
+type IcoProps = { size?: number; style?: React.CSSProperties; className?: string }
+
+function Ico({ path, size = 20, fill, style, className }: IcoProps & { path: React.ReactNode; fill?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill ?? 'none'}
+      stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"
+      style={style} className={className}>
+      {path}
+    </svg>
+  )
+}
+
+// ─── Primitives ───────────────────────────────────────────────────────────────
+
+function Btn({
+  variant = 'primary',
+  children,
+  onClick,
+  disabled,
+  type = 'button',
+  className = '',
+}: {
+  variant?: 'primary' | 'secondary' | 'quiet'
+  children: React.ReactNode
+  onClick?: () => void
+  disabled?: boolean
+  type?: 'button' | 'submit'
+  className?: string
+}) {
+  const styles: Record<string, React.CSSProperties> = {
+    primary: {
+      backgroundColor: 'rgba(196,88,120,0.75)',
+      color: '#f5dfe8',
+      border: '1px solid rgba(196,88,120,0.5)',
+      boxShadow: '0 0 18px rgba(196,88,120,0.22)',
+    },
+    secondary: {
+      backgroundColor: 'rgba(255,255,255,0.06)',
+      color: 'rgba(245,210,225,0.75)',
+      border: '1px solid rgba(245,180,200,0.15)',
+    },
+    quiet: {
+      backgroundColor: 'transparent',
+      color: 'var(--color-muted)',
+      border: '1px solid var(--color-edge)',
+    },
   }
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`av-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm cursor-pointer ${className}`}
+      style={{
+        fontFamily: 'var(--font-sans)',
+        minHeight: 44,
+        opacity: disabled ? 0.45 : 1,
+        ...styles[variant],
+      }}
+    >
+      {children}
+    </button>
+  )
+}
 
-  if (loading || !translation) {
-    return <LoadingState />;
-  }
+function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`rounded-2xl p-5 ${className}`}
+      style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-edge)' }}>
+      {children}
+    </div>
+  )
+}
 
-  if (!ritual) {
-    return <LoadingState />;
-  }
+// ─── Data Types & Constants ───────────────────────────────────────────────────
+
+type ScriptureState = 'open' | 'waiting' | 'respond' | 'complete'
+
+const SUGGESTED_VERSE = {
+  ref: 'Ruth 1:16',
+  text: "Where you go I will go, and where you stay I will stay. Your people will be my people and your God my God.",
+}
+
+// ─── Screen: Scripture ────────────────────────────────────────────────────────
+
+export default function ScriptureScreen() {
+  const [state, setState] = useState<ScriptureState>('open')
+  const [myNote, setMyNote] = useState('')
+  const [response, setResponse] = useState('')
+  const [translation, setTranslation] = useState<'KJV' | 'WEB'>('WEB')
 
   return (
     <div className="max-w-[640px] mx-auto px-5 py-8 md:py-12">
       <div className="mb-8">
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15 }}>
+        <div style={{ fontSize: 13, color: 'var(--color-muted)', fontWeight: 500 }}>Friday, 8 August</div>
+        <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem, 4.5vw, 2rem)', fontWeight: 600, color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 4 }}>
           Scripture
-        </h1>
-        <div style={{ fontSize: 15, color: 'var(--color-muted)', marginTop: 4 }}>{"Whoever gets here first chooses today's verse. The other reads it and says what it stirred."}</div>
+        </div>
       </div>
 
-      {error && <div style={{ fontSize: 13, color: 'var(--color-alert)', marginBottom: 16 }}>{error}</div>}
-
-      {/* Choose stage */}
-      {ritual.stage === 'open' && chosen && (
-        <Card className="mb-6">
-          <div className="flex flex-col gap-3">
-            <div className="rounded-xl p-3" style={{ backgroundColor: 'var(--color-well)' }}>
-              <p style={{ fontSize: 12, color: 'var(--color-muted)', marginBottom: 8 }}>{"Today&apos;s suggestion"}</p>
-              <p style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.5, marginBottom: 8 }}>{chosen.text}</p>
-              <p style={{ fontSize: 13, color: 'var(--color-accent)', fontWeight: 600 }}>{chosen.reference}</p>
-            </div>
-
-            {picking ? (
-              <div style={{ maxHeight: 300, overflowY: 'auto', marginBottom: 12 }}>
-                {verses.map((v) => (
-                  <button
-                    key={v.ref}
-                    onClick={() => {
-                      setChosen({ reference: v.ref, text: textOf(v, translation) });
-                      setPicking(false);
-                    }}
-                    className="w-full text-left rounded-lg border p-2 mb-2 transition-colors"
-                    style={{ borderColor: 'var(--color-edge)', backgroundColor: 'var(--color-surface)' }}
-                  >
-                    <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-accent)' }}>{v.ref}</div>
-                    <div style={{ fontSize: 12, color: 'var(--color-muted)' }}>{textOf(v, translation)}</div>
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <Btn variant="quiet" onClick={() => setPicking(true)}>
-                Choose a different verse
-              </Btn>
-            )}
-
-            <textarea
-              value={note}
-              onChange={e => setNote(e.target.value)}
-              placeholder="Why this one, today"
-              rows={3}
-              className="w-full rounded-xl px-4 py-3 text-sm"
+      {/* Translation toggle — personal, not shared */}
+      <div className="flex items-center gap-2 mb-6">
+        <span style={{ fontSize: 13, color: 'var(--color-muted)' }}>Your translation</span>
+        <div className="flex gap-1 p-0.5 rounded-lg" style={{ backgroundColor: 'var(--color-well)' }}>
+          {(['WEB', 'KJV'] as const).map(t => (
+            <button key={t} onClick={() => setTranslation(t)}
+              className="px-3 py-1 rounded-md text-xs font-semibold"
               style={{
-                backgroundColor: 'var(--color-well)',
-                border: '1px solid var(--color-edge)',
-                color: 'var(--color-ink)',
-                fontSize: 14,
-                outline: 'none',
-              }}
-              onFocus={e => { e.target.style.borderColor = 'var(--color-accent)' }}
-              onBlur={e => { e.target.style.borderColor = 'var(--color-edge)' }}
-            />
-            <Btn onClick={() => void chooseVerse(chosen, note)} disabled={busy}>
-              {busy ? 'Sharing…' : 'Share this verse'}
-            </Btn>
-          </div>
-        </Card>
-      )}
-
-      {/* Chosen verse display */}
-      {ritual.entry && (
-        <Card className="mb-6">
-          <div style={{ fontSize: 12, color: 'var(--color-muted)', marginBottom: 8 }}>
-            {ritual.entry.chooser === 'partner_one' ? 'You chose' : `${partnerName} chose`}
-          </div>
-          <p style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.5, marginBottom: 8 }}>{ritual.entry.text}</p>
-          <p style={{ fontSize: 13, color: 'var(--color-accent)', fontWeight: 600, marginBottom: 12 }}>{ritual.entry.reference}</p>
-          {ritual.entry.chooser_note && (
-            <p style={{ fontSize: 14, color: 'var(--color-muted)', lineHeight: 1.6, borderLeft: '2px solid var(--color-edge)', paddingLeft: 12 }}>
-              {ritual.entry.chooser_note}
-            </p>
-          )}
-        </Card>
-      )}
-
-      {/* Waiting */}
-      {ritual.stage === 'waiting' && (
-        <Card className="mb-6">
-          <p style={{ fontSize: 14, color: 'var(--color-muted)' }}>Waiting to hear what {partnerName} makes of it.</p>
-        </Card>
-      )}
-
-      {/* Respond stage */}
-      {ritual.stage === 'to-respond' && (
-        <Card className="mb-6">
-          <div className="flex flex-col gap-3">
-            <textarea
-              value={response}
-              onChange={e => setResponse(e.target.value)}
-              placeholder="However it lands. There's no right answer."
-              autoFocus
-              rows={4}
-              className="w-full rounded-xl px-4 py-3 text-sm"
-              style={{
-                backgroundColor: 'var(--color-well)',
-                border: '1px solid var(--color-edge)',
-                color: 'var(--color-ink)',
-                fontSize: 14,
-                outline: 'none',
-              }}
-              onFocus={e => { e.target.style.borderColor = 'var(--color-accent)' }}
-              onBlur={e => { e.target.style.borderColor = 'var(--color-edge)' }}
-            />
-            <Btn onClick={() => void respond(response)} disabled={busy || !response.trim()}>
-              {busy ? 'Sharing…' : 'Share what you think'}
-            </Btn>
-          </div>
-        </Card>
-      )}
-
-      {/* Complete - show response */}
-      {ritual.stage === 'complete' && ritual.entry && (
-        <Card className="mb-6" style={{ backgroundColor: 'var(--color-well)' }}>
-          <p style={{ fontSize: 12, color: 'var(--color-muted)', marginBottom: 8 }}>
-            {ritual.entry.chooser === 'partner_one' ? partnerName : 'You'}
-          </p>
-          <p style={{ fontSize: 15, lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{ritual.entry.response}</p>
-        </Card>
-      )}
-
-      {/* Translation selector */}
-      <Card>
-        <div className="mb-3">
-          <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-muted)', marginBottom: 8 }}>Your translation</p>
-          <p style={{ fontSize: 12, color: 'var(--color-muted)', marginBottom: 12 }}>Just for you — {partnerName} reads whichever they prefer.</p>
-        </div>
-        <div className="flex gap-2">
-          {(['web', 'kjv'] as Translation[]).map((t) => (
-            <button
-              key={t}
-              onClick={() => chooseTranslation(t)}
-              className="flex-1 rounded-lg border px-4 py-2.5 transition-colors"
-              style={{
-                borderColor: translation === t ? 'var(--color-accent)' : 'var(--color-edge)',
-                backgroundColor: translation === t ? 'var(--color-tint)' : 'var(--color-surface)',
-                color: translation === t ? 'var(--color-accent)' : 'var(--color-ink)',
-                fontWeight: translation === t ? 600 : 500,
-              }}
-            >
-              {TRANSLATION_NAMES[t]}
-            </button>
+                backgroundColor: translation === t ? 'var(--color-surface)' : 'transparent',
+                color: translation === t ? 'var(--color-ink)' : 'var(--color-muted)',
+                border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)',
+              }}>{t}</button>
           ))}
         </div>
-      </Card>
+      </div>
+
+      {state === 'open' && (
+        <div className="flex flex-col gap-4">
+          <div style={{ fontSize: 14, color: 'var(--color-muted)' }}>You arrived first today. Choose a verse for both of you.</div>
+          <Card>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-bronze)', marginBottom: 10 }}>
+              Suggested · {SUGGESTED_VERSE.ref}
+            </div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
+              "{SUGGESTED_VERSE.text}"
+            </div>
+            <button className="mt-3 text-sm" style={{ color: 'var(--color-muted)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', textDecorationStyle: 'dotted', fontFamily: 'var(--font-sans)' }}>
+              Use a different verse instead
+            </button>
+          </Card>
+          <div>
+            <div style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 8 }}>Why this one? (optional)</div>
+            <textarea rows={3} value={myNote} onChange={e => setMyNote(e.target.value)}
+              placeholder="What drew you to it today?"
+              className="w-full rounded-xl px-4 py-3"
+              style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-edge)', color: 'var(--color-ink)', fontSize: 15, outline: 'none' }}
+              onFocus={e => { e.target.style.borderColor = 'var(--color-accent)' }}
+              onBlur={e => { e.target.style.borderColor = 'var(--color-edge)' }}
+            />
+          </div>
+          <div className="flex justify-end">
+            <Btn onClick={() => setState('waiting')}>Share this verse</Btn>
+          </div>
+        </div>
+      )}
+
+      {state === 'waiting' && (
+        <div className="flex flex-col gap-4">
+          <Card>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-bronze)', marginBottom: 10 }}>
+              {SUGGESTED_VERSE.ref}
+            </div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
+              "{SUGGESTED_VERSE.text}"
+            </div>
+            {myNote && (
+              <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--color-edge)', fontSize: 14, color: 'var(--color-muted)', fontStyle: 'italic' }}>
+                {myNote}
+              </div>
+            )}
+          </Card>
+          <div className="flex items-center gap-3 py-4">
+            <div className="flex-1 h-px" style={{ backgroundColor: 'var(--color-edge)' }} />
+            <span style={{ fontSize: 14, color: 'var(--color-muted)', fontStyle: 'italic' }}>Open — Jordan's response will appear here</span>
+            <div className="flex-1 h-px" style={{ backgroundColor: 'var(--color-edge)' }} />
+          </div>
+        </div>
+      )}
+
+      {state === 'respond' && (
+        <div className="flex flex-col gap-4">
+          <div style={{ fontSize: 14, color: 'var(--color-muted)' }}>Jordan chose today's verse.</div>
+          <Card>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-bronze)', marginBottom: 10 }}>
+              {SUGGESTED_VERSE.ref}
+            </div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
+              "{SUGGESTED_VERSE.text}"
+            </div>
+          </Card>
+          <div>
+            <div style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 8 }}>What did it stir?</div>
+            <textarea rows={4} value={response} onChange={e => setResponse(e.target.value)}
+              placeholder="Write whatever it brought up. There's no right answer."
+              className="w-full rounded-xl px-4 py-3"
+              style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-edge)', color: 'var(--color-ink)', fontSize: 15, outline: 'none' }}
+              onFocus={e => { e.target.style.borderColor = 'var(--color-accent)' }}
+              onBlur={e => { e.target.style.borderColor = 'var(--color-edge)' }}
+            />
+          </div>
+          <div className="flex justify-end">
+            <Btn onClick={() => setState('complete')} disabled={!response.trim()}>Share your response</Btn>
+          </div>
+        </div>
+      )}
+
+      {state === 'complete' && (
+        <div className="flex flex-col gap-4">
+          <Card>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-bronze)', marginBottom: 10 }}>
+              {SUGGESTED_VERSE.ref}
+            </div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 400, color: 'var(--color-ink)', lineHeight: 1.7, fontStyle: 'italic' }}>
+              "{SUGGESTED_VERSE.text}"
+            </div>
+          </Card>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-tint)', border: '1px solid var(--color-edge)' }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-accent)', marginBottom: 8 }}>You chose it because</div>
+              <div style={{ fontSize: 15, color: 'var(--color-ink)', lineHeight: 1.65 }}>
+                {myNote || "Something about today felt like it needed this verse."}
+              </div>
+            </div>
+            <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-well)', border: '1px solid var(--color-edge)' }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-bronze)', marginBottom: 8 }}>Jordan's response</div>
+              <div style={{ fontSize: 15, color: 'var(--color-ink)', lineHeight: 1.65 }}>
+                {response || "It made me think of the first time we drove somewhere without a plan. Just going."}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  );
+  )
 }

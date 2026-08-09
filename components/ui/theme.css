@@ -1,0 +1,67 @@
+/* Q27 Brand Theme - Aveyra Flow */
+
+:root {
+  /* Typography */
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Inter', 'Nunito Sans', system-ui, sans-serif;
+
+  /* Light Mode - Q27 Roses & Plums */
+  --color-ink: #2c1f29;
+  --color-muted: #8d7682;
+  --color-accent: #a83f5b;
+  --color-bronze: #c89baf;
+  --color-surface: #faf1ee;
+  --color-well: #f5e5e0;
+  --color-tint: rgba(168, 63, 91, 0.08);
+  --color-edge: rgba(168, 63, 91, 0.12);
+  --color-ground: #fdfbfa;
+  --color-error: #c84040;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-ink: #f5dfe8;
+    --color-muted: #b399a8;
+    --color-accent: #e888a8;
+    --color-bronze: #c89baf;
+    --color-surface: #2a1222;
+    --color-well: #3a1a2e;
+    --color-tint: rgba(232, 136, 168, 0.08);
+    --color-edge: rgba(232, 136, 168, 0.12);
+    --color-ground: #1c0e1a;
+    --color-error: #f08080;
+  }
+}
+
+:root[data-theme='dark'] {
+  --color-ink: #f5dfe8;
+  --color-muted: #b399a8;
+  --color-accent: #e888a8;
+  --color-bronze: #c89baf;
+  --color-surface: #2a1222;
+  --color-well: #3a1a2e;
+  --color-tint: rgba(232, 136, 168, 0.08);
+  --color-edge: rgba(232, 136, 168, 0.12);
+  --color-ground: #1c0e1a;
+  --color-error: #f08080;
+}
+
+body {
+  background-color: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.av-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
